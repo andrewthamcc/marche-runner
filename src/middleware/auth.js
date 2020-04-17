@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
     const user = await User.findOne({ _id: id }).select("-password");
 
     if (!user) {
-      return res.status(500).send();
+      return res.status(404).send({ error: "User not found" });
     }
 
     // attach user to the request

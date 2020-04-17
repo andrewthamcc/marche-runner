@@ -7,6 +7,25 @@ const User = require("../models/user");
 // get middleware auth
 const auth = require("../middleware/auth");
 
+// POST    /profile
+// Create a user
+// Public
+router.post("/", async (req, res) => {
+  // create new user instance from req.body
+  const user = new User(req.body);
+  try {
+    // save the user
+    await user.save();
+
+    // generate token
+    const token = await user.generateToken();
+
+    res.status(201).send({ user, token });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 // @GET     /profile
 // Get user profile
 // Private
@@ -20,10 +39,11 @@ router.get("/", auth, async (req, res) => {
 
 // @PATCH   /profile
 // Edit user profile
+// Private
 router.patch("/", auth, async (req, res) => {
   const user = req.user;
 
-  // allowed updates
+  // valid updates
   const allowedUpdates = ["firstName", "lastName", "email", "password"];
   const updates = Object.keys(req.body);
 
@@ -50,8 +70,9 @@ router.patch("/", auth, async (req, res) => {
 
 // @DELETE  /profile
 // Delete user profile
+// Private
 router.delete("/", auth, async (req, res) => {
-  const user = req.user._id;
+  const user = req.user;
 
   try {
     await user.remove();

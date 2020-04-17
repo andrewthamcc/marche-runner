@@ -29,6 +29,10 @@ const itemSchema = new mongoose.Schema({
     lowercase: true,
     required: true,
   },
+  purchased: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Item = mongoose.model("item", itemSchema);

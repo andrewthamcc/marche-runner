@@ -47,7 +47,28 @@ router.get("/", auth, async (req, res) => {
 // @PATCH   /shop/:id
 // edit an item
 router.patch("/:id", auth, async (req, res) => {
+  const _id = req.params.id;
+  const user = req.user._id;
+
+  // valid updates
+  const allowedUpdates = ["name", "category", "purchased"];
+  const updates = Object.keys(req.body);
+
+  const validUpdates = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+
+  if (!validUpdates) {
+    return res.status(400).send({ error: "Invalid update request." });
+  }
+
   try {
+    const item = await Item.findOne({ _id, user });
+
+    updates.forEach((update) => (item[update] = req.body[update]));
+
+    item.save();
+    res.send(item);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -85,7 +106,7 @@ router.delete("/category/:category", auth, async (req, res) => {
       return res.status(404).send();
     }
 
-    Item.deleteMany({ category, user });
+    await Item.deleteMany({ category, user });
 
     // hack to return items that deleteMany will remove instead of just a count
     res.send({ items, category });
@@ -106,7 +127,7 @@ router.delete("/shop", auth, async (req, res) => {
       return res.status(400).send();
     }
 
-    Item.deleteMany({ user });
+    await Item.deleteMany({ user });
 
     // hack to return all items that deleteMany will removes instead of just a count
     res.send({ items });

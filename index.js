@@ -1,18 +1,18 @@
 const express = require("express");
 const path = require("path");
 
-const connectDB = require("./src/mongoose/db");
+const connectDB = require("./src/db/db");
 connectDB();
 
 const app = express();
 app.use(express.json());
 
 // api routes
-const authRoute = require("./src/routes/auth");
+const loginRoute = require("./src/routes/auth");
 const shopRoute = require("./src/routes/shop");
 const userRoute = require("./src/routes/user");
 
-app.use("/auth", authRoute);
+app.use("/login", loginRoute);
 app.use("/shop", shopRoute);
 app.use("/profile", userRoute);
 
