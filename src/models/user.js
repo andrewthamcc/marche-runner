@@ -4,8 +4,16 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 require("dotenv").config();
 
+// get task model for deleteMany
+const Item = require("./item");
+
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
     type: String,
     required: true,
     trim: true,
@@ -26,6 +34,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
     minlength: 6,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 
@@ -70,6 +82,15 @@ userSchema.pre("save", async function (next) {
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
+
+  next();
+});
+
+// pre remove delete all the associated user's items
+userSchema.pre("remove", async function (next) {
+  const user = this;
+
+  await Item.deleteMany({ user: user._id });
 
   next();
 });

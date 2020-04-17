@@ -9,12 +9,12 @@ app.use(express.json());
 
 // api routes
 const authRoute = require("./src/routes/auth");
-const groceryRoute = require("./src/routes/grocery");
+const shopRoute = require("./src/routes/shop");
 const userRoute = require("./src/routes/user");
 
 app.use("/auth", authRoute);
-app.use("/grocery", groceryRoute);
-app.use("/users", userRoute);
+app.use("/shop", shopRoute);
+app.use("/profile", userRoute);
 
 // serve static assets in production
 if (process.env.NODE_ENV === "production") {
