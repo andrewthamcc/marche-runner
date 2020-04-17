@@ -4,7 +4,7 @@ const router = new express.Router();
 // get user model
 const User = require("../models/user");
 
-// @POST    /auth/create
+// POST    /auth/create
 // Create a user
 // Public
 router.post("/create", async (req, res) => {
@@ -23,7 +23,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// @POST    /auth/login
+// POST    /auth/login
 // Login a user
 // Public
 router.post("/login", async (req, res) => {
@@ -36,11 +36,11 @@ router.post("/login", async (req, res) => {
 
     res.send({ user, token });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).json({ error: "Invalid Credentials" });
   }
 });
 
-// @POST    /auth/logout
+// POST    /auth/logout
 // Logout a user
 // Private
 router.post("/logout", async (req, res) => {});

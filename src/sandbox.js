@@ -7,7 +7,9 @@ const makeAPICall = (url, method = "GET", data = {}) => {
     method,
   };
 
-  return fetch(`${url}`, params);
+  const res = fetch(`${url}`, params);
+
+  return res;
 };
 
 makeAPICall("/").then((res) => console.log(res));
