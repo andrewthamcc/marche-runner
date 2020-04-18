@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./redux";
+
+// components
+import Home from "./scenes/Home";
+import Dashboard from "./scenes/Dashboard";
+import Profile from "./scenes/Profile";
+
+require("./styles/App.scss");
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/profile" component={Profile} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    </Provider>
   );
 }
 

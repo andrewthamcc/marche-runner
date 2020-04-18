@@ -1,0 +1,38 @@
+html {
+  font-size: 125%;
+}
+
+body {
+  background-color: #ffffff;
+  color: $dark-color;
+  font-family: "Arial", sans-serif;
+}
+
+h1,
+h2,
+h3,
+ul,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.container {
+  width: 90%;
+  max-width: 1380px;
+  margin: 0 auto;
+}
