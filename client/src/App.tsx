@@ -26,7 +26,7 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/signup" component={Signup} />
           </Switch>
-          <Footer />
+          <Route path={/^(?!.*signup).*$/} component={Footer} />
         </BrowserRouter>
       </div>
     </Provider>

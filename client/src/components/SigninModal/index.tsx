@@ -57,7 +57,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             inputName="sign-in-email"
-            label="Email:"
+            label="Email Address"
           />
           <TextInput
             value={password}
@@ -65,7 +65,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
             placeholder="Password"
             inputName="sign-in-password"
             type={textInputType.password}
-            label="Password:"
+            label="Password"
           />
           <Button color={buttonColor.orange} disabled={!email || !password}>
             Sign In

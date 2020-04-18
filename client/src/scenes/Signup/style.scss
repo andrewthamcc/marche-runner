@@ -1,0 +1,89 @@
+@import "../../styles/variables";
+
+.signup {
+  display: flex;
+  height: 100vh;
+
+  &-left {
+    width: 55%;
+    background-image: linear-gradient(
+        to bottom right,
+        rgba(0, 0, 0, 0.7) 60%,
+        rgba(24, 188, 51, 0.4)
+      ),
+      url("assets/grocery-produce.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .flex-container {
+      height: 100%;
+      color: #ffffff;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      h2 {
+        font-size: 4rem;
+        font-style: italic;
+        font-weight: 500;
+      }
+
+      font-size: 1.8rem;
+      line-height: 1.8;
+    }
+  }
+
+  &-right {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-form {
+    width: 70%;
+    margin: 0 auto;
+
+    &-title {
+      margin-bottom: 4rem;
+      font-weight: 500;
+
+      span {
+        color: $primary-color;
+        font-weight: 600;
+        font-style: italic;
+      }
+    }
+
+    &-input {
+      margin-bottom: 3rem;
+    }
+
+    &-name {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      &-first,
+      &-last {
+        width: 50%;
+      }
+
+      &-first {
+        margin-right: 1rem;
+      }
+
+      &-last {
+        margin-left: 1rem;
+      }
+    }
+
+    &-button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}
