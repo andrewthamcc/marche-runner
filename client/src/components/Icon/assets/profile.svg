@@ -2,7 +2,7 @@
     <defs>
         <circle id="a" cx="9" cy="9" r="9"/>
     </defs>
-    <g fill="none" fill-rule="evenodd" transform="translate(-1)">
+    <g fill="" fill-rule="evenodd" transform="translate(-1)">
         <mask id="b" fill="#fff">
             <use xlink:href="#a"/>
         </mask>

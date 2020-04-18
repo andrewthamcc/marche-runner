@@ -1,11 +1,12 @@
 html {
-  font-size: 125%;
+  font-size: 62.5%;
 }
 
 body {
   background-color: #ffffff;
   color: $dark-color;
   font-family: "Arial", sans-serif;
+  font-size: 1.6rem;
 }
 
 h1,
@@ -32,7 +33,7 @@ img {
 }
 
 .container {
-  width: 90%;
-  max-width: 1380px;
+  width: 85%;
+  max-width: 1400px;
   margin: 0 auto;
 }

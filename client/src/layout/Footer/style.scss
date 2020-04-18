@@ -1,0 +1,27 @@
+@import "../../styles/variables";
+
+.footer {
+  background-color: $primary-color;
+  color: #ffffff;
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+
+  margin-top: 4rem;
+
+  &-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+      color: #ffffff;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+  }
+}

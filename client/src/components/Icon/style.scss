@@ -1,0 +1,27 @@
+.icon {
+  display: inline-block;
+
+  &.green {
+    svg {
+      path {
+        fill: #1dd43c;
+      }
+    }
+  }
+
+  &.purple {
+    svg {
+      path {
+        fill: #8241f3;
+      }
+    }
+  }
+
+  &.orange {
+    svg {
+      path {
+        fill: #f48b00;
+      }
+    }
+  }
+}

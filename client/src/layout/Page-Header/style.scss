@@ -1,0 +1,55 @@
+@import "../../styles/variables";
+
+.page-header {
+  background-color: $primary-color;
+  color: #ffffff;
+  padding: 2rem 0;
+
+  &-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 3.5rem;
+      font-weight: 500;
+      font-style: italic;
+      margin-right: 1rem;
+    }
+
+    &-icon {
+      width: 60px;
+      height: 60px;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+
+  &-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-nav-list {
+    display: flex;
+    align-items: center;
+
+    &-icon {
+      margin-right: 1rem;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 16px;
+      margin-right: 3rem;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}

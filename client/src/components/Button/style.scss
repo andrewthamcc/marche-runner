@@ -1,0 +1,70 @@
+@import "../../styles/variables";
+
+.button {
+  font-size: 1.6rem;
+  width: 130px;
+  padding: 8px 16px;
+  color: #1e1e1e;
+  background-color: transparent;
+  border: 2px solid #c0c0c0;
+  border-radius: 40px;
+  box-shadow: 0 1px 2px 0 rgba(130, 65, 243, 0.42);
+
+  &-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.disabled {
+    background-color: #c0c0c0 !important;
+  }
+
+  &.no-border {
+    border: none;
+  }
+
+  &.green {
+    background-color: $primary-color;
+    color: #ffffff;
+    border-color: #ffffff;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($primary-color, 5%);
+    }
+
+    &:active {
+      background-color: darken($primary-color, 5%);
+    }
+  }
+
+  &.purple {
+    background-color: $secondary-color;
+    color: #ffffff;
+    border-color: #ffffff;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($secondary-color, 5%);
+    }
+
+    &:active {
+      background-color: darken($secondary-color, 5%);
+    }
+  }
+
+  &.orange {
+    background-color: $third-color;
+    color: #ffffff;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($third-color, 5%);
+    }
+
+    &:active {
+      background-color: darken($third-color, 5%);
+    }
+  }
+}

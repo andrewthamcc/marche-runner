@@ -1,0 +1,74 @@
+@import "../../styles/variables";
+
+.home {
+  .hero {
+    background-image: linear-gradient(
+        to bottom right,
+        rgba(0, 0, 0, 0.7) 60%,
+        rgba(24, 188, 51, 0.4)
+      ),
+      url("assets/grocery.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: 65vh;
+    padding: 8rem 0;
+
+    &-text {
+      color: #ffffff;
+
+      h1 {
+        font-size: 6rem;
+        font-style: italic;
+        font-weight: 500;
+      }
+
+      font-size: 2rem;
+      line-height: 1.8;
+    }
+
+    &-button {
+      margin: 1rem 0;
+    }
+
+    &-signin {
+      font-size: 1.3rem;
+
+      &-link {
+        color: $third-color;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.about {
+  margin-top: 7rem;
+
+  &-title {
+    font-size: 5rem;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  &-text {
+    font-size: 1.6rem;
+    line-height: 1.7;
+    margin-top: 2rem;
+  }
+
+  &-flex-container {
+    display: flex;
+    justify-content: space-between;
+
+    &-left {
+      width: 50%;
+    }
+  }
+}

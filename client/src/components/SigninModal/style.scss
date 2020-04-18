@@ -1,0 +1,46 @@
+.signin {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  &-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &-container {
+    margin: auto;
+    margin-top: 20vh;
+    height: 400px;
+    width: 25%;
+    padding: 4rem;
+    border-radius: 8px;
+
+    color: #0e0e0e;
+    background-color: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    input {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &-signup {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    text-align: left;
+  }
+}

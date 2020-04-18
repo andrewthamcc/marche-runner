@@ -18,5 +18,5 @@ A simple listing application where users are able to sign up and log log items r
 - Recipes keep track of number of times cooked -> popularity
 
 ### Build
-Backend: NodeJS, Express, Mongoose/MongoDB
-Frontend: React, TypeScript, Redux
+- Backend: NodeJS, Express, Mongoose/MongoDB
+- Frontend: React, TypeScript, Redux
