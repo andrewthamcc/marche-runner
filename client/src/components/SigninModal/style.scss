@@ -6,6 +6,9 @@
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.6);
 
+  opacity: 0;
+  animation: fadeIn 0.4s 0.2s ease-in forwards;
+
   &-title {
     font-size: 3rem;
     margin-bottom: 1.5rem;
@@ -42,5 +45,15 @@
     margin-top: 1rem;
     font-size: 1.4rem;
     text-align: left;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import isEmail from "../../utils/isEmail";
 
 require("./style.scss");
 
 export enum textInputType {
   text = "text",
+  email = "email",
   password = "password",
 }
 
 interface OwnProps {
   className?: string; // passthrough for className
   label?: string; // label name
+  inputID?: string; // id for input required if labels are being used
   inputName: string; // name for label
   placeholder?: string; // placeholder text
   type?: textInputType;
@@ -26,6 +29,7 @@ const TextInput: React.FC<Props> = (props: Props): JSX.Element => {
     className,
     label,
     inputName,
+    inputID,
     placeholder,
     type,
     required,
@@ -37,16 +41,24 @@ const TextInput: React.FC<Props> = (props: Props): JSX.Element => {
     if (required && value === "") {
       setErrors("This is required");
     }
+
+    if (type === textInputType.email && !isEmail(value)) {
+      setErrors("Invalid Email");
+    }
+
+    if (type === textInputType.password && value.length < 6) {
+      setErrors("Minimum 6 characters");
+    }
   };
 
   return (
     <div className={`text-input ${className ? className : ""}`}>
-      <label htmlFor={inputName}>{label}</label>
+      {label && <label htmlFor={inputID}>{label}</label>}
       <input
         className={`${errors ? "error" : ""}`}
         type={type}
         name={inputName}
-        id={inputName}
+        id={inputID}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

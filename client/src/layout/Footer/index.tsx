@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container footer-flex-container">
-        <span>© {new Date().getFullYear()} shopRunner</span>
+        <span>© {new Date().getFullYear()} marchéRunner</span>
         <span>
           by{" "}
           <a

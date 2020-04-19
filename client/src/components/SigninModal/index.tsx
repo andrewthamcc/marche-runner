@@ -32,8 +32,7 @@ type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 const portalRoot = document.querySelector("#portal-root");
 
 const SigninModal: React.FC<Props> = (props: Props) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const node = useRef(null);
   const { isModalOpen, close } = props;
 
@@ -57,8 +56,15 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     close();
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((formData) => ({ ...formData, [name]: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { email, password } = formData;
 
     if (!email || !password) {
       return;
@@ -68,8 +74,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     loginUser(data);
 
     // clear form
-    setEmail("");
-    setPassword("");
+    setFormData({ email: "", password: "" });
 
     // close modal
     close();
@@ -84,21 +89,26 @@ const SigninModal: React.FC<Props> = (props: Props) => {
 
         <form onSubmit={handleSubmit} className="signin-form">
           <TextInput
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={(e) => handleChange(e)}
             placeholder="Email"
-            inputName="sign-in-email"
             label="Email Address"
+            inputID="sign-in-email"
+            inputName="email"
           />
           <TextInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={(e) => handleChange(e)}
             placeholder="Password"
-            inputName="sign-in-password"
-            type={textInputType.password}
             label="Password"
+            inputID="sign-in-password"
+            inputName="password"
+            type={textInputType.password}
           />
-          <Button color={buttonColor.orange} disabled={!email || !password}>
+          <Button
+            color={buttonColor.orange}
+            disabled={!formData.email || !formData.password}
+          >
             Sign In
           </Button>
         </form>

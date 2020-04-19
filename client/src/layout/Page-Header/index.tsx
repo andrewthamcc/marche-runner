@@ -28,7 +28,7 @@ const PageHeader: React.FC = (): JSX.Element => {
         <div className="page-header-flex-container container">
           <Link to="/">
             <div className="page-header-title">
-              <h2>shopRunner</h2>
+              <h2>marchéRunner</h2>
               <Runner className="page-header-title-icon" />
             </div>
           </Link>

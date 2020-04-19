@@ -5,7 +5,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
 } from "../../actions/user/types";
-import { User } from "../../models/user";
 
 class userState {
   _id: "";

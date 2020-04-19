@@ -18,9 +18,9 @@ const Home: React.FC = (): JSX.Element => {
       <section className="hero">
         <div className="container">
           <div className="hero-text">
-            <h1>shopRunner</h1>
+            <h1>marchéRunner</h1>
             <p>
-              shopRunner is a web application for helping with your grocery
+              marchéRunner is a web application for helping with your grocery
               runs.
             </p>
             <Button
@@ -53,7 +53,7 @@ const Home: React.FC = (): JSX.Element => {
               <p className="about-text">
                 Items are separated into categories to make your shopping trips
                 easier. There will be future updates to build lists from recipes
-                inputed into the shopRunner system.
+                inputed into the marchéRunner system.
               </p>
             </div>
             <div className="about-flex-container-right"></div>
