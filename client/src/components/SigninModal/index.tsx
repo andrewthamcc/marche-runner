@@ -1,17 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
+import { connect } from "react-redux";
 import ReactDOM from "react-dom";
+import axios from "axios";
+import { History } from "history";
 
 // components
 import TextInput, { textInputType } from "../TextInput";
 import Button, { buttonColor } from "../Button";
 
+// redux actions
+import { loginUser } from "../../actions/user";
+
 require("./style.scss");
 
-interface Props {
+interface OwnProps {
   isModalOpen: boolean; // boolean to determine to display modal or not
   close: () => void; // prop to close modal from parent
   children?: any;
+  history?: History;
 }
+
+interface ReduxStateProps {}
+
+interface ReduxDispatchProps {
+  loginUser: (data) => void;
+}
+
+type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 // gets the root for the portal to append to
 const portalRoot = document.querySelector("#portal-root");
@@ -42,8 +57,24 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     close();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      return;
+    }
+
+    const data = { email, password };
+    loginUser(data);
+
+    // clear form
+    setEmail("");
+    setPassword("");
+
+    // close modal
+    close();
+
+    props.history.replace("/dashboard");
   };
 
   const renderModal = (
@@ -84,4 +115,6 @@ SigninModal.defaultProps = {
   isModalOpen: false,
 };
 
-export default SigninModal;
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { loginUser })(SigninModal);

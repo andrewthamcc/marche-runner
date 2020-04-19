@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
-const AppState = {};
+import userReducer from "./userReducer";
+
+const AppState = { userReducer };
 
 export default combineReducers(AppState);

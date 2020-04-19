@@ -26,10 +26,12 @@ const PageHeader: React.FC = (): JSX.Element => {
 
       <header className="page-header">
         <div className="page-header-flex-container container">
-          <div className="page-header-title">
-            <h2>shopRunner</h2>
-            <Runner className="page-header-title-icon" />
-          </div>
+          <Link to="/">
+            <div className="page-header-title">
+              <h2>shopRunner</h2>
+              <Runner className="page-header-title-icon" />
+            </div>
+          </Link>
 
           <nav className="page-header-nav">
             <ul className="page-header-nav-list">

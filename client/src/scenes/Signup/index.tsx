@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
+import { History } from "history";
 
 // components
 import TextInput, { textInputType } from "../../components/TextInput";
 import Button, { buttonColor } from "../../components/Button";
 
+// redux actions
+import { registerUser } from "../../actions/user";
+
 require("./style.scss");
 
-interface OwnProps {}
+interface OwnProps {
+  history: History;
+}
 
 interface ReduxStateProps {}
 
-interface ReduxDispatchProps {}
+interface ReduxDispatchProps {
+  registerUser: (data) => void;
+}
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
@@ -20,6 +29,27 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { registerUser } = props;
+
+    if (!firstName || !lastName || !email || !password) {
+      return;
+    }
+
+    const data = { firstName, lastName, email, password };
+    registerUser(data);
+
+    // clear form
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+
+    // props.history.replace("/dashboard");
+  };
 
   return (
     <div className="signup">
@@ -35,7 +65,7 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
         <h2 className="signup-form-title">
           Sign up with <span>shopRunner</span>!
         </h2>
-        <form className="signup-form">
+        <form className="signup-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="signup-form-name">
             <TextInput
               label="First Name"
@@ -90,4 +120,4 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, {})(Signup);
+export default connect(mapStateToProps, { registerUser })(Signup);

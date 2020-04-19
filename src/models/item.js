@@ -19,11 +19,12 @@ const itemSchema = new mongoose.Schema({
       "dry", // dry & canned goods
       "frozen",
       "house",
-      "meat-seafood", // meat & seafood
+      "meat",
       "prepared", // deli & prepared
       "personal",
       "pharmacy",
       "produce",
+      "seafood",
     ],
     trim: true,
     lowercase: true,
