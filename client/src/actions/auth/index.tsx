@@ -99,7 +99,7 @@ export const loginUser = (data) => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => {
+export const logoutUser = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });

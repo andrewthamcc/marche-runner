@@ -10,8 +10,6 @@ import Button, { buttonColor } from "../../components/Button";
 // redux actions
 import { registerUser } from "../../actions/auth";
 
-import { UserModel } from "../../models/user";
-
 require("./style.scss");
 
 interface OwnProps {}

@@ -9,16 +9,76 @@ import useModal from "../../components/SigninModal/useModal";
 import Button, { buttonColor } from "../../components/Button";
 import Icon, { iconType } from "../../components/Icon";
 
+import { logoutUser } from "../../actions/auth";
+
 require("./style.scss");
 
 // once user is authenticated nav will alter to "Welcome {name}"
 // display current date somewhere
 
 // non-authenticated (sign in, get started)
-// authenticated (welcome, edit profile gear icon?)
+// authenticated (welcome, edit profile gear icon?, logout)
 
-const PageHeader: React.FC = (): JSX.Element => {
+interface OwnProps {}
+
+interface ReduxStateProps {
+  isAuthenticated: boolean;
+  firstName: string;
+}
+
+interface ReduxDispatchProps {
+  logoutUser: () => void;
+}
+
+interface SignUpData {}
+
+type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
+
+const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
   const { open, openModal, closeModal } = useModal();
+  const { isAuthenticated, firstName } = props;
+
+  const renderAuthLinks = () => {
+    const { logoutUser } = props;
+
+    return (
+      <>
+        <li>Welcome {firstName}</li>
+        <li>
+          <Link to="/profile">
+            <Button border={false} color={buttonColor.green}>
+              Edit Profile
+            </Button>
+          </Link>
+        </li>
+        <li>
+          <Button color={buttonColor.orange} onClick={() => logoutUser()}>
+            Logout
+          </Button>
+        </li>
+      </>
+    );
+  };
+
+  const renderHomeLinks = () => {
+    return (
+      <>
+        <li>
+          <Button border={false} color={buttonColor.green} onClick={openModal}>
+            <Icon iconType={iconType.profile} />
+            Sign In
+          </Button>
+        </li>
+        <li>
+          <Link to="/signup">
+            <Button border={false} color={buttonColor.orange}>
+              Get Started
+            </Button>
+          </Link>
+        </li>
+      </>
+    );
+  };
 
   return (
     <>
@@ -26,7 +86,7 @@ const PageHeader: React.FC = (): JSX.Element => {
 
       <header className="page-header">
         <div className="page-header-flex-container container">
-          <Link to="/">
+          <Link to={isAuthenticated ? "/dashboard" : "/"}>
             <div className="page-header-title">
               <h2>MarchéRunner</h2>
               <Runner className="page-header-title-icon" />
@@ -35,21 +95,7 @@ const PageHeader: React.FC = (): JSX.Element => {
 
           <nav className="page-header-nav">
             <ul className="page-header-nav-list">
-              <li>
-                <Button
-                  color={buttonColor.green}
-                  border={false}
-                  onClick={openModal}
-                >
-                  <Icon iconType={iconType.profile} />
-                  Sign In
-                </Button>
-              </li>
-              <li>
-                <Link to="/signup">
-                  <Button color={buttonColor.green}>Get Started</Button>
-                </Link>
-              </li>
+              {isAuthenticated ? renderAuthLinks() : renderHomeLinks()}
             </ul>
           </nav>
         </div>
@@ -58,6 +104,9 @@ const PageHeader: React.FC = (): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authState.isAuthenticated,
+  firstName: state.authState.firstName,
+});
 
-export default connect(mapStateToProps, {})(PageHeader);
+export default connect(mapStateToProps, { logoutUser })(PageHeader);

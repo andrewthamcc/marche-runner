@@ -9,12 +9,12 @@ import {
 } from "../../actions/auth/types";
 
 class authState {
-  isAuthenticated = false;
-  _id = "";
-  firstName = "";
-  lastName = "";
-  email = "";
-  date = "";
+  isAuthenticated = true; // CHANGE THIS SHIT BACK
+  _id = "0961235";
+  firstName = "Andrew";
+  lastName = "T";
+  email = "andrew@andrew.com";
+  date = "2020-01-01";
   error = "";
   loading = false;
 }
