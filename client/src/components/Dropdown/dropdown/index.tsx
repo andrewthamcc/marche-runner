@@ -1,0 +1,87 @@
+import React, { useState, useRef } from "react";
+import DropdownList from "./dropdown-list";
+import useOutsideClick from "../../../utils/outsideClick";
+import Icon, { iconType } from "../../Icon";
+import PropTypes from "prop-types";
+require("./style.scss");
+
+// define model for dropdown here
+export interface DropDownItem {
+  icon?: typeof Icon;
+  text: string;
+  value: any;
+  disabled: boolean;
+}
+
+interface Props {
+  className?: string; // passthrough for className
+  list: DropDownItem[]; // array of dropdown items - TypeScript would help with creating a model for this data
+  label?: string; // label for dropdown
+  width?: number; // width of dropdown menu
+  listWidth?: number; // optional prop for width of rendered dropdown list
+  value: any; // passthrough for setting value of dropdown
+  selectValue: () => void; // passthrough for method of changing the value similar usage to onChange
+}
+
+const Dropdown: React.FC<Props> = (props: Props) => {
+  const {
+    className,
+    list,
+    label,
+    width,
+    listWidth,
+    value,
+    selectValue,
+  } = props;
+
+  const [dropdownOpen, setDropdownOpen] = useState(false); // boolean to toggle opening of dropdown
+  const [coords, setCoords] = useState({ x: 0, y: 0 }); // coordinates to open dropdown list
+  const dropdownRef = useRef(null); // ref of dropdown list for coordinates
+
+  useOutsideClick(dropdownRef, () => setDropdownOpen(false));
+
+  const toggleDropdown = () => {
+    const rect = dropdownRef.current.getBoundingClientRect();
+
+    const newCoords = {
+      x: rect.right - rect.width / 2,
+      y: rect.bottom + 10,
+      width: rect.width,
+    };
+
+    setCoords(newCoords);
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  return (
+    <div
+      className={`dropdown-wrapper ${className ? className : ""}`}
+      style={{ width }}
+      onClick={toggleDropdown}
+    >
+      <label className="dropdown-label">{label}</label>
+
+      <div className="dropdown" ref={dropdownRef}>
+        <span>{value.text}</span>
+        <span className="dropdown-caret">
+          <Icon iconType={iconType.chevronDown} />
+        </span>
+
+        {dropdownOpen && (
+          <DropdownList
+            list={list}
+            coords={coords}
+            selectValue={selectValue}
+            listWidth={listWidth}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+Dropdown.defaultProps = {
+  width: 200,
+};
+
+export default Dropdown;

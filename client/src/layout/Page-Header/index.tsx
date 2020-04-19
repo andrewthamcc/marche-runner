@@ -13,10 +13,7 @@ import { logoutUser } from "../../actions/auth";
 
 require("./style.scss");
 
-// once user is authenticated nav will alter to "Welcome {name}"
 // display current date somewhere
-
-// non-authenticated (sign in, get started)
 // authenticated (welcome, edit profile gear icon?, logout)
 
 interface OwnProps {}
