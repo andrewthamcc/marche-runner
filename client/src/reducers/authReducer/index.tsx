@@ -1,47 +1,65 @@
 import {
-  AUTH_USER,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-} from "../../actions/user/types";
+  LOGOUT,
+  LOAD_USER,
+  SET_LOADING,
+} from "../../actions/auth/types";
 
-class userState {
-  _id: "";
-  firstName: "";
-  lastName: "";
-  email: "";
-  date: "";
+class authState {
+  isAuthenticated = false;
+  _id = "";
+  firstName = "";
+  lastName = "";
+  email = "";
+  date = "";
+  error = "";
+  loading = false;
 }
 
-const initialState = new userState();
+const initialState = new authState();
 
-const userReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_USER:
-      return {
-        ...state,
-      };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
 
       return {
         ...state,
-        _id: action.payload.user._id,
-        firstName: action.payload.user.firstName,
-        lastName: action.payload.user.lastName,
-        email: action.payload.user.email,
-        date: action.payload.user.date,
+        isAuthenticated: true,
+        _id: action.payload.id,
+        loading: false,
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       return {
         ...state,
+        error: action.payload.error,
+      };
+    case LOAD_USER:
+      return {
+        ...state,
+        firstName: action.payload.user.firstName,
+        lastName: action.payload.user.lastName,
+        email: action.payload.user.email,
+        date: action.payload.user.date,
+        loading: false,
+      };
+    case LOGOUT:
+      localStorage.removeItem("token");
+
+      return new authState();
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;
   }
 };
 
-export default userReducer;
+export default authReducer;

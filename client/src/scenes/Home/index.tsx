@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 // components
@@ -18,18 +19,20 @@ const Home: React.FC = (): JSX.Element => {
       <section className="hero">
         <div className="container">
           <div className="hero-text">
-            <h1>marchéRunner</h1>
+            <h1>MarchéRunner</h1>
             <p>
-              marchéRunner is a web application for helping with your grocery
+              MarchéRunner is a web application for helping with your grocery
               runs.
             </p>
-            <Button
-              className="hero-button"
-              color={buttonColor.orange}
-              border={false}
-            >
-              <Link to="/signup">Get Started</Link>
-            </Button>
+            <Link to="/signup">
+              <Button
+                className="hero-button"
+                color={buttonColor.orange}
+                border={false}
+              >
+                Get Started
+              </Button>
+            </Link>
             <p className="hero-signin">
               Already have an account?{" "}
               <span className="hero-signin-link" onClick={openModal}>
@@ -64,4 +67,6 @@ const Home: React.FC = (): JSX.Element => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, {})(Home);

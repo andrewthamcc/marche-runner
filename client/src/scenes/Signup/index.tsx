@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from "axios";
 
 // components
+import LoadingSpinner from "../../components/Loader";
 import TextInput, { textInputType } from "../../components/TextInput";
 import Button, { buttonColor } from "../../components/Button";
 
 // redux actions
-import { registerUser } from "../../actions/user";
+import { registerUser } from "../../actions/auth";
+
+import { UserModel } from "../../models/user";
 
 require("./style.scss");
 
 interface OwnProps {}
 
-interface ReduxStateProps {}
+interface ReduxStateProps {
+  loading: boolean;
+  isAuthenticated: boolean;
+}
 
 interface ReduxDispatchProps {
   registerUser: (data) => void;
@@ -34,6 +40,15 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
     lastName: "",
     email: "",
     password: "",
+  });
+  const { loading } = props;
+  const history = useHistory();
+
+  useEffect(() => {
+    // if user is authenticated redirect to dashboard
+    if (props.isAuthenticated) {
+      history.push("/dashboard");
+    }
   });
 
   const handleChange = (e) => {
@@ -64,20 +79,11 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
     });
   };
 
-  return (
-    <div className="signup">
-      <div className="signup-left">
-        <div className="container flex-container">
-          <h2>marchéRunner</h2>
-          <p>
-            marchéRunner is a web application for helping with your grocery
-            runs.
-          </p>
-        </div>
-      </div>
-      <div className="signup-right">
+  const renderForm = () => {
+    return (
+      <>
         <h2 className="signup-form-title">
-          Sign up with <span>marchéRunner</span>!
+          Sign up with <span>MarchéRunner</span>
         </h2>
         <form className="signup-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="signup-form-name">
@@ -137,11 +143,33 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
             Sign Up
           </Button>
         </form>
+      </>
+    );
+  };
+
+  // todo: bug where signup right doens't display loader with flex
+
+  return (
+    <div className="signup">
+      <div className="signup-left">
+        <div className="container flex-container">
+          <h2>MarchéRunner</h2>
+          <p>
+            MarchéRunner is a web application for helping with your grocery
+            runs.
+          </p>
+        </div>
+      </div>
+      <div className="signup-right">
+        {loading ? <LoadingSpinner /> : renderForm()}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  loading: state.authState.loading,
+  isAuthenticated: state.authState.isAuthenticated,
+});
 
 export default connect(mapStateToProps, { registerUser })(Signup);

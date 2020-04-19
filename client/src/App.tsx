@@ -6,6 +6,7 @@ import store from "./redux";
 // components
 import PageHeader from "./layout/Page-Header";
 import Footer from "./layout/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 
 import Home from "./scenes/Home";
 import Signup from "./scenes/Signup";
@@ -22,7 +23,7 @@ function App() {
           <Route path={/^(?!.*signup).*$/} component={PageHeader} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route path="/profile" component={Profile} />
             <Route path="/signup" component={Signup} />
           </Switch>

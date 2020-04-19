@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
     // generate token
     const token = await user.generateToken();
 
-    res.send({ user, token });
+    res.send({ id: user._id, token });
   } catch (error) {
     res.status(400).json({ error: "Invalid Credentials" });
   }

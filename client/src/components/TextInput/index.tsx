@@ -46,7 +46,7 @@ const TextInput: React.FC<Props> = (props: Props): JSX.Element => {
       setErrors("Invalid Email");
     }
 
-    if (type === textInputType.password && value.length < 6) {
+    if (required && type === textInputType.password && value.length < 6) {
       setErrors("Minimum 6 characters");
     }
   };
