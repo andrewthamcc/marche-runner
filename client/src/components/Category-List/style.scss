@@ -1,0 +1,17 @@
+.category-list {
+  padding: 5rem 0;
+
+  &-header {
+    display: flex;
+    align-items: center;
+  }
+
+  &-icon {
+    margin-right: 1rem;
+
+    svg {
+      height: 30px;
+      width: 30px;
+    }
+  }
+}

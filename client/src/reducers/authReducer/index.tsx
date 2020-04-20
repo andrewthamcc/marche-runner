@@ -12,10 +12,6 @@ class authState {
   isAuthenticated = true; // CHANGE THIS SHIT BACK
   _id = "0961235";
   firstName = "Andrew";
-  lastName = "T";
-  email = "andrew@andrew.com";
-  date = "2020-01-01";
-  error = "";
   loading = false;
 }
 
@@ -43,15 +39,16 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         firstName: action.payload.user.firstName,
-        lastName: action.payload.user.lastName,
-        email: action.payload.user.email,
-        date: action.payload.user.date,
         loading: false,
       };
     case LOGOUT:
       localStorage.removeItem("token");
 
-      return new authState();
+      // return new authState();
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
     case SET_LOADING:
       return {
         ...state,

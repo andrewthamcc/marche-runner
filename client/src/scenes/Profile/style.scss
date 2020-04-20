@@ -1,0 +1,94 @@
+@import "../../styles/variables";
+
+.profile {
+  padding: 7rem 0;
+
+  .container {
+    width: 600px;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+
+    &-controls-icon {
+      path {
+        fill: #747474;
+
+        &:hover {
+          fill: darken(#747474, 15%);
+        }
+      }
+
+      cursor: pointer;
+      margin-right: 1.5rem;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &-icon {
+    display: flex;
+    justify-content: center;
+    border-radius: 8px;
+    background: $green;
+    padding: 2rem;
+    margin-top: 1rem;
+
+    svg {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+
+  &-flex-container {
+    display: flex;
+
+    &-right {
+      width: 100%;
+      margin-left: 2rem;
+    }
+  }
+
+  &-firstname {
+    margin-top: 1rem;
+  }
+
+  &-firstname,
+  &-lastname,
+  &-email {
+    height: 40px;
+    margin-bottom: 1rem;
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+
+  &-edit-input {
+    margin-bottom: 2rem;
+  }
+
+  &-edit-button {
+    margin-right: 1rem;
+  }
+
+  &-edit-errors {
+    color: #ff0000;
+    font-size: 1.3rem;
+    position: relative;
+    bottom: 2rem;
+  }
+
+  &-date {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+
+    span {
+      font-weight: 600;
+    }
+  }
+}

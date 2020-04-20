@@ -21,12 +21,14 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Route path={/^(?!.*signup).*$/} component={PageHeader} />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/profile" component={Profile} />
-            <Route path="/signup" component={Signup} />
-          </Switch>
+          <main>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <Route path="/signup" component={Signup} />
+            </Switch>
+          </main>
           <Route path={/^(?!.*signup).*$/} component={Footer} />
         </BrowserRouter>
       </div>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 // components
-import CategoryIcon, { iconType } from "../../components/Category-Icon";
+import AddItem from "../../components/AddItem";
+import CategoryList, { categoryType } from "../../components/Category-List";
 
 require("./style.scss");
 
@@ -18,7 +19,22 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   return (
     <div className="dashboard">
       <div className="container">
-        <CategoryIcon iconType={iconType.produce} />
+        <AddItem />
+
+        <div className="dashboard-grid">
+          <CategoryList category={categoryType.bakery} />
+          <CategoryList category={categoryType.beverage} />
+          <CategoryList category={categoryType.dairy} />
+          <CategoryList category={categoryType.dry} />
+          <CategoryList category={categoryType.frozen} />
+          <CategoryList category={categoryType.household} />
+          <CategoryList category={categoryType.meat} />
+          <CategoryList category={categoryType.personal} />
+          <CategoryList category={categoryType.pharmacy} />
+          <CategoryList category={categoryType.prepared} />
+          <CategoryList category={categoryType.produce} />
+          <CategoryList category={categoryType.seafood} />
+        </div>
       </div>
     </div>
   );

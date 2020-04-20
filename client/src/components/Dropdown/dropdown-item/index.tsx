@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { DropDownItem } from "../index";
 
 require("./style.scss");
-
-import { DropDownItem } from "../../dropdown";
 
 interface Props {
   item: DropDownItem;
@@ -24,7 +23,8 @@ const dropdownListItem: React.FC<Props> = (props: Props) => {
       onClick={() => selectValue(item)}
       tabIndex={0}
     >
-      {item.text}
+      <span className="dropdown-list-item-icon">{item.icon}</span>
+      <span className="dropdown-list-item-text">{item.text}</span>
     </li>
   );
 };

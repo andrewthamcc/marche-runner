@@ -16,7 +16,7 @@ interface Props {
   coords: Coords; // passthrough of coordinates to render list
   list: DropDownItem[]; // passthrough of list items
   listWidth?: number; // passthrough of optional prop for width of rendered list
-  selectValue: () => void; // passthrough of function for selecting value
+  selectValue: (value) => void; // passthrough of function for selecting value
 }
 
 const DropdownList: React.FC<Props> = (props: Props) => {

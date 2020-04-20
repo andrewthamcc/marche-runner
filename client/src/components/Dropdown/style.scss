@@ -1,0 +1,48 @@
+@import "../../styles/variables";
+
+.dropdown {
+  margin: 1rem 0;
+  border: 2px solid #c0c0c0;
+  border-radius: 8px;
+  box-sizing: content-box;
+  font-size: 1.6rem;
+
+  padding: 3px 16px;
+  height: 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: border 0.2s ease-in, box-shadow 0.2s ease-in;
+
+  &-label {
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  &-caret {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    svg {
+      width: 20px;
+      height: 30px;
+
+      path {
+        fill: #c0c0c0;
+      }
+    }
+  }
+
+  &.open {
+    border: 2px solid $green;
+  }
+
+  &:hover {
+    border: 2px solid $green;
+    cursor: pointer;
+  }
+}

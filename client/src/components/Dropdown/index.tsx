@@ -1,16 +1,16 @@
 import React, { useState, useRef } from "react";
 import DropdownList from "./dropdown-list";
-import useOutsideClick from "../../../utils/outsideClick";
-import Icon, { iconType } from "../../Icon";
-import PropTypes from "prop-types";
+import useOutsideClick from "../../utils/outsideClick";
+import Icon, { iconType } from "../Icon";
+import CategoryIcon from "../Category-Icon";
 require("./style.scss");
 
 // define model for dropdown here
 export interface DropDownItem {
-  icon?: typeof Icon;
+  icon?: JSX.Element;
   text: string;
   value: any;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
   width?: number; // width of dropdown menu
   listWidth?: number; // optional prop for width of rendered dropdown list
   value: any; // passthrough for setting value of dropdown
-  selectValue: () => void; // passthrough for method of changing the value similar usage to onChange
+  selectValue: (value) => void; // passthrough for method of changing the value similar usage to onChange
 }
 
 const Dropdown: React.FC<Props> = (props: Props) => {
@@ -59,9 +59,12 @@ const Dropdown: React.FC<Props> = (props: Props) => {
       style={{ width }}
       onClick={toggleDropdown}
     >
-      <label className="dropdown-label">{label}</label>
+      {label && <label className="dropdown-label">{label}</label>}
 
-      <div className="dropdown" ref={dropdownRef}>
+      <div
+        className={`dropdown ${dropdownOpen ? "open" : ""}`}
+        ref={dropdownRef}
+      >
         <span>{value.text}</span>
         <span className="dropdown-caret">
           <Icon iconType={iconType.chevronDown} />

@@ -34,9 +34,9 @@ const loadUser = async () => {
       user: {
         _id: "something",
         firstName: "Andrew",
-        lastName: "T",
-        email: "andrew@andrew.com",
-        date: "2020-04-01",
+        // lastName: "T",
+        // email: "andrew@andrew.com",
+        // date: "2020-04-01",
       },
     };
 

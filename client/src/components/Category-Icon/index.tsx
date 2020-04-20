@@ -4,9 +4,11 @@ import { ReactComponent as Beverage } from "./assets/beverage.svg";
 import { ReactComponent as Dairy } from "./assets/dairy.svg";
 import { ReactComponent as Dry } from "./assets/dry.svg";
 import { ReactComponent as Frozen } from "./assets/frozen.svg";
+import { ReactComponent as Household } from "./assets/household.svg";
 import { ReactComponent as Meat } from "./assets/meat.svg";
 import { ReactComponent as Personal } from "./assets/personal.svg";
 import { ReactComponent as Pharmacy } from "./assets/pharmacy.svg";
+import { ReactComponent as Prepared } from "./assets/prepared.svg";
 import { ReactComponent as Produce } from "./assets/produce.svg";
 import { ReactComponent as Seafood } from "./assets/seafood.svg";
 
@@ -18,9 +20,11 @@ export enum iconType {
   dairy = "dairy",
   dry = "dry",
   frozen = "frozen",
+  household = "household",
   meat = "meat",
   personal = "personal",
   pharmacy = "pharmacy",
+  prepared = "prepared",
   produce = "produce",
   seafood = "seafood",
 }
@@ -31,9 +35,11 @@ const svgIcons = {
   dairy: Dairy,
   dry: Dry,
   frozen: Frozen,
+  household: Household,
   meat: Meat,
   personal: Personal,
   pharmacy: Pharmacy,
+  prepared: Prepared,
   produce: Produce,
   seafood: Seafood,
 };
