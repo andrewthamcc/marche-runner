@@ -48,6 +48,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: false,
+        setLoading: false,
       };
     case SET_LOADING:
       return {

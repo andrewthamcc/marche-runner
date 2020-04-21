@@ -27,7 +27,7 @@ const Checkbox: React.FC<Props> = (props: Props): JSX.Element => {
       />
       <span className="checkbox-icon" onClick={onChange}>
         <Symbol
-          symbolType={checked ? symbolType.selected : symbolType.unselected}
+          symbolType={checked ? symbolType.checkmark : symbolType.unselected}
         />
       </span>
       <label htmlFor={inputID} className={`${checked ? "checked" : ""}`}>

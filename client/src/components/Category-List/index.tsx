@@ -68,8 +68,9 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
       const filteredItems = items.filter((item) => item.category === category);
       setCategoryItems(filteredItems);
     }
+
     // eslint-disable-next-line
-  }, [props.items]);
+  }, [props]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -80,9 +81,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
     };
 
     addItem(newItemData);
-
     setNewItem("");
-    // setAddItemView(false);
   };
 
   const renderAddItemInput = () => {

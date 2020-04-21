@@ -40,7 +40,7 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
 
     return (
       <>
-        <li>Welcome {firstName}</li>
+        <li>Welcome {firstName}!</li>
         <li>
           <Link to="/profile">
             <Button border={false} color={buttonColor.green}>

@@ -7,7 +7,9 @@ import {
   ADD_ITEM,
   EDIT_ITEM,
   DELETE_ITEM,
+  SEARCH_ITEMS,
   SET_LOADING,
+  CLEAR_SEARCH,
 } from "./types";
 
 const setLoading = () => {
@@ -71,5 +73,18 @@ export const deleteItem = (id) => async (dispatch) => {
   dispatch({
     type: DELETE_ITEM,
     payload: data,
+  });
+};
+
+export const searchItems = (searchText) => (dispatch) => {
+  dispatch({
+    type: SEARCH_ITEMS,
+    payload: searchText,
+  });
+};
+
+export const clearSearch = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_SEARCH,
   });
 };

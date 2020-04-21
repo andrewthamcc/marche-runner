@@ -3,13 +3,16 @@ import {
   ADD_ITEM,
   EDIT_ITEM,
   DELETE_ITEM,
+  SEARCH_ITEMS,
+  CLEAR_SEARCH,
   SET_LOADING,
 } from "../../actions/items/types";
 import { Item } from "../../models/item";
 
 class ItemState {
-  items: Item[];
+  items: Item[] = [];
   loading: false;
+  searchResults: Item[] = [];
 }
 
 const initialState = new ItemState();
@@ -48,6 +51,20 @@ const itemsReducer = (state = initialState, action) => {
       return {
         ...state,
         items: filteredItems,
+      };
+    case SEARCH_ITEMS:
+      const searchResults = state.items.filter((item) =>
+        item.name.toLowerCase().includes(action.payload.toLowerCase())
+      );
+
+      return {
+        ...state,
+        searchResults,
+      };
+    case CLEAR_SEARCH:
+      return {
+        ...state,
+        searchResults: [],
       };
     case SET_LOADING:
       return {
