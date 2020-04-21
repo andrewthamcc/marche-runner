@@ -64,7 +64,8 @@ const Dropdown: React.FC<Props> = (props: Props) => {
         className={`dropdown ${dropdownOpen ? "open" : ""}`}
         ref={dropdownRef}
       >
-        <span>{value.text}</span>
+        {value.icon && <span className="dropdown-icon">{value.icon}</span>}
+        <span className="dropdown-text">{value.text}</span>
         <span className="dropdown-caret">
           <Icon iconType={iconType.chevronDown} />
         </span>

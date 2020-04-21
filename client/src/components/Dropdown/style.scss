@@ -11,7 +11,7 @@
   height: 30px;
 
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
 
   transition: border 0.2s ease-in, box-shadow 0.2s ease-in;
@@ -19,7 +19,15 @@
   &-label {
     font-weight: 600;
     display: inline-block;
-    margin-bottom: 10px;
+  }
+
+  &-icon svg {
+    height: 25px;
+    width: 25px;
+  }
+
+  &-text {
+    flex-grow: 1;
   }
 
   &-caret {

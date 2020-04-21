@@ -42,23 +42,19 @@ const index: React.FC<Props> = (props: Props): JSX.Element => {
       <div className="category-list-item-description">
         <Checkbox
           className="category-list-item-checkbox"
-          label="Purchased?"
+          label={name}
           inputName="item-checkbox"
           inputID={`checkbox-${_id}`}
           checked={purchased}
           onChange={handleChange}
         />
-        <span
-          className={`category-list-item-name ${purchased ? "purchased" : ""}`}
-        >
-          {name}
-        </span>
       </div>
 
       <div className="category-list-item-controls">
-        <span className="category-list-item-controls-edit">
+        {/* todo: investigate: inline edit may not be needed with the delete button and add button more easily accessible by the user */}
+        {/* <span className="category-list-item-controls-edit">
           <Icon iconType={iconType.pencil} />
-        </span>
+        </span> */}
         <span
           className="category-list-item-controls-delete"
           onClick={() => deleteItem(_id)}

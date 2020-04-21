@@ -8,4 +8,37 @@
     width: 14px;
     height: 14px;
   }
+
+  label {
+    margin-left: 0.5rem;
+
+    &.checked {
+      color: #808080;
+      position: relative;
+
+      &::after {
+        content: " ";
+        position: absolute;
+        top: 45%;
+        left: 0;
+        width: 150%;
+        height: 2px;
+        background: #808080;
+        animation-name: strike;
+        animation-duration: 0.1s;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+      }
+    }
+  }
+}
+
+@keyframes strike {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
 }

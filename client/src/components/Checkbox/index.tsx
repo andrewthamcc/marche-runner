@@ -1,6 +1,6 @@
 import React from "react";
 
-import Icon, { iconType } from "../Icon";
+import Symbol, { symbolType } from "../Symbol";
 
 require("./style.scss");
 
@@ -18,9 +18,6 @@ const Checkbox: React.FC<Props> = (props: Props): JSX.Element => {
 
   return (
     <div className={`checkbox ${className ? className : ""}`}>
-      <label htmlFor={inputID} className="visuallyHidden">
-        {label}
-      </label>
       <input
         type="checkbox"
         name={inputName}
@@ -29,8 +26,13 @@ const Checkbox: React.FC<Props> = (props: Props): JSX.Element => {
         onChange={onChange}
       />
       <span className="checkbox-icon" onClick={onChange}>
-        <Icon iconType={checked ? iconType.selected : iconType.unselected} />
+        <Symbol
+          symbolType={checked ? symbolType.selected : symbolType.unselected}
+        />
       </span>
+      <label htmlFor={inputID} className={`${checked ? "checked" : ""}`}>
+        {label}
+      </label>
     </div>
   );
 };

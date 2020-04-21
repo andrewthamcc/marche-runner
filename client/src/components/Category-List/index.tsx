@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import { Item } from "../../models/item";
 
 // react components
-import Icon, { iconType, iconColor } from "../Icon";
+import Symbol, { symbolType } from "../Symbol";
 import CategoryListItem from "./Category-List-Item";
 import CategoryIcon, { catIconType } from "../Category-Icon";
 import Button from "../Button";
 import TextInput from "../TextInput";
+
+// redux actions
+import { addItem } from "../../actions/items";
 
 require("./style.scss");
 
@@ -48,7 +51,9 @@ interface OwnProps {
 
 interface ReduxStateProps {}
 
-interface ReduxDispatchProps {}
+interface ReduxDispatchProps {
+  addItem: (item) => void;
+}
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
@@ -56,7 +61,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   const [categoryItems, setCategoryItems] = useState<Item[]>([]);
   const [addItemView, setAddItemView] = useState<boolean>(false);
   const [newItem, setNewItem] = useState<string>("");
-  const { category, items } = props;
+  const { addItem, category, items } = props;
 
   useEffect(() => {
     if (props.items) {
@@ -68,6 +73,16 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newItemData = {
+      name: newItem,
+      category,
+    };
+
+    addItem(newItemData);
+
+    setNewItem("");
+    // setAddItemView(false);
   };
 
   const renderAddItemInput = () => {
@@ -79,16 +94,24 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           onChange={(e) => setNewItem(e.target.value)}
           inputName="add-item-input"
           placeholder="Add an item..."
+          required
         />
-        <Button border={false} className="category-list-form-button">
-          <Icon
-            color={iconColor.green}
-            iconType={iconType.add}
+        <Button
+          border={false}
+          className="category-list-form-button"
+          disabled={newItem === ""}
+        >
+          <Symbol
+            symbolType={symbolType.addGreen}
             className="category-list-form-button-icon"
           />
         </Button>
       </form>
     );
+  };
+
+  const renderEmptyList = () => {
+    return <li className="category-list-item-empty">Nothing here...</li>;
   };
 
   const renderListItems = () => {
@@ -99,10 +122,6 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
       ));
     }
   };
-
-  if (!categoryItems.length) {
-    return null;
-  }
 
   return (
     <div className="category-list">
@@ -123,15 +142,17 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           className="category-list-control-icon"
           onClick={() => setAddItemView(!addItemView)}
         >
-          <Icon iconType={addItemView ? iconType.close : iconType.add} />
+          <Symbol
+            symbolType={addItemView ? symbolType.close : symbolType.addOrange}
+          />
         </span>
       </div>
       <hr />
-      <ul>{renderListItems()}</ul>
+      <ul>{!categoryItems.length ? renderEmptyList() : renderListItems()}</ul>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, {})(CategoryList);
+export default connect(mapStateToProps, { addItem })(CategoryList);

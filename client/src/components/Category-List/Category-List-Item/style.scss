@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
+  padding: 8px 0;
   height: 25px;
 
   &-description {
@@ -11,11 +11,6 @@
 
   &-checkbox {
     margin-right: 0.5rem;
-  }
-
-  &-name.purchased {
-    color: #808080;
-    text-decoration: line-through;
   }
 
   &-controls {

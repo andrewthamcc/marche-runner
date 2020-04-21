@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactComponent as AllItems } from "./assets/allItems.svg";
 import { ReactComponent as Bakery } from "./assets/bakery.svg";
 import { ReactComponent as Beverage } from "./assets/beverage.svg";
 import { ReactComponent as Dairy } from "./assets/dairy.svg";
@@ -15,6 +16,7 @@ import { ReactComponent as Seafood } from "./assets/seafood.svg";
 require("./style.scss");
 
 export enum catIconType {
+  allItems = "allItems",
   bakery = "bakery",
   beverage = "beverage",
   dairy = "dairy",
@@ -30,6 +32,7 @@ export enum catIconType {
 }
 
 const svgIcons = {
+  allItems: AllItems,
   bakery: Bakery,
   beverage: Beverage,
   dairy: Dairy,

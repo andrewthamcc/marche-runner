@@ -37,6 +37,12 @@
       padding: 0;
       margin-left: 1rem;
 
+      // todo: look into disabled button background-color;
+      &.disabled {
+        cursor: not-allowed;
+        background: none !important;
+      }
+
       &-icon {
         svg path {
           fill: $green;
@@ -53,5 +59,11 @@
       width: 20px;
       height: 20px;
     }
+  }
+
+  &-item-empty {
+    text-align: center;
+    font-size: 1.3rem;
+    font-style: italic;
   }
 }

@@ -5,13 +5,9 @@
   display: flex;
   align-items: center;
 
-  &-icon {
-    margin-right: 0.8rem;
-
-    svg {
-      height: 25px;
-      width: 25px;
-    }
+  &-icon svg {
+    height: 25px;
+    width: 25px;
   }
 
   &:hover,
