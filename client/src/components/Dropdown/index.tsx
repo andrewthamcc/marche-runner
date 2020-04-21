@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import DropdownList from "./dropdown-list";
 import useOutsideClick from "../../utils/outsideClick";
 import Icon, { iconType } from "../Icon";
-import CategoryIcon from "../Category-Icon";
 require("./style.scss");
 
 // define model for dropdown here
@@ -45,7 +44,7 @@ const Dropdown: React.FC<Props> = (props: Props) => {
 
     const newCoords = {
       x: rect.right - rect.width / 2,
-      y: rect.bottom + 10,
+      y: rect.bottom + 10 + window.scrollY,
       width: rect.width,
     };
 

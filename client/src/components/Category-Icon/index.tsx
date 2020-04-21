@@ -14,7 +14,7 @@ import { ReactComponent as Seafood } from "./assets/seafood.svg";
 
 require("./style.scss");
 
-export enum iconType {
+export enum catIconType {
   bakery = "bakery",
   beverage = "beverage",
   dairy = "dairy",
@@ -45,7 +45,7 @@ const svgIcons = {
 };
 
 interface OwnProps {
-  iconType: iconType; // iconType
+  iconType: catIconType; // iconType
   className?: string; // passthrough for className
 }
 

@@ -1,0 +1,11 @@
+.checkbox {
+  input {
+    position: absolute;
+    left: -1000%;
+  }
+
+  &-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+}

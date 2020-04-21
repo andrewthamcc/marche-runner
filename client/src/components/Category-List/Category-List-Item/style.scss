@@ -1,0 +1,44 @@
+.category-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  height: 25px;
+
+  &-description {
+    display: flex;
+  }
+
+  &-checkbox {
+    margin-right: 0.5rem;
+  }
+
+  &-name.purchased {
+    color: #808080;
+    text-decoration: line-through;
+  }
+
+  &-controls {
+    display: none;
+
+    path {
+      fill: #747474;
+
+      &:hover {
+        fill: darken(#747474, 15%);
+      }
+    }
+
+    &-edit,
+    &-delete {
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+  }
+
+  &:hover {
+    .category-list-item-controls {
+      display: block;
+    }
+  }
+}

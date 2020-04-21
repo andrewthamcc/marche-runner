@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Item } from "../../models/item";
 
 // react components
-import CategoryIcon, { iconType } from "../Category-Icon";
+import Icon, { iconType, iconColor } from "../Icon";
+import CategoryListItem from "./Category-List-Item";
+import CategoryIcon, { catIconType } from "../Category-Icon";
+import Button from "../Button";
+import TextInput from "../TextInput";
 
 require("./style.scss");
 
@@ -22,22 +27,23 @@ export enum categoryType {
 }
 
 const categoryInfo = {
-  bakery: { title: "Bakery", icon: iconType.bakery },
-  beverage: { title: "Beverages", icon: iconType.beverage },
-  dairy: { title: "Dairy & Cheese", icon: iconType.dairy },
-  dry: { title: "Dry & Canned Goods", icon: iconType.dry },
-  frozen: { title: "Frozen Foods", icon: iconType.frozen },
-  household: { title: "Household Items", icon: iconType.household },
-  meat: { title: "Meat", icon: iconType.meat },
-  personal: { title: "Personal Items", icon: iconType.personal },
-  pharmacy: { title: "Pharmacy", icon: iconType.pharmacy },
-  prepared: { title: "Deli & Prepared Foods", icon: iconType.prepared },
-  produce: { title: "Fruits & Vegetables", icon: iconType.produce },
-  seafood: { title: "Seafood", icon: iconType.seafood },
+  bakery: { title: "Bakery", icon: catIconType.bakery },
+  beverage: { title: "Beverages", icon: catIconType.beverage },
+  dairy: { title: "Dairy & Cheese", icon: catIconType.dairy },
+  dry: { title: "Dry & Canned Goods", icon: catIconType.dry },
+  frozen: { title: "Frozen Foods", icon: catIconType.frozen },
+  household: { title: "Household Items", icon: catIconType.household },
+  meat: { title: "Meat", icon: catIconType.meat },
+  personal: { title: "Personal Items", icon: catIconType.personal },
+  pharmacy: { title: "Pharmacy", icon: catIconType.pharmacy },
+  prepared: { title: "Deli & Prepared Foods", icon: catIconType.prepared },
+  produce: { title: "Fruits & Vegetables", icon: catIconType.produce },
+  seafood: { title: "Seafood", icon: catIconType.seafood },
 };
 
 interface OwnProps {
   category: categoryType;
+  items: Item[];
 }
 
 interface ReduxStateProps {}
@@ -47,7 +53,56 @@ interface ReduxDispatchProps {}
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
-  const { category } = props;
+  const [categoryItems, setCategoryItems] = useState<Item[]>([]);
+  const [addItemView, setAddItemView] = useState<boolean>(false);
+  const [newItem, setNewItem] = useState<string>("");
+  const { category, items } = props;
+
+  useEffect(() => {
+    if (props.items) {
+      const filteredItems = items.filter((item) => item.category === category);
+      setCategoryItems(filteredItems);
+    }
+    // eslint-disable-next-line
+  }, [props.items]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const renderAddItemInput = () => {
+    return (
+      <form onSubmit={(e) => handleSubmit(e)} className="category-list-form">
+        <TextInput
+          className="category-list-form-input"
+          value={newItem}
+          onChange={(e) => setNewItem(e.target.value)}
+          inputName="add-item-input"
+          placeholder="Add an item..."
+        />
+        <Button border={false} className="category-list-form-button">
+          <Icon
+            color={iconColor.green}
+            iconType={iconType.add}
+            className="category-list-form-button-icon"
+          />
+        </Button>
+      </form>
+    );
+  };
+
+  const renderListItems = () => {
+    // filter items to only display category related items
+    if (categoryItems) {
+      return categoryItems.map((item) => (
+        <CategoryListItem key={item._id} item={item} />
+      ));
+    }
+  };
+
+  if (!categoryItems.length) {
+    return null;
+  }
 
   return (
     <div className="category-list">
@@ -56,9 +111,23 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           iconType={categoryInfo[category].icon}
           className="category-list-icon"
         />
-        <h3 className="category-list-title">{categoryInfo[category].title}</h3>
+        {addItemView ? (
+          renderAddItemInput()
+        ) : (
+          <h3 className="category-list-title">
+            {categoryInfo[category].title}
+          </h3>
+        )}
+
+        <span
+          className="category-list-control-icon"
+          onClick={() => setAddItemView(!addItemView)}
+        >
+          <Icon iconType={addItemView ? iconType.close : iconType.add} />
+        </span>
       </div>
       <hr />
+      <ul>{renderListItems()}</ul>
     </div>
   );
 };

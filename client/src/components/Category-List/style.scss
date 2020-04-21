@@ -1,7 +1,10 @@
+@import "../../styles/variables";
+
 .category-list {
   padding: 5rem 0;
 
   &-header {
+    height: 3rem;
     display: flex;
     align-items: center;
   }
@@ -12,6 +15,43 @@
     svg {
       height: 30px;
       width: 30px;
+    }
+  }
+
+  &-title,
+  &-form {
+    flex-grow: 1;
+  }
+
+  &-form {
+    display: flex;
+    align-items: center;
+
+    &-input {
+      flex-grow: 1;
+    }
+
+    &-button {
+      width: auto;
+      box-shadow: none;
+      padding: 0;
+      margin-left: 1rem;
+
+      &-icon {
+        svg path {
+          fill: $green;
+        }
+      }
+    }
+  }
+
+  &-control-icon {
+    margin-left: 1rem;
+    cursor: pointer;
+
+    svg {
+      width: 20px;
+      height: 20px;
     }
   }
 }
