@@ -5,16 +5,17 @@ import Icon, { iconType } from "../Icon";
 require("./style.scss");
 
 // define model for dropdown here
-export interface DropDownItem {
+export interface DropdownItem {
   icon?: JSX.Element;
   text: string;
   value: any;
   disabled?: boolean;
+  fn?: () => void;
 }
 
 interface Props {
   className?: string; // passthrough for className
-  list: DropDownItem[]; // array of dropdown items - TypeScript would help with creating a model for this data
+  list: DropdownItem[]; // array of dropdown items - TypeScript would help with creating a model for this data
   label?: string; // label for dropdown
   width?: number; // width of dropdown menu
   listWidth?: number; // optional prop for width of rendered dropdown list

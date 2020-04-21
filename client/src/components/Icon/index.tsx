@@ -1,5 +1,6 @@
 import React from "react";
 import { ReactComponent as ChevronDown } from "./assets/chevron.svg";
+import { ReactComponent as Gear } from "./assets/gear.svg";
 import { ReactComponent as Info } from "./assets/info.svg";
 import { ReactComponent as Pencil } from "./assets/pencil.svg";
 import { ReactComponent as Profile } from "./assets/profile.svg";
@@ -10,6 +11,7 @@ require("./style.scss");
 
 export enum iconType {
   chevronDown = "chevronDown",
+  gear = "gear",
   info = "info",
   pencil = "pencil",
   profile = "profile",
@@ -20,10 +22,12 @@ export enum iconType {
 export enum iconColor {
   green = "green",
   orange = "orange",
+  grey = "grey",
 }
 
 const svgIcons = {
   chevronDown: ChevronDown,
+  gear: Gear,
   info: Info,
   pencil: Pencil,
   profile: Profile,

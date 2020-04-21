@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import DropDownListItem from "../dropdown-item";
 
-import { DropDownItem } from "../index";
+import { DropdownItem } from "../index";
 
 require("./style.scss");
 
@@ -14,7 +14,7 @@ interface Coords {
 
 interface Props {
   coords: Coords; // passthrough of coordinates to render list
-  list: DropDownItem[]; // passthrough of list items
+  list: DropdownItem[]; // passthrough of list items
   listWidth?: number; // passthrough of optional prop for width of rendered list
   selectValue: (value) => void; // passthrough of function for selecting value
 }

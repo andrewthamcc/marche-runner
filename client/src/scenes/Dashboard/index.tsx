@@ -6,10 +6,11 @@ import { Item } from "../../models/item";
 import CategoryList, { categoryType } from "../../components/Category-List";
 import CategoryItem from "../../components/Category-List/Category-List-Item";
 import TextInput from "../../components/TextInput";
-import Dropdown, { DropDownItem } from "../../components/Dropdown";
+import Dropdown, { DropdownItem } from "../../components/Dropdown";
 import categoryList from "./categoryDropdownData";
 import CategoryIcon, { catIconType } from "../../components/Category-Icon";
 import Symbol, { symbolType } from "../../components/Symbol";
+import { iconType } from "../../components/Icon";
 import LoadingSpinner from "../../components/Loader";
 
 // react actions
@@ -33,9 +34,30 @@ interface ReduxDispatchProps {
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
+const deleteDropdownList = [
+  {
+    text: "Select...",
+    value: null,
+    disabled: true,
+  },
+  {
+    text: "Delete All Items",
+    value: "delete purchased",
+    fn: () => console.log("Deleting all..."),
+  },
+  {
+    text: "Delete Purhased Items",
+    value: "delete all",
+    fn: () => console.log("Deleting some..."),
+  },
+];
+
 const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
-  const [selectListView, setSelectListView] = useState<DropDownItem>(
+  const [selectListView, setSelectListView] = useState<DropdownItem>(
     categoryList[0]
+  );
+  const [deleteSelection, setDeleteSelection] = useState<DropdownItem>(
+    deleteDropdownList[0]
   );
   const [searchText, setSearchText] = useState<string>("");
   const {
@@ -62,17 +84,9 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     // eslint-disable-next-line
   }, [searchText]);
 
-  const handleSearch = (e) => {
-    setSearchText(e.target.value);
-  };
-
   const clearInput = () => {
     setSearchText("");
     clearSearch();
-  };
-
-  const handleChange = (category) => {
-    setSelectListView(category);
   };
 
   const renderControls = () => {
@@ -84,7 +98,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
               label="Search List:"
               inputName="search-item-input"
               value={searchText}
-              onChange={(e) => handleSearch(e)}
+              onChange={(e) => setSearchText(e.target.value)}
               placeholder="Search"
               className="dashboard-controls-input-field"
             />
@@ -99,14 +113,25 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
           )}
         </div>
         {searchText === "" && (
-          <Dropdown
-            label="List View:"
-            list={categoryList}
-            value={selectListView}
-            selectValue={handleChange}
-            width={245}
-            className="dashboard-controls-dropdown"
-          />
+          <div className="dashboard-controls-right">
+            <Dropdown
+              label="List View:"
+              list={categoryList}
+              value={selectListView}
+              selectValue={(selection) => setSelectListView(selection)}
+              width={245}
+              className="dashboard-controls-dropdown"
+            />
+            <Dropdown
+              label="Delete Items:"
+              list={deleteDropdownList}
+              value={deleteSelection}
+              selectValue={(selection) =>
+                setDeleteSelection(deleteDropdownList[0])
+              }
+              className="dashboard-controls-dropdown"
+            />
+          </div>
         )}
       </>
     );
@@ -120,7 +145,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     // filter only the items to display
     const itemsToDisplay = items.filter((item) => searchIDS.includes(item._id));
 
-    if (searchResults.length > 0) {
+    if (searchText !== "") {
       return (
         <div className="dashboard-single-list">
           <div className="category-list">
@@ -129,9 +154,11 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
               <h3>Search Results</h3>
             </div>
             <hr />
-            {itemsToDisplay.map((item) => (
-              <CategoryItem item={item} key={item._id} />
-            ))}
+            {itemsToDisplay.length > 0
+              ? itemsToDisplay.map((item) => (
+                  <CategoryItem item={item} key={item._id} />
+                ))
+              : "No results..."}
           </div>
         </div>
       );

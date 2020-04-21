@@ -16,4 +16,16 @@
       }
     }
   }
+
+  &.grey {
+    svg {
+      path {
+        fill: #747474;
+
+        &:hover {
+          fill: darken(#747474, 15%);
+        }
+      }
+    }
+  }
 }
