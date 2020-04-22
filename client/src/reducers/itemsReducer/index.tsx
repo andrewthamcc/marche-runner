@@ -30,7 +30,7 @@ const itemsReducer = (state = initialState, action) => {
     case ADD_ITEM:
       return {
         ...state,
-        items: [...state.items, action.payload],
+        items: [action.payload, ...state.items],
       };
     case EDIT_ITEM:
       const editedItems = state.items.map((item) => {
