@@ -46,7 +46,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   });
   const history = useHistory();
   const node = useRef(null);
-  const { isModalOpen, close } = props;
+  const { isModalOpen, close, loading } = props;
 
   useEffect(() => {
     // if user is authenticated redirect to dashboard
@@ -97,8 +97,6 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   };
 
   const renderModal = () => {
-    const { loading } = props;
-
     if (loading) {
       return (
         <div className="signin">

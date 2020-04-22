@@ -1,15 +1,15 @@
 import axios from "axios";
-import setAuthToken from "../../utils/setAuthToken";
 import store from "../../redux";
+import setAuthToken from "../../utils/setAuthToken";
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
+  DELETE_USER,
   LOAD_USER,
   LOAD_USER_FAILED,
-  DELETE_USER,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
   SET_AUTH_LOADING,
 } from "./types";
 
