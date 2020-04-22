@@ -67,7 +67,9 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
 
   useEffect(() => {
     if (props.items) {
-      const filteredItems = items.filter((item) => item.category === category);
+      const filteredItems = items
+        .reverse()
+        .filter((item) => item.category === category);
       setCategoryItems(filteredItems);
 
       // focuses input
