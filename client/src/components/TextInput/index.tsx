@@ -21,6 +21,7 @@ interface OwnProps {
   onChange: (e) => void;
   ref?: RefObject<HTMLInputElement> | null; // forwardRef
   onBlur?: () => void; // passthrough of callback for onBlur event
+  disabled?: boolean; // prop to disable input
 }
 
 type Props = OwnProps;
@@ -40,6 +41,7 @@ const TextInput: React.FC<Props> = React.forwardRef(
       value,
       onChange,
       onBlur,
+      disabled,
     } = props;
 
     const validateInput = (e) => {
@@ -75,6 +77,7 @@ const TextInput: React.FC<Props> = React.forwardRef(
           onBlur={validateInput}
           onFocus={() => setErrors("")}
           ref={ref}
+          disabled={disabled}
         />
         <p className="text-input-errors">{errors}</p>
       </div>

@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactComponent as Runner } from "./assets/runner.svg";
+import history from "History";
 
 // components
 import SigninModal from "../../components/SigninModal";
 import useModal from "../../components/SigninModal/useModal";
 import Button, { buttonColor } from "../../components/Button";
 import Icon, { iconType } from "../../components/Icon";
+import Dropdown, { DropdownItem } from "../../components/Dropdown";
 
 import { logoutUser } from "../../actions/auth";
 
 require("./style.scss");
 
-// todo: display current date somewhere
-
-interface OwnProps {}
+interface OwnProps {
+  history: history;
+}
 
 interface ReduxStateProps {
   isAuthenticated: boolean;
@@ -28,27 +30,47 @@ interface ReduxDispatchProps {
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
+enum profileOptions {
+  account = "account",
+  signout = "signout",
+}
+
 const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
+  const userDropdownList = [
+    {
+      // icon: <Icon iconType={iconType.profile} color={iconColor.grey} />,
+      text: "Account",
+      value: profileOptions.account,
+      fn: () => props.history.push("/profile"),
+    },
+    {
+      // icon: <Icon iconType={iconType.logout} color={iconColor.grey} />,
+
+      text: "Sign out",
+      value: profileOptions.signout,
+      fn: () => logoutUser(),
+    },
+  ];
+
+  const [userControlSelection, setUserControlSelection] = useState<
+    DropdownItem
+  >(userDropdownList[0]);
+  const { isAuthenticated, firstName, logoutUser } = props;
   const { open, openModal, closeModal } = useModal();
-  const { isAuthenticated, firstName } = props;
 
   const renderAuthLinks = () => {
-    const { logoutUser } = props;
-
     return (
       <>
-        <li>Welcome {firstName}!</li>
+        <li>{firstName}</li>
         <li>
-          <Link to="/profile">
-            <Button border={false} color={buttonColor.green}>
-              Profile
-            </Button>
-          </Link>
-        </li>
-        <li>
-          <Button color={buttonColor.orange} onClick={() => logoutUser()}>
-            Logout
-          </Button>
+          <Dropdown
+            list={userDropdownList}
+            value={userControlSelection}
+            selectValue={(selection) => setUserControlSelection(selection)}
+            className="page-header-dropdown"
+            listWidth={120}
+            caret={true}
+          />
         </li>
       </>
     );
@@ -65,13 +87,6 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
             />
             Sign In
           </Button>
-        </li>
-        <li>
-          <Link to="/signup">
-            <Button border={false} color={buttonColor.orange}>
-              Get Started
-            </Button>
-          </Link>
         </li>
       </>
     );

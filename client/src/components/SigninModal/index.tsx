@@ -41,10 +41,8 @@ interface SignInData {
 
 const SigninModal: React.FC<Props> = (props: Props) => {
   const [formData, setFormData] = useState<SignInData>({
-    email: "andrew@andrew.com",
-    password: "123456",
-    // email: "",
-    // password: "",
+    email: "",
+    password: "",
   });
   const history = useHistory();
   const node = useRef(null);

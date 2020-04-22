@@ -5,7 +5,7 @@
   height: 100vh;
 
   opacity: 0;
-  animation: fadeIn 0.4s 0.2s ease-in forwards;
+  animation: fadeIn 0.3s 0.2s ease-in forwards;
 
   &-left {
     width: 55%;
@@ -98,5 +98,40 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .signup {
+    flex-direction: column;
+    height: auto;
+
+    &-left {
+      width: 100%;
+      height: 30vh;
+    }
+
+    &-right {
+      width: 100%;
+      padding-top: 4rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 675px) {
+  .signup-form {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .signup-form-name {
+    flex-direction: column;
+
+    &-first,
+    &-last {
+      width: 100%;
+      margin-left: 0;
+    }
   }
 }

@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import Button, { buttonColor } from "../../components/Button";
 import SigninModal from "../../components/SigninModal";
 import useModal from "../../components/SigninModal/useModal";
+import Screenshot from "./assets/marcherunner.png";
+import { ReactComponent as Profile } from "./assets/profile.svg";
+import { ReactComponent as List } from "./assets/list.svg";
+import { ReactComponent as Cart } from "./assets/cart.svg";
 
 require("./style.scss");
 
@@ -50,16 +54,53 @@ const Home: React.FC = (): JSX.Element => {
               <h2 className="about-title">How it works...</h2>
               <p className="about-text">
                 A super simple web application for all your grocery shopping
-                needs. Sign up, add items to your shopping list, check things
-                off when you're done, delete items, and start over again.
+                needs. Write your list, head off on your shopping trip, and
+                start over again.
               </p>
               <p className="about-text">
                 Items are separated into categories to make your shopping trips
-                easier. There will be continous updates to the MarchéRunner
-                system to improve and expand on its features. Stay tuned.
+                easier. There's lots of future plans with continous updates to
+                improve MarchéRunner and expand on its features.
               </p>
             </div>
-            <div className="about-flex-container-right"></div>
+            {/* <div className="about-flex-container-right"> */}
+            <div className="about-screenshot">
+              <img src={Screenshot} alt="MarchéRunner app screenshot" />
+            </div>
+            {/* </div> */}
+          </div>
+        </div>
+      </section>
+
+      <section className="steps">
+        <div className="container">
+          <h2 className="steps-title">Get running....</h2>
+          <div className="steps-flex-container">
+            <div className="steps-direction">
+              <div className="steps-direction-image">
+                <Profile />
+              </div>
+
+              <p className="steps-direction-text">1. Create a profile.</p>
+            </div>
+
+            <div className="steps-direction">
+              <div className="steps-direction-image">
+                <List />
+              </div>
+              <p className="steps-direction-text">
+                2. Login and start making your shopping list.
+              </p>
+            </div>
+
+            <div className="steps-direction">
+              <div className="steps-direction-image">
+                <Cart />
+              </div>
+              <p className="steps-direction-text">
+                3. Go shopping with MarchéRunner!
+              </p>
+            </div>
           </div>
         </div>
       </section>

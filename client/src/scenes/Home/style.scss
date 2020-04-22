@@ -53,7 +53,7 @@
 }
 
 .about {
-  margin-top: 7rem;
+  margin: 7rem 0 10rem;
 
   &-title {
     font-size: 5rem;
@@ -69,10 +69,139 @@
 
   &-flex-container {
     display: flex;
-    justify-content: space-between;
+    align-items: flex-start;
 
     &-left {
       width: 50%;
+    }
+  }
+
+  &-screenshot {
+    width: 50%;
+    margin-left: 3rem;
+    box-shadow: 0 16px 32px 0 rgba(55, 58, 75, 0.12);
+  }
+}
+
+.steps {
+  margin-bottom: 10rem;
+
+  &-flex-container {
+    display: flex;
+    margin-top: 4rem;
+    justify-content: space-evenly;
+  }
+
+  &-title {
+    font-size: 5rem;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  &-direction {
+    width: calc(100% / 3);
+
+    &-image {
+      svg {
+        background-color: $green;
+        border-radius: 12px;
+        padding: 2rem;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+      }
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-text {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .home {
+    .hero {
+      &-text {
+        font-size: 1.7rem;
+      }
+    }
+
+    .about {
+      margin-bottom: 7rem;
+
+      &-flex-container {
+        flex-direction: column;
+
+        &-left {
+          width: 100%;
+        }
+      }
+
+      &-screenshot {
+        margin: 5rem 0 0;
+        padding: 0;
+        width: 100%;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 600px) {
+  .home {
+    .hero {
+      height: 50vh;
+
+      h1 {
+        font-size: 4rem;
+      }
+    }
+
+    .steps {
+      &-flex-container {
+        flex-direction: column;
+      }
+
+      &-direction {
+        width: 100%;
+        margin: 2rem 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .home {
+    h2 {
+      font-size: 3.5rem;
+    }
+
+    .about {
+      margin: 5rem 0;
+    }
+
+    .steps {
+      margin-bottom: 5rem;
+
+      &-flex-container {
+        margin-top: 2rem;
+      }
+
+      &-direction {
+        svg {
+          width: 150px;
+          height: 150px;
+        }
+
+        &-text {
+          font-size: 1.6rem;
+        }
+      }
     }
   }
 }

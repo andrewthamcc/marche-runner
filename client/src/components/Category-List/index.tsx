@@ -15,6 +15,7 @@ import { addItem } from "../../actions/items";
 require("./style.scss");
 
 export enum categoryType {
+  allItems = "allItems",
   bakery = "bakery",
   beverage = "beverage",
   dairy = "dairy",

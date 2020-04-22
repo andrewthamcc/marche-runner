@@ -77,6 +77,8 @@ export const deleteItem = (id) => async (dispatch) => {
 };
 
 export const deletePurchasedItems = () => async (dispatch) => {
+  setLoading();
+
   try {
     const res = await axios.delete("/shop/delete/purchased");
     const data = res.data;
@@ -94,6 +96,8 @@ export const deletePurchasedItems = () => async (dispatch) => {
 };
 
 export const deleteAllItems = () => async (dispatch) => {
+  setLoading();
+
   try {
     const res = await axios.delete("/shop/delete/all");
     const data = res.data;

@@ -4,6 +4,7 @@
   background-color: $green;
   color: #ffffff;
   padding: 2rem 0;
+  box-shadow: 0 10px 16px 0 rgba(55, 58, 75, 0.35);
 
   &-title {
     display: flex;
@@ -37,16 +38,12 @@
     display: flex;
     align-items: center;
 
-    &-icon {
-      margin-right: 1rem;
-    }
-
     li {
       display: flex;
       align-items: center;
       justify-content: center;
       line-height: 16px;
-      margin-right: 3rem;
+      margin-right: 0.25rem;
 
       &:last-of-type {
         margin-right: 0;
@@ -54,11 +51,62 @@
     }
   }
 
+  &-signin-icon {
+    margin-right: 0.5rem;
+  }
+
+  // specific styles to target the dropdown to only display the caret
+  &-dropdown {
+    width: auto !important;
+
+    svg {
+      path {
+        fill: #ffffff;
+      }
+    }
+
+    .dropdown {
+      border: none;
+      padding: 0.5rem;
+
+      &:hover {
+        border: none;
+        box-shadow: none;
+      }
+    }
+
+    .dropdown-icon,
+    .dropdown-text {
+      display: none;
+    }
+  }
+
+  // for link tags
   a {
     color: #ffffff;
   }
+}
 
-  &-signin-icon {
-    margin-right: 0.5rem;
+@media only screen and (max-width: 600px) {
+  .page-header {
+    h2 {
+      font-size: 3rem;
+    }
+
+    &-title-icon {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .page-header h2 {
+    font-size: 2.25rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .page-header .welcome {
+    display: none;
   }
 }

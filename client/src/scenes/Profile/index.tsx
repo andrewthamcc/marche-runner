@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 // components
 import ConfirmationModal from "../../components/ConfirmationModal";
@@ -252,10 +253,8 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
 
   if (loading) {
     return (
-      <div className="profile">
-        <div className="container">
-          <LoadingSpinner />
-        </div>
+      <div className="profile loading">
+        <LoadingSpinner />
       </div>
     );
   }
@@ -299,7 +298,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
             <div className="profile-flex-container-right">
               {editView ? renderEditView() : renderStandardView()}
               <p className="profile-date">
-                Member Since: <span>{date}</span>
+                Member Since: <span>{moment(date).format("MMM Do YYYY")}</span>
               </p>
               {editView && renderEditControls()}
             </div>

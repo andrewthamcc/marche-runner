@@ -5,7 +5,7 @@ const categoryList = [
   {
     icon: <CategoryIcon iconType={catIconType.allItems} />,
     text: "All",
-    value: "all",
+    value: "allItems",
   },
   {
     icon: <CategoryIcon iconType={catIconType.bakery} />,

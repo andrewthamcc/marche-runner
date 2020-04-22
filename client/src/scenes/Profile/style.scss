@@ -83,4 +83,29 @@
       font-weight: 600;
     }
   }
+
+  &.loading {
+    flex-grow: 1;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .profile .container {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .profile-flex-container {
+    flex-direction: column;
+
+    &-left {
+      width: 50%;
+      margin: 0 auto 2rem;
+    }
+
+    &-right {
+      margin-left: 0;
+    }
+  }
 }

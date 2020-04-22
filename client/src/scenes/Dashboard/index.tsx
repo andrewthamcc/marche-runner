@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { Item } from "../../models/item";
 
 // components
-import CategoryList from "../../components/Category-List";
+import CategoryList, { categoryType } from "../../components/Category-List";
 import CategoryItem from "../../components/Category-List/Category-List-Item";
 import TextInput from "../../components/TextInput";
 import Dropdown, { DropdownItem } from "../../components/Dropdown";
-import categoryList from "./categoryDropdownData";
+import categoryList from "./categoryDropdownList";
 import CategoryIcon, { catIconType } from "../../components/Category-Icon";
 import Symbol, { symbolType } from "../../components/Symbol";
 import ConfirmationModal from "../../components/ConfirmationModal";
@@ -43,6 +43,11 @@ interface ReduxDispatchProps {
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
+enum deleteType {
+  purchased = "purchased",
+  allPurchased = "allPurchased",
+}
+
 const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   const deleteDropdownList = [
     {
@@ -52,12 +57,12 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     },
     {
       text: "Purchased Items",
-      value: "purchased",
+      value: deleteType.purchased,
       fn: () => openModal(),
     },
     {
       text: "All Items",
-      value: "all",
+      value: deleteType.allPurchased,
       fn: () => openModal(),
     },
   ];
@@ -107,9 +112,9 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   const handleDeleteConfirmation = () => {
-    if (deleteSelection.value === "all") {
+    if (deleteSelection.value === deleteType.allPurchased) {
       deleteAllItems();
-    } else if (deleteSelection.value === "purchased") {
+    } else if (deleteSelection.value === deleteType.purchased) {
       deletePurchasedItems();
     }
 
@@ -121,14 +126,15 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     return (
       <>
         <div className="dashboard-controls-input">
-          {selectListView.value === "all" && (
+          {selectListView.value === categoryType.allItems && (
             <TextInput
-              label="Search List:"
+              label="Search:"
               inputName="search-item-input"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               placeholder="Search"
               className="dashboard-controls-input-field"
+              disabled={items.length === 0}
             />
           )}
           {searchText !== "" && (
@@ -143,7 +149,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
         {searchText === "" && (
           <div className="dashboard-controls-right">
             <Dropdown
-              label="List View:"
+              label="View:"
               list={categoryList}
               value={selectListView}
               selectValue={(selection) => setSelectListView(selection)}
@@ -151,11 +157,12 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
               className="dashboard-controls-dropdown"
             />
             <Dropdown
-              label="Delete Items:"
+              label="Delete:"
               list={deleteDropdownList}
               value={deleteSelection}
               selectValue={(selection) => setDeleteSelection(selection)}
               className="dashboard-controls-dropdown"
+              disabled={items.length === 0}
             />
           </div>
         )}
@@ -192,11 +199,11 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     }
 
     // all-item view
-    if (selectListView.value === "all") {
+    if (selectListView.value === categoryType.allItems) {
       return (
         <div className="dashboard-grid">
           {categoryList.map((category) => {
-            if (category.value !== "all") {
+            if (category.value !== categoryType.allItems) {
               return (
                 <CategoryList
                   category={category.value}
@@ -221,7 +228,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
 
   if (loading) {
     return (
-      <div className="dashboard">
+      <div className="dashboard loading">
         <LoadingSpinner />
       </div>
     );

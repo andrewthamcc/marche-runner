@@ -67,6 +67,7 @@ const itemsReducer = (state = initialState, action) => {
       return {
         ...state,
         items: itemsDeleted,
+        loading: false,
       };
     case SEARCH_ITEMS:
       const searchResults = state.items.filter((item) =>

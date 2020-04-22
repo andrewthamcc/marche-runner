@@ -21,7 +21,7 @@
     margin: auto;
     margin-top: 20vh;
     height: 400px;
-    width: 25%;
+    width: 400px;
     padding: 2rem 4rem;
     border-radius: 8px;
 
@@ -72,5 +72,17 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .signin-container {
+    width: 350px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .signin-container {
+    width: 325px;
   }
 }

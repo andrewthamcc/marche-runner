@@ -1,5 +1,6 @@
 .dashboard {
   padding: 4rem 0;
+  flex-grow: 1;
 
   &-controls {
     display: flex;
@@ -14,6 +15,7 @@
       margin-left: 1rem;
     }
 
+    // this is the container/wrapper for the close button
     &-input {
       display: flex;
       align-items: flex-end;
@@ -36,12 +38,76 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 5rem;
-    grid-row-gap: 3rem;
+    grid-row-gap: 1rem;
   }
 
   &-single-list {
     width: 75%;
     min-height: 600px;
     margin: 0 auto;
+  }
+
+  &.loading {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 920px) {
+  .dashboard-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    &-dropdown {
+      margin: 1rem;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .dashboard {
+    padding: 2rem 0;
+
+    &-grid {
+      grid-template-columns: 1fr;
+      grid-row-gap: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .dashboard-controls {
+    label {
+      display: none;
+    }
+
+    &-input {
+      width: 100%;
+    }
+
+    &-input-field {
+      width: 100%;
+    }
+
+    &-right {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    &-dropdown {
+      margin-left: 0;
+      width: 100% !important;
+    }
   }
 }

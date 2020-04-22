@@ -50,7 +50,12 @@
     border: 2px solid $green;
   }
 
-  &:hover {
+  &.disabled {
+    color: #c0c0c0;
+    border-color: #c0c0c0;
+  }
+
+  &:hover:not(.disabled) {
     border: 2px solid $green;
     cursor: pointer;
   }

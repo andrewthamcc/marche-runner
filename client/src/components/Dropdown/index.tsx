@@ -21,6 +21,8 @@ interface Props {
   listWidth?: number; // optional prop for width of rendered dropdown list
   value: any; // passthrough for setting value of dropdown
   selectValue: (value) => void; // passthrough for method of changing the value similar usage to onChange
+  disabled?: boolean; // prop to disable dropdown functionality
+  caret?: boolean; // prop for caret only dropdown TODO: make it so this dropdown can only be an icon instead...
 }
 
 const Dropdown: React.FC<Props> = (props: Props) => {
@@ -32,6 +34,8 @@ const Dropdown: React.FC<Props> = (props: Props) => {
     listWidth,
     value,
     selectValue,
+    disabled,
+    caret,
   } = props;
 
   const [dropdownOpen, setDropdownOpen] = useState(false); // boolean to toggle opening of dropdown
@@ -41,13 +45,21 @@ const Dropdown: React.FC<Props> = (props: Props) => {
   useOutsideClick(dropdownRef, () => setDropdownOpen(false));
 
   const toggleDropdown = () => {
-    const rect = dropdownRef.current.getBoundingClientRect();
+    if (disabled) {
+      return;
+    }
 
+    const rect = dropdownRef.current.getBoundingClientRect();
     const newCoords = {
       x: rect.right - rect.width / 2,
       y: rect.bottom + 10 + window.scrollY,
       width: rect.width,
     };
+
+    if (caret) {
+      newCoords.x = rect.right - rect.width * 2;
+      newCoords.y = newCoords.y - 10;
+    }
 
     setCoords(newCoords);
     setDropdownOpen(!dropdownOpen);
@@ -62,13 +74,16 @@ const Dropdown: React.FC<Props> = (props: Props) => {
       {label && <label className="dropdown-label">{label}</label>}
 
       <div
-        className={`dropdown ${dropdownOpen ? "open" : ""}`}
+        className={`dropdown 
+          ${dropdownOpen ? "open" : ""} 
+          ${disabled ? "disabled" : ""}
+        `}
         ref={dropdownRef}
       >
         {value.icon && <span className="dropdown-icon">{value.icon}</span>}
         <span className="dropdown-text">{value.text}</span>
         <span className="dropdown-caret">
-          <Icon iconType={iconType.chevronDown} />
+          <Icon iconType={iconType.caretDown} />
         </span>
 
         {dropdownOpen && (
