@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactComponent as Runner } from "./assets/runner.svg";
-import history from "History";
+import { useHistory } from "react-router-dom";
 
 // components
 import SigninModal from "../../components/SigninModal";
@@ -36,12 +36,13 @@ enum profileOptions {
 }
 
 const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
+  const history = useHistory();
   const userDropdownList = [
     {
       // icon: <Icon iconType={iconType.profile} color={iconColor.grey} />,
       text: "Account",
       value: profileOptions.account,
-      fn: () => props.history.push("/profile"),
+      fn: () => history.push("/profile"),
     },
     {
       // icon: <Icon iconType={iconType.logout} color={iconColor.grey} />,
