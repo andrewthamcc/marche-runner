@@ -29,12 +29,11 @@ const index: React.FC<Props> = (props: Props): JSX.Element => {
   const { _id, purchased, name } = item;
 
   const handleChange = () => {
-    const newItem = {
-      ...item,
+    const editedField = {
       purchased: !purchased,
     };
 
-    editItem(_id, newItem);
+    editItem(_id, editedField);
   };
 
   return (

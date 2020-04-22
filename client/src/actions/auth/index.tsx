@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import setAuthToken from "../../utils/setAuthToken";
 import store from "../../redux";
 import {
@@ -9,12 +8,13 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   LOAD_USER,
-  SET_LOADING,
+  DELETE_USER,
+  SET_AUTH_LOADING,
 } from "./types";
 
 const setLoading = () => {
   store.dispatch({
-    type: SET_LOADING,
+    type: SET_AUTH_LOADING,
   });
 };
 
@@ -27,18 +27,8 @@ const loadUser = async () => {
   }
 
   try {
-    // const res = await axios.get("/profile")
-    // const userData = res.data
-    console.log("My Token", localStorage.token);
-    const userData = {
-      user: {
-        _id: "something",
-        firstName: "Andrew",
-        // lastName: "T",
-        // email: "andrew@andrew.com",
-        // date: "2020-04-01",
-      },
-    };
+    const res = await axios.get("/profile");
+    const userData = res.data;
 
     store.dispatch({
       type: LOAD_USER,
@@ -53,12 +43,8 @@ export const registerUser = (data) => async (dispatch) => {
   setLoading();
 
   try {
-    // const res = await axios.post("/profile", data);
-    // const userData = res.data;
-    const userData = {
-      id: "09876",
-      token: "token",
-    };
+    const res = await axios.post("/profile", data);
+    const userData = res.data;
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -78,12 +64,8 @@ export const loginUser = (data) => async (dispatch) => {
   setLoading();
 
   try {
-    // const res = await axios.post("/login", data);
-    // const userData = res.data;
-    const userData = {
-      id: "09876",
-      token: "token",
-    };
+    const res = await axios.post("/login", data);
+    const userData = res.data;
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -103,4 +85,19 @@ export const logoutUser = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+};
+
+export const deleteUserProfile = () => async (dispatch) => {
+  setLoading();
+
+  try {
+    const res = await axios.delete("/profile");
+    const userData = res.data;
+
+    dispatch({
+      type: DELETE_USER,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -1,8 +1,7 @@
 import {
   GET_PROFILE,
   EDIT_PROFILE,
-  DELETE_PROFILE,
-  SET_LOADING,
+  SET_USER_LOADING,
 } from "../../actions/user/types";
 
 class UserState {
@@ -21,10 +20,10 @@ const userReducer = (state = initialState, action) => {
     case GET_PROFILE:
       return {
         ...state,
-        firstName: action.payload.user.firstName,
-        lastName: action.payload.user.lastName,
-        email: action.payload.user.email,
-        date: action.payload.user.date,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        date: action.payload.date,
         loading: false,
       };
     case EDIT_PROFILE:
@@ -35,11 +34,7 @@ const userReducer = (state = initialState, action) => {
         email: action.payload.email,
         loading: false,
       };
-    case DELETE_PROFILE:
-      return {
-        ...state,
-      };
-    case SET_LOADING:
+    case SET_USER_LOADING:
       return {
         ...state,
         loading: true,

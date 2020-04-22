@@ -5,13 +5,14 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   LOAD_USER,
-  SET_LOADING,
+  DELETE_USER,
+  SET_AUTH_LOADING,
 } from "../../actions/auth/types";
 
 class authState {
-  isAuthenticated = true; // CHANGE THIS SHIT BACK
-  _id = "0961235";
-  firstName = "Andrew";
+  isAuthenticated = false;
+  _id = "";
+  firstName = "";
   loading = false;
 }
 
@@ -25,32 +26,29 @@ const authReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        isAuthenticated: true,
-        _id: action.payload.id,
         loading: false,
+        _id: action.payload.id,
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       return {
         ...state,
+        loading: false,
         error: action.payload.error,
       };
     case LOAD_USER:
       return {
         ...state,
-        firstName: action.payload.user.firstName,
         loading: false,
+        isAuthenticated: true,
+        firstName: action.payload.firstName,
       };
     case LOGOUT:
+    case DELETE_USER:
       localStorage.removeItem("token");
 
-      // return new authState();
-      return {
-        ...state,
-        isAuthenticated: false,
-        setLoading: false,
-      };
-    case SET_LOADING:
+      return new authState();
+    case SET_AUTH_LOADING:
       return {
         ...state,
         loading: true,

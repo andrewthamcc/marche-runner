@@ -1,30 +1,29 @@
 import store from "../../redux";
 import axios from "axios";
-import { dummyData } from "./dummy";
 
 import {
   GET_ITEMS,
   ADD_ITEM,
   EDIT_ITEM,
   DELETE_ITEM,
+  DELETE_PURCHASED,
+  DELETE_ALL,
   SEARCH_ITEMS,
-  SET_LOADING,
+  SET_ITEMS_LOADING,
   CLEAR_SEARCH,
 } from "./types";
 
 const setLoading = () => {
   store.dispatch({
-    type: SET_LOADING,
+    type: SET_ITEMS_LOADING,
   });
 };
 
 export const getItems = () => async (dispatch) => {
   setLoading();
   try {
-    // const res = await axios.get("/shop")
-    // const data = res.data
-
-    const data = dummyData;
+    const res = await axios.get("/shop");
+    const data = res.data;
 
     dispatch({
       type: GET_ITEMS,
@@ -36,44 +35,79 @@ export const getItems = () => async (dispatch) => {
 };
 
 export const addItem = (item) => async (dispatch) => {
-  // const res = await axios.post("/shop", item)
-  // const data = res.data;
+  try {
+    const res = await axios.post("/shop", item);
+    const data = res.data;
 
-  const data = {
-    ...item,
-    _id: Math.random().toString(),
-    _v: 0,
-    purchased: false,
-  };
-
-  dispatch({
-    type: ADD_ITEM,
-    payload: data,
-  });
+    dispatch({
+      type: ADD_ITEM,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const editItem = (id, data) => async (dispatch) => {
-  // const res = await axios.patch(`/shop/${id}`, data)
-  // const data = res.data;
+export const editItem = (id, item) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`/shop/${id}`, item);
+    const data = res.data;
 
-  dispatch({
-    type: EDIT_ITEM,
-    payload: { _id: id, ...data },
-  });
+    dispatch({
+      type: EDIT_ITEM,
+      payload: { _id: id, ...data },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteItem = (id) => async (dispatch) => {
-  // const res = await axios.delete(`/shop/${id}`)
-  // const data = res.data
+  try {
+    const res = await axios.delete(`/shop/${id}`);
+    const data = res.data;
 
-  const data = {
-    _id: id,
-  };
+    dispatch({
+      type: DELETE_ITEM,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  dispatch({
-    type: DELETE_ITEM,
-    payload: data,
-  });
+export const deletePurchasedItems = () => async (dispatch) => {
+  try {
+    const res = await axios.delete("/shop/delete/purchased");
+    const data = res.data;
+
+    const ids = [];
+    data.items.forEach((item) => ids.push(item._id));
+
+    dispatch({
+      type: DELETE_PURCHASED,
+      payload: ids,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteAllItems = () => async (dispatch) => {
+  try {
+    const res = await axios.delete("/shop/delete/all");
+    const data = res.data;
+
+    const ids = [];
+    data.items.forEach((item) => ids.push(item._id));
+
+    dispatch({
+      type: DELETE_ALL,
+      payload: ids,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const searchItems = (searchText) => (dispatch) => {

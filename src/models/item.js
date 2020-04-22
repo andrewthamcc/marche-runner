@@ -18,7 +18,7 @@ const itemSchema = new mongoose.Schema({
       "dairy",
       "dry", // dry & canned goods
       "frozen",
-      "house",
+      "household",
       "meat",
       "prepared", // deli & prepared
       "personal",

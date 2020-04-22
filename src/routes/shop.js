@@ -93,23 +93,22 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
-// @DELETE  /shop/:category
-// delete all items within a category
-router.delete("/category/:category", auth, async (req, res) => {
-  const category = req.params.category;
+// @DELETE  /shop/purchased
+// delete all purchased items
+router.delete("/delete/purchased", auth, async (req, res) => {
   const user = req.user._id;
 
   try {
-    const items = await Item.find({ category, user });
+    const items = await Item.find({ purchased: true, user });
 
     if (!items) {
       return res.status(404).send();
     }
 
-    await Item.deleteMany({ category, user });
+    await Item.deleteMany({ purchased: true, user });
 
     // hack to return items that deleteMany will remove instead of just a count
-    res.send({ items, category });
+    res.send({ items });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -117,7 +116,7 @@ router.delete("/category/:category", auth, async (req, res) => {
 
 // @DELETE  /shop/
 // delete all items
-router.delete("/shop", auth, async (req, res) => {
+router.delete("/delete/all", auth, async (req, res) => {
   const user = req.user._id;
 
   try {

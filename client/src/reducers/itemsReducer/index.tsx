@@ -3,9 +3,11 @@ import {
   ADD_ITEM,
   EDIT_ITEM,
   DELETE_ITEM,
+  DELETE_PURCHASED,
+  DELETE_ALL,
   SEARCH_ITEMS,
   CLEAR_SEARCH,
-  SET_LOADING,
+  SET_ITEMS_LOADING,
 } from "../../actions/items/types";
 import { Item } from "../../models/item";
 
@@ -52,6 +54,20 @@ const itemsReducer = (state = initialState, action) => {
         ...state,
         items: filteredItems,
       };
+    case DELETE_PURCHASED:
+    case DELETE_ALL:
+      const itemsDeleted = state.items.filter((item) => {
+        if (!action.payload.includes(item._id)) {
+          return item;
+        }
+
+        return;
+      });
+
+      return {
+        ...state,
+        items: itemsDeleted,
+      };
     case SEARCH_ITEMS:
       const searchResults = state.items.filter((item) =>
         item.name.toLowerCase().includes(action.payload.toLowerCase())
@@ -66,7 +82,7 @@ const itemsReducer = (state = initialState, action) => {
         ...state,
         searchResults: [],
       };
-    case SET_LOADING:
+    case SET_ITEMS_LOADING:
       return {
         ...state,
         loading: true,

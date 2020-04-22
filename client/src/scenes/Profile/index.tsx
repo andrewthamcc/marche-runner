@@ -11,11 +11,8 @@ import TextInput, { textInputType } from "../../components/TextInput";
 import LoadingSpinner from "../../components/Loader";
 
 // redux actions
-import {
-  getUserProfile,
-  editUserProfile,
-  deleteUserProfile,
-} from "../../actions/user";
+import { getUserProfile, editUserProfile } from "../../actions/user";
+import { deleteUserProfile } from "../../actions/auth";
 
 // models
 import { UserModel } from "../../models/user";
@@ -30,9 +27,9 @@ interface ReduxStateProps {
 }
 
 interface NewUserInfo {
-  firstName: null | string;
-  lastName: null | string;
-  email: null | string;
+  firstName: string;
+  lastName: string;
+  email: string;
 }
 
 interface NewPassword {
@@ -52,9 +49,9 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
   // state
   const [editView, setEditView] = useState<boolean>(false);
   const [newUserInfo, setNewUserInfo] = useState<NewUserInfo>({
-    firstName: null,
-    lastName: null,
-    email: null,
+    firstName: "",
+    lastName: "",
+    email: "",
   });
   const [password, setPassword] = useState<NewPassword>({
     newPassword: "",
@@ -86,8 +83,8 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setNewUserInfo((userInfo) => ({
-      ...userInfo,
+    setNewUserInfo((newUserInfo) => ({
+      ...newUserInfo,
       [name]: value,
     }));
   };
@@ -142,6 +139,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
     }
 
     editUserProfile(newUserData);
+    setEditView(false);
   };
 
   // cancel changes
@@ -149,9 +147,9 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
     setEditView(false);
 
     setNewUserInfo({
-      firstName: null,
-      lastName: null,
-      email: null,
+      firstName: "",
+      lastName: "",
+      email: "",
     });
   };
 
@@ -184,29 +182,29 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
       <>
         <TextInput
           label="First Name:"
-          placeholder="Jane"
+          placeholder={firstName}
           inputID="profile-firstname"
           inputName="firstName"
-          value={newUserInfo.firstName || firstName}
+          value={newUserInfo.firstName}
           onChange={(e) => handleChange(e)}
           className="profile-edit-input"
         />
         <TextInput
           label="Last Name:"
-          placeholder="last-name"
+          placeholder={lastName}
           inputID="profile-lastname"
           inputName="lastName"
-          value={newUserInfo.lastName || lastName}
+          value={newUserInfo.lastName}
           onChange={(e) => handleChange(e)}
           className="profile-edit-input"
         />
         <TextInput
           label="Email Address:"
           type={textInputType.email}
-          placeholder="example@email.com"
-          inputID="profile-lastname"
+          placeholder={email}
+          inputID="profile-email"
           inputName="email"
-          value={newUserInfo.email || email}
+          value={newUserInfo.email}
           onChange={(e) => handleChange(e)}
           className="profile-edit-input"
         />
@@ -269,7 +267,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
           isModalOpen={open}
           close={closeModal}
           title={"Delete Profile?"}
-          text={"Are you sure you want to delete your profile?That "}
+          text={"Are you sure you want to delete your profile?"}
           confirm={() => deleteProfile()}
         />
       )}

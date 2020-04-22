@@ -1,15 +1,10 @@
 import store from "../../redux";
 import axios from "axios";
-import {
-  GET_PROFILE,
-  EDIT_PROFILE,
-  DELETE_PROFILE,
-  SET_LOADING,
-} from "./types";
+import { GET_PROFILE, EDIT_PROFILE, SET_USER_LOADING } from "./types";
 
 const setLoading = () => {
   store.dispatch({
-    type: SET_LOADING,
+    type: SET_USER_LOADING,
   });
 };
 
@@ -17,18 +12,8 @@ export const getUserProfile = () => async (dispatch) => {
   setLoading();
 
   try {
-    // const res = await axios.get("/profile")
-    // const userData = res.data
-
-    const userData = {
-      user: {
-        _id: "something",
-        firstName: "Andrew",
-        lastName: "T",
-        email: "andrew@andrew.com",
-        date: "2020-04-01",
-      },
-    };
+    const res = await axios.get("/profile");
+    const userData = res.data;
 
     dispatch({
       type: GET_PROFILE,
@@ -40,32 +25,17 @@ export const getUserProfile = () => async (dispatch) => {
 };
 
 export const editUserProfile = (data) => async (dispatch) => {
-  try {
-    // const res = await axios.post("/profile", data)
-    // const userData = res.data
+  setLoading();
 
-    const userData = {
-      firstName: "Denise",
-      lastName: "S",
-      email: "denise@denise.com",
-    };
+  try {
+    const res = await axios.patch("/profile", data);
+    const userData = res.data;
+
+    console.log(userData);
 
     dispatch({
       type: EDIT_PROFILE,
       payload: userData,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const deleteUserProfile = () => async (dispatch) => {
-  try {
-    // const res = await axios.delete("/profile")
-    // const userData = res.data
-
-    dispatch({
-      type: DELETE_PROFILE,
     });
   } catch (error) {
     console.log(error);
