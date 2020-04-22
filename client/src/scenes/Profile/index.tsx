@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 // components
 import ConfirmationModal from "../../components/ConfirmationModal";
 import useModal from "../../components/ConfirmationModal/useModal";
-import Icon, { iconType } from "../../components/Icon";
+import Icon, { iconType, iconColor } from "../../components/Icon";
 import Button, { buttonColor } from "../../components/Button";
 import TextInput, { textInputType } from "../../components/TextInput";
 import LoadingSpinner from "../../components/Loader";
@@ -281,13 +281,13 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
                 onClick={() => setEditView(!editView)}
                 className="profile-header-controls-icon"
               >
-                <Icon iconType={iconType.pencil} />
+                <Icon iconType={iconType.pencil} color={iconColor.grey} />
               </span>
               <span
                 onClick={() => openModal()}
                 className="profile-header-controls-icon"
               >
-                <Icon iconType={iconType.trash} />
+                <Icon iconType={iconType.trash} color={iconColor.grey} />
               </span>
             </div>
           </div>

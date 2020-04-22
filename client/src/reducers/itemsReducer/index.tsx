@@ -61,7 +61,7 @@ const itemsReducer = (state = initialState, action) => {
           return item;
         }
 
-        return;
+        return null;
       });
 
       return {

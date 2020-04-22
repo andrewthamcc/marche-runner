@@ -50,13 +50,13 @@ const Home: React.FC = (): JSX.Element => {
               <h2 className="about-title">How it works...</h2>
               <p className="about-text">
                 A super simple web application for all your grocery shopping
-                needs. Sign up, start adding to your list, check things off when
-                you're done, delete and edit items, and start over again.
+                needs. Sign up, add items to your shopping list, check things
+                off when you're done, delete items, and start over again.
               </p>
               <p className="about-text">
                 Items are separated into categories to make your shopping trips
-                easier. There will be future updates to build lists from recipes
-                inputed into the marchéRunner system.
+                easier. There will be continous updates to the MarchéRunner
+                system to improve and expand on its features. Stay tuned.
               </p>
             </div>
             <div className="about-flex-container-right"></div>

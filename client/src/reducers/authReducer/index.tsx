@@ -5,6 +5,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   LOAD_USER,
+  LOAD_USER_FAILED,
   DELETE_USER,
   SET_AUTH_LOADING,
 } from "../../actions/auth/types";
@@ -31,10 +32,11 @@ const authReducer = (state = initialState, action) => {
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
+    case LOAD_USER_FAILED:
       return {
         ...state,
         loading: false,
-        error: action.payload.error,
+        error: action.payload,
       };
     case LOAD_USER:
       return {

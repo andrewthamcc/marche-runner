@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { Item } from "../../models/item";
 
@@ -62,15 +62,21 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   const [addItemView, setAddItemView] = useState<boolean>(false);
   const [newItem, setNewItem] = useState<string>("");
   const { addItem, category, items } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (props.items) {
       const filteredItems = items.filter((item) => item.category === category);
       setCategoryItems(filteredItems);
+
+      // focuses input
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
 
     // eslint-disable-next-line
-  }, [props]);
+  }, [props, addItemView]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,6 +90,13 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
     setNewItem("");
   };
 
+  // close input when losing focus
+  const handleInputBlur = () => {
+    if (newItem === "") {
+      setAddItemView(false);
+    }
+  };
+
   const renderAddItemInput = () => {
     return (
       <form onSubmit={(e) => handleSubmit(e)} className="category-list-form">
@@ -93,7 +106,8 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           onChange={(e) => setNewItem(e.target.value)}
           inputName="add-item-input"
           placeholder="Add an item..."
-          required
+          ref={inputRef} // todo: investigate the weird prop stuff on this
+          onBlur={handleInputBlur}
         />
         <Button
           border={false}

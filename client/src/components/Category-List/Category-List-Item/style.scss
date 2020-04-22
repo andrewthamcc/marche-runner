@@ -16,14 +16,6 @@
   &-controls {
     display: none;
 
-    path {
-      fill: #747474;
-
-      &:hover {
-        fill: darken(#747474, 15%);
-      }
-    }
-
     &-edit,
     &-delete {
       cursor: pointer;

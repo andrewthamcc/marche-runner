@@ -13,8 +13,7 @@ import { logoutUser } from "../../actions/auth";
 
 require("./style.scss");
 
-// display current date somewhere
-// authenticated (welcome, edit profile gear icon?, logout)
+// todo: display current date somewhere
 
 interface OwnProps {}
 
@@ -26,8 +25,6 @@ interface ReduxStateProps {
 interface ReduxDispatchProps {
   logoutUser: () => void;
 }
-
-interface SignUpData {}
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
@@ -44,7 +41,7 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
         <li>
           <Link to="/profile">
             <Button border={false} color={buttonColor.green}>
-              Edit Profile
+              Profile
             </Button>
           </Link>
         </li>
@@ -62,7 +59,10 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
       <>
         <li>
           <Button border={false} color={buttonColor.green} onClick={openModal}>
-            <Icon iconType={iconType.profile} />
+            <Icon
+              iconType={iconType.profile}
+              className="page-header-signin-icon"
+            />
             Sign In
           </Button>
         </li>

@@ -31,8 +31,6 @@ export const editUserProfile = (data) => async (dispatch) => {
     const res = await axios.patch("/profile", data);
     const userData = res.data;
 
-    console.log(userData);
-
     dispatch({
       type: EDIT_PROFILE,
       payload: userData,

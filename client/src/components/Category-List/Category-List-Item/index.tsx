@@ -4,7 +4,7 @@ import { Item } from "../../../models/item";
 
 // components
 import Checkbox from "../../../components/Checkbox";
-import Icon, { iconType } from "../../Icon";
+import Icon, { iconType, iconColor } from "../../Icon";
 
 // redux actions
 import { editItem, deleteItem } from "../../../actions/items";
@@ -58,7 +58,7 @@ const index: React.FC<Props> = (props: Props): JSX.Element => {
           className="category-list-item-controls-delete"
           onClick={() => deleteItem(_id)}
         >
-          <Icon iconType={iconType.trash} />
+          <Icon iconType={iconType.trash} color={iconColor.grey} />
         </span>
       </div>
     </li>

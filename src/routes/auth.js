@@ -17,13 +17,8 @@ router.post("/", async (req, res) => {
 
     res.send({ id: user._id, token });
   } catch (error) {
-    res.status(400).json({ error: "Invalid Credentials" });
+    res.status(401).send();
   }
 });
-
-// POST    /auth/logout
-// Logout a user
-// Private
-// router.post("/logout", async (req, res) => {});
 
 module.exports = router;

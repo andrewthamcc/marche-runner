@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, RefObject } from "react";
 import isEmail from "../../utils/isEmail";
 
 require("./style.scss");
@@ -19,56 +19,68 @@ interface OwnProps {
   required?: boolean;
   value: string;
   onChange: (e) => void;
+  ref?: RefObject<HTMLInputElement> | null; // forwardRef
+  onBlur?: () => void; // passthrough of callback for onBlur event
 }
 
 type Props = OwnProps;
 
-const TextInput: React.FC<Props> = (props: Props): JSX.Element => {
-  const [errors, setErrors] = useState<string>("");
-  const {
-    className,
-    label,
-    inputName,
-    inputID,
-    placeholder,
-    type,
-    required,
-    value,
-    onChange,
-  } = props;
+// todo: investigate proper typing of forwardRef
+const TextInput: React.FC<Props> = React.forwardRef(
+  (props: Props, ref?): JSX.Element => {
+    const [errors, setErrors] = useState<string>("");
+    const {
+      className,
+      label,
+      inputName,
+      inputID,
+      placeholder,
+      type,
+      required,
+      value,
+      onChange,
+      onBlur,
+    } = props;
 
-  const validateInput = (e) => {
-    if (required && value === "") {
-      setErrors("This is required");
-    }
+    const validateInput = (e) => {
+      // onBlur callback
+      if (onBlur) {
+        onBlur();
+      }
 
-    if (type === textInputType.email && !isEmail(value)) {
-      setErrors("Invalid Email");
-    }
+      if (required && value === "") {
+        setErrors("This is required");
+      }
 
-    if (required && type === textInputType.password && value.length < 6) {
-      setErrors("Minimum 6 characters");
-    }
-  };
+      if (type === textInputType.email && !isEmail(value)) {
+        setErrors("Invalid Email");
+      }
 
-  return (
-    <div className={`text-input ${className ? className : ""}`}>
-      {label && <label htmlFor={inputID}>{label}</label>}
-      <input
-        className={`${errors ? "error" : ""}`}
-        type={type}
-        name={inputName}
-        id={inputID}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        onBlur={validateInput}
-        onFocus={() => setErrors("")}
-      />
-      <p className="text-input-errors">{errors}</p>
-    </div>
-  );
-};
+      if (required && type === textInputType.password && value.length < 6) {
+        setErrors("Minimum 6 characters");
+      }
+    };
+
+    return (
+      <div className={`text-input ${className ? className : ""}`}>
+        {label && <label htmlFor={inputID}>{label}</label>}
+        <input
+          className={`${errors ? "error" : ""}`}
+          type={type}
+          name={inputName}
+          id={inputID}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={validateInput}
+          onFocus={() => setErrors("")}
+          ref={ref}
+        />
+        <p className="text-input-errors">{errors}</p>
+      </div>
+    );
+  }
+);
 
 TextInput.defaultProps = {
   type: textInputType.text,

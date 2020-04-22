@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   LOAD_USER,
+  LOAD_USER_FAILED,
   DELETE_USER,
   SET_AUTH_LOADING,
 } from "./types";
@@ -35,7 +36,10 @@ const loadUser = async () => {
       payload: userData,
     });
   } catch (error) {
-    console.log(error);
+    store.dispatch({
+      type: LOAD_USER_FAILED,
+      payload: error,
+    });
   }
 };
 
@@ -74,6 +78,8 @@ export const loginUser = (data) => async (dispatch) => {
 
     loadUser();
   } catch (error) {
+    // invalid credentials
+
     dispatch({
       type: LOGIN_FAIL,
       payload: error,
@@ -91,11 +97,13 @@ export const deleteUserProfile = () => async (dispatch) => {
   setLoading();
 
   try {
-    const res = await axios.delete("/profile");
-    const userData = res.data;
+    // const res = await axios.delete("/profile");
+    // const userData = res.data;
+    await axios.delete("/profile");
 
     dispatch({
       type: DELETE_USER,
+      // payload: userData,
     });
   } catch (error) {
     console.log(error);

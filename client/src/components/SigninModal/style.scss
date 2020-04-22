@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .signin {
   position: fixed;
   top: 0;
@@ -12,6 +14,7 @@
   &-title {
     font-size: 3rem;
     margin-bottom: 1.5rem;
+    text-align: center;
   }
 
   &-container {
@@ -19,7 +22,7 @@
     margin-top: 20vh;
     height: 400px;
     width: 25%;
-    padding: 4rem;
+    padding: 2rem 4rem;
     border-radius: 8px;
 
     color: #0e0e0e;
@@ -36,16 +39,29 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    flex-grow: 1;
 
     input {
       margin-bottom: 1rem;
     }
+
+    button {
+      margin: 0 auto;
+    }
   }
 
   &-signup {
-    margin-top: 1rem;
     font-size: 1.4rem;
-    text-align: left;
+    text-align: center;
+
+    a {
+      font-weight: 600;
+      color: $green;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // components
 import LoadingSpinner from "../Loader";
@@ -40,8 +41,10 @@ interface SignInData {
 
 const SigninModal: React.FC<Props> = (props: Props) => {
   const [formData, setFormData] = useState<SignInData>({
-    email: "",
-    password: "",
+    email: "andrew@andrew.com",
+    password: "123456",
+    // email: "",
+    // password: "",
   });
   const history = useHistory();
   const node = useRef(null);
@@ -140,7 +143,9 @@ const SigninModal: React.FC<Props> = (props: Props) => {
             </Button>
           </form>
 
-          <p className="signin-signup">Don't have an account? Sign Up</p>
+          <p className="signin-signup">
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
         </div>
       </div>
     );

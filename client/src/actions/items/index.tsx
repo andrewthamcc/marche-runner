@@ -9,8 +9,8 @@ import {
   DELETE_PURCHASED,
   DELETE_ALL,
   SEARCH_ITEMS,
-  SET_ITEMS_LOADING,
   CLEAR_SEARCH,
+  SET_ITEMS_LOADING,
 } from "./types";
 
 const setLoading = () => {

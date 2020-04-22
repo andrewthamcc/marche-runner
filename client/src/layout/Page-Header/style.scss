@@ -20,6 +20,7 @@
     &-icon {
       width: 60px;
       height: 60px;
+
       path {
         fill: #ffffff;
       }
@@ -55,5 +56,9 @@
 
   a {
     color: #ffffff;
+  }
+
+  &-signin-icon {
+    margin-right: 0.5rem;
   }
 }
