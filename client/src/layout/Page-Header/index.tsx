@@ -15,9 +15,7 @@ import { logoutUser } from "../../actions/auth";
 
 require("./style.scss");
 
-interface OwnProps {
-  history: history;
-}
+interface OwnProps {}
 
 interface ReduxStateProps {
   isAuthenticated: boolean;
