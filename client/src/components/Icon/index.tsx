@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactComponent as CaretDown } from "./assets/caretDown.svg";
 import { ReactComponent as ChevronDown } from "./assets/chevron.svg";
+import { ReactComponent as Close } from "./assets/close.svg";
 import { ReactComponent as Gear } from "./assets/gear.svg";
 import { ReactComponent as Info } from "./assets/info.svg";
 import { ReactComponent as Logout } from "./assets/logout.svg";
@@ -14,6 +15,7 @@ require("./style.scss");
 export enum iconType {
   caretDown = "caretDown",
   chevronDown = "chevronDown",
+  close = "close",
   gear = "gear",
   info = "info",
   logout = "logout",
@@ -32,6 +34,7 @@ export enum iconColor {
 const svgIcons = {
   caretDown: CaretDown,
   chevronDown: ChevronDown,
+  close: Close,
   gear: Gear,
   info: Info,
   logout: Logout,

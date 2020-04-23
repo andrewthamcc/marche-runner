@@ -11,10 +11,11 @@ import {
 } from "../../actions/auth/types";
 
 class authState {
-  isAuthenticated = false;
-  _id = "";
-  firstName = "";
-  loading = false;
+  isAuthenticated: boolean = false;
+  _id: string = "";
+  firstName: string = "";
+  loading: boolean = false;
+  error: string = "";
 }
 
 const initialState = new authState();

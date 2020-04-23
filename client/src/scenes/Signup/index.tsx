@@ -21,6 +21,7 @@ interface ReduxStateProps {
 
 interface ReduxDispatchProps {
   registerUser: (data) => void;
+  showToast: (message, type) => void;
 }
 
 interface SignUpData {
@@ -47,7 +48,7 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
     if (props.isAuthenticated) {
       history.push("/dashboard");
     }
-  });
+  }, [props]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;

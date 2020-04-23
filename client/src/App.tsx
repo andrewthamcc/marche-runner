@@ -7,6 +7,7 @@ import store from "./redux";
 import PageHeader from "./layout/Page-Header";
 import Footer from "./layout/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import Toast from "./components/Toast";
 
 import Home from "./scenes/Home";
 import Signup from "./scenes/Signup";
@@ -31,6 +32,7 @@ function App() {
           </main>
           <Route path={/^(?!.*signup).*$/} component={Footer} />
         </BrowserRouter>
+        <Toast />
       </div>
     </Provider>
   );

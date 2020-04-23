@@ -11,6 +11,7 @@ import Button, { buttonColor } from "../Button";
 
 // redux actions
 import { loginUser } from "../../actions/auth";
+import { showToast, toastType } from "../../actions/ui";
 
 require("./style.scss");
 
@@ -21,12 +22,14 @@ interface OwnProps {
 }
 
 interface ReduxStateProps {
-  loading: boolean;
   isAuthenticated: boolean;
+  loading: boolean;
+  authError: string;
 }
 
 interface ReduxDispatchProps {
   loginUser: (data) => void;
+  showToast: (message, type) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
@@ -64,7 +67,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  });
+  }, [props]);
 
   const handleOutsideClick = (e) => {
     if (node.current.contains(e.target)) {
@@ -157,6 +160,7 @@ SigninModal.defaultProps = {
 const mapStateToProps = (state) => ({
   loading: state.authState.loading,
   isAuthenticated: state.authState.isAuthenticated,
+  authError: state.authState.error,
 });
 
-export default connect(mapStateToProps, { loginUser })(SigninModal);
+export default connect(mapStateToProps, { loginUser, showToast })(SigninModal);
