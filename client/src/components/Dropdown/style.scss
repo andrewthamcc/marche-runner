@@ -5,21 +5,18 @@
   border-radius: 8px;
   box-sizing: content-box;
   font-size: 1.6rem;
-
-  padding: 3px 16px;
   height: 30px;
-
-  display: flex;
-  // justify-content: space-between;
-  align-items: center;
-
+  padding: 3px 16px;
   transition: border 0.2s ease-in, box-shadow 0.2s ease-in;
 
+  display: flex;
+  align-items: center;
+
   &-label {
-    margin-bottom: 1rem;
     display: block;
     font-size: 1.5rem;
     font-weight: 600;
+    margin-bottom: 1rem;
   }
 
   &-icon svg {
@@ -37,8 +34,8 @@
     justify-content: space-between;
 
     svg {
-      width: 20px;
       height: 30px;
+      width: 20px;
 
       path {
         fill: #c0c0c0;

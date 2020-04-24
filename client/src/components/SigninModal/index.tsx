@@ -10,32 +10,28 @@ import TextInput, { textInputType } from "../TextInput";
 import Button, { buttonColor } from "../Button";
 
 // redux actions
-import { loginUser } from "../../actions/auth";
-import { showToast, toastType } from "../../actions/ui";
+import { clearErrors, loginUser } from "../../actions/auth";
 
 require("./style.scss");
 
 interface OwnProps {
-  isModalOpen: boolean; // boolean to determine to display modal or not
   close: () => void; // prop to close modal from parent
   children?: any;
+  isModalOpen: boolean; // boolean to determine to display modal or not
 }
 
 interface ReduxStateProps {
+  authError: any;
   isAuthenticated: boolean;
   loading: boolean;
-  authError: string;
 }
 
 interface ReduxDispatchProps {
+  clearErrors: () => void;
   loginUser: (data) => void;
-  showToast: (message, type) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
-
-// gets the root for the portal to append to
-const portalRoot = document.querySelector("#portal-root");
 
 interface SignInData {
   email: string;
@@ -43,13 +39,18 @@ interface SignInData {
 }
 
 const SigninModal: React.FC<Props> = (props: Props) => {
+  // state
   const [formData, setFormData] = useState<SignInData>({
     email: "",
     password: "",
   });
+
+  // props
+  const { authError, clearErrors, close, isModalOpen, loading } = props;
+
+  // other hooks
   const history = useHistory();
   const node = useRef(null);
-  const { isModalOpen, close, loading } = props;
 
   useEffect(() => {
     // if user is authenticated redirect to dashboard
@@ -67,13 +68,15 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [props]);
+    // eslint-disable-next-line
+  }, [props, isModalOpen]);
 
   const handleOutsideClick = (e) => {
     if (node.current.contains(e.target)) {
       return;
     }
 
+    clearErrors();
     close();
   };
 
@@ -97,6 +100,19 @@ const SigninModal: React.FC<Props> = (props: Props) => {
 
     // clear form
     setFormData({ email: "", password: "" });
+  };
+
+  const renderError = () => {
+    const { status } = authError;
+    let message = "";
+
+    if (status === 401) {
+      message = "Invalid Credentials.";
+    } else if (status === 500) {
+      message = "An unexpected error occured.";
+    }
+
+    return <p className="signin-error">{message}</p>;
   };
 
   const renderModal = () => {
@@ -140,8 +156,8 @@ const SigninModal: React.FC<Props> = (props: Props) => {
             >
               Sign In
             </Button>
+            {authError && renderError()}
           </form>
-
           <p className="signin-signup">
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </p>
@@ -149,6 +165,9 @@ const SigninModal: React.FC<Props> = (props: Props) => {
       </div>
     );
   };
+
+  // gets the root for the portal to append to
+  const portalRoot = document.querySelector("#portal-root");
 
   return isModalOpen && ReactDOM.createPortal(renderModal(), portalRoot);
 };
@@ -158,9 +177,11 @@ SigninModal.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
+  authError: state.authState.error,
   loading: state.authState.loading,
   isAuthenticated: state.authState.isAuthenticated,
-  authError: state.authState.error,
 });
 
-export default connect(mapStateToProps, { loginUser, showToast })(SigninModal);
+export default connect(mapStateToProps, { clearErrors, loginUser })(
+  SigninModal
+);

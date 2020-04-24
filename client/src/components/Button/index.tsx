@@ -9,26 +9,26 @@ export enum buttonColor {
 }
 
 interface OwnProps {
-  color?: buttonColor; // color of icon
   border?: boolean;
-  className?: string; // passthrough for className
-  disabled?: boolean;
   children?: any;
+  className?: string; // passthrough for className
+  color?: buttonColor; // color of icon
+  disabled?: boolean;
   onClick?: () => void;
 }
 
 type Props = OwnProps;
 
 const Button: React.FC<Props> = (props: Props): JSX.Element => {
-  const { color, border, disabled, className, onClick } = props;
+  const { border, color, className, disabled, onClick } = props;
 
   return (
     <button
       disabled={disabled}
       className={`button 
+        ${border ? "" : "no-border"} 
         ${className ? className : ""} 
         ${color ? color : ""} 
-        ${border ? "" : "no-border"} 
         ${disabled ? "disabled" : ""}`}
       onClick={onClick}
     >

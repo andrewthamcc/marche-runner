@@ -1,10 +1,10 @@
 .category-list-item {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem 0;
+  display: flex;
   height: 25px;
+  justify-content: space-between;
   margin-bottom: 0.5rem;
+  padding: 0.8rem 0;
 
   &-description {
     display: flex;

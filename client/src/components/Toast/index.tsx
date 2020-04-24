@@ -15,8 +15,8 @@ interface OwnProps {}
 
 interface ReduxStateProps {
   displayToast: boolean;
-  type: toastType;
   message: string;
+  type: toastType;
 }
 
 interface ReduxDispatchProps {
@@ -25,11 +25,9 @@ interface ReduxDispatchProps {
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
-// gets the root for the portal to append to
-const toastPortal = document.querySelector("#toast-portal");
-
 const ToastNotification: React.FC<Props> = (props: Props): JSX.Element => {
-  const { hideToast, displayToast, type, message } = props;
+  // props
+  const { displayToast, hideToast, message, type } = props;
 
   const renderSymbol = () => {
     switch (type) {
@@ -59,6 +57,8 @@ const ToastNotification: React.FC<Props> = (props: Props): JSX.Element => {
       </div>
     );
   };
+
+  const toastPortal = document.querySelector("#toast-portal");
 
   return displayToast && ReactDOM.createPortal(renderToast(), toastPortal);
 };

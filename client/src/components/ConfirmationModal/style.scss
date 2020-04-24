@@ -1,28 +1,25 @@
 .confirmation-modal {
-  position: fixed;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 999;
-  background-color: rgba(0, 0, 0, 0.6);
-
-  opacity: 0;
   animation: fadeIn 0.1s 0.1s ease-in forwards;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  opacity: 0;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 999;
 
   &-container {
-    margin: auto;
-    margin-top: 20vh;
-    width: 30%;
-    padding: 2rem 3rem;
-    border-radius: 8px;
-
     color: #0e0e0e;
     background-color: #ffffff;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 20vh;
+    padding: 2rem 3rem;
+    position: relative;
+    width: 30%;
 
     display: flex;
     flex-direction: column;
-
-    position: relative;
   }
 
   &-title {

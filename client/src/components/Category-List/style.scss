@@ -4,9 +4,9 @@
   padding: 4rem 0;
 
   &-header {
-    height: 3rem;
-    display: flex;
     align-items: center;
+    display: flex;
+    height: 3rem;
   }
 
   &-icon {
@@ -24,41 +24,41 @@
   }
 
   &-form {
-    display: flex;
     align-items: center;
+    display: flex;
 
     &-input {
       flex-grow: 1;
     }
 
     &-button {
-      width: auto;
       box-shadow: none;
-      padding: 0;
       margin-left: 1rem;
+      padding: 0;
+      width: auto;
 
       // todo: look into disabled button background-color;
       &.disabled {
-        cursor: not-allowed;
         background: none !important;
+        cursor: not-allowed;
       }
     }
   }
 
   &-control-icon {
-    margin-left: 1rem;
     cursor: pointer;
+    margin-left: 1rem;
 
     svg {
-      width: 20px;
       height: 20px;
+      width: 20px;
     }
   }
 
   &-item-empty {
-    text-align: center;
     font-size: 1.3rem;
     font-style: italic;
+    text-align: center;
   }
 }
 

@@ -4,24 +4,24 @@ import isEmail from "../../utils/isEmail";
 require("./style.scss");
 
 export enum textInputType {
-  text = "text",
   email = "email",
+  text = "text",
   password = "password",
 }
 
 interface OwnProps {
   className?: string; // passthrough for className
-  label?: string; // label name
+  disabled?: boolean; // prop to disable input
   inputID?: string; // id for input required if labels are being used
   inputName: string; // name for label
-  placeholder?: string; // placeholder text
-  type?: textInputType;
-  required?: boolean;
-  value: string;
-  onChange: (e) => void;
-  ref?: RefObject<HTMLInputElement> | null; // forwardRef
+  label?: string; // label name
   onBlur?: () => void; // passthrough of callback for onBlur event
-  disabled?: boolean; // prop to disable input
+  onChange: (e) => void;
+  placeholder?: string; // placeholder text
+  ref?: RefObject<HTMLInputElement> | null; // forwardRef
+  required?: boolean;
+  type?: textInputType;
+  value: string;
 }
 
 type Props = OwnProps;
@@ -29,19 +29,22 @@ type Props = OwnProps;
 // todo: investigate proper typing of forwardRef
 const TextInput: React.FC<Props> = React.forwardRef(
   (props: Props, ref?): JSX.Element => {
+    // state
     const [errors, setErrors] = useState<string>("");
+
+    // props
     const {
       className,
-      label,
-      inputName,
-      inputID,
-      placeholder,
-      type,
-      required,
-      value,
-      onChange,
-      onBlur,
       disabled,
+      inputID,
+      inputName,
+      label,
+      onBlur,
+      onChange,
+      placeholder,
+      required,
+      type,
+      value,
     } = props;
 
     const validateInput = (e) => {
@@ -68,16 +71,16 @@ const TextInput: React.FC<Props> = React.forwardRef(
         {label && <label htmlFor={inputID}>{label}</label>}
         <input
           className={`${errors ? "error" : ""}`}
-          type={type}
-          name={inputName}
-          id={inputID}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onBlur={validateInput}
-          onFocus={() => setErrors("")}
-          ref={ref}
           disabled={disabled}
+          id={inputID}
+          name={inputName}
+          onBlur={validateInput}
+          onChange={onChange}
+          onFocus={() => setErrors("")}
+          placeholder={placeholder}
+          ref={ref}
+          type={type}
+          value={value}
         />
         <p className="text-input-errors">{errors}</p>
       </div>

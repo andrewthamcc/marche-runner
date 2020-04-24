@@ -11,6 +11,7 @@ import Button, { buttonColor } from "../../components/Button";
 import Icon, { iconType } from "../../components/Icon";
 import Dropdown, { DropdownItem } from "../../components/Dropdown";
 
+// redux actions
 import { logoutUser } from "../../actions/auth";
 
 require("./style.scss");
@@ -18,8 +19,8 @@ require("./style.scss");
 interface OwnProps {}
 
 interface ReduxStateProps {
-  isAuthenticated: boolean;
   firstName: string;
+  isAuthenticated: boolean;
 }
 
 interface ReduxDispatchProps {
@@ -34,7 +35,6 @@ enum profileOptions {
 }
 
 const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
-  const history = useHistory();
   const userDropdownList = [
     {
       // icon: <Icon iconType={iconType.profile} color={iconColor.grey} />,
@@ -44,17 +44,22 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
     },
     {
       // icon: <Icon iconType={iconType.logout} color={iconColor.grey} />,
-
       text: "Sign out",
       value: profileOptions.signout,
       fn: () => logoutUser(),
     },
   ];
 
+  // state
   const [userControlSelection, setUserControlSelection] = useState<
     DropdownItem
   >(userDropdownList[0]);
+
+  // props
   const { isAuthenticated, firstName, logoutUser } = props;
+
+  // other hooks
+  const history = useHistory();
   const { open, openModal, closeModal } = useModal();
 
   const renderAuthLinks = () => {
@@ -116,8 +121,8 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.authState.isAuthenticated,
   firstName: state.authState.firstName,
+  isAuthenticated: state.authState.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { logoutUser })(PageHeader);

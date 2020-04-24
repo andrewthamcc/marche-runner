@@ -59,17 +59,20 @@ interface ReduxDispatchProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
-  const [categoryItems, setCategoryItems] = useState<Item[]>([]);
+  // state
   const [addItemView, setAddItemView] = useState<boolean>(false);
+  const [categoryItems, setCategoryItems] = useState<Item[]>([]);
   const [newItem, setNewItem] = useState<string>("");
+
+  // props
   const { addItem, category, items } = props;
+
+  // other hooks
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (props.items) {
-      const filteredItems = items
-        .reverse()
-        .filter((item) => item.category === category);
+      const filteredItems = items.filter((item) => item.category === category);
       setCategoryItems(filteredItems);
 
       // focuses input

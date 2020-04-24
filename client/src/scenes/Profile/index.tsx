@@ -23,25 +23,25 @@ require("./style.scss");
 interface OwnProps {}
 
 interface ReduxStateProps {
-  user: UserModel;
   loading: boolean;
+  user: UserModel;
 }
 
 interface NewUserInfo {
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
 }
 
 interface NewPassword {
-  newPassword: string;
   confirmPassword: string;
+  newPassword: string;
 }
 
 interface ReduxDispatchProps {
-  getUserProfile: () => void;
   editUserProfile: (data) => void;
   deleteUserProfile: () => void;
+  getUserProfile: () => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
@@ -49,6 +49,7 @@ type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 const Profile: React.FC<Props> = (props: Props): JSX.Element => {
   // state
   const [editView, setEditView] = useState<boolean>(false);
+  const [errors, setErrors] = useState<string>("");
   const [newUserInfo, setNewUserInfo] = useState<NewUserInfo>({
     firstName: "",
     lastName: "",
@@ -58,20 +59,19 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
     newPassword: "",
     confirmPassword: "",
   });
-  const [errors, setErrors] = useState<string>("");
 
   // modal hook and useHistory
   const { open, openModal, closeModal } = useModal();
   const history = useHistory();
 
   const {
-    getUserProfile,
-    editUserProfile,
     deleteUserProfile,
-    user,
+    editUserProfile,
+    getUserProfile,
     loading,
+    user,
   } = props;
-  const { firstName, lastName, email, date } = user;
+  const { date, email, firstName, lastName } = user;
 
   useEffect(() => {
     // load the user data from redux
@@ -114,7 +114,6 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
     }
 
     const { firstName, lastName, email } = newUserInfo;
-
     const newUserData = {
       firstName,
       lastName,

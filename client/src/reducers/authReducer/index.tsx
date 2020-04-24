@@ -1,12 +1,13 @@
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
+  DELETE_USER,
+  CLEAR_ERRORS,
   LOAD_USER,
   LOAD_USER_FAILED,
-  DELETE_USER,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
   SET_AUTH_LOADING,
 } from "../../actions/auth/types";
 
@@ -15,7 +16,7 @@ class authState {
   _id: string = "";
   firstName: string = "";
   loading: boolean = false;
-  error: string = "";
+  error: any = null;
 }
 
 const initialState = new authState();
@@ -51,6 +52,11 @@ const authReducer = (state = initialState, action) => {
       localStorage.removeItem("token");
 
       return new authState();
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     case SET_AUTH_LOADING:
       return {
         ...state,

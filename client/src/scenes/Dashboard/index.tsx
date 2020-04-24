@@ -16,11 +16,11 @@ import LoadingSpinner from "../../components/Loader";
 
 // react actions
 import {
+  clearSearch,
+  deleteAllItems,
+  deletePurchasedItems,
   getItems,
   searchItems,
-  clearSearch,
-  deletePurchasedItems,
-  deleteAllItems,
 } from "../../actions/items";
 
 require("./style.scss");
@@ -29,23 +29,23 @@ interface OwnProps {}
 
 interface ReduxStateProps {
   items: Item[];
-  searchResults: Item[];
   loading: boolean;
+  searchResults: Item[];
 }
 
 interface ReduxDispatchProps {
+  clearSearch: () => void;
+  deleteAllItems: () => void;
+  deletePurchasedItems: () => void;
   getItems: () => void;
   searchItems: (item) => void;
-  clearSearch: () => void;
-  deletePurchasedItems: () => void;
-  deleteAllItems: () => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 enum deleteType {
-  purchased = "purchased",
   allPurchased = "allPurchased",
+  purchased = "purchased",
 }
 
 const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
@@ -67,24 +67,29 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     },
   ];
 
-  const [selectListView, setSelectListView] = useState<DropdownItem>(
-    categoryList[0]
-  );
+  // state
   const [deleteSelection, setDeleteSelection] = useState<DropdownItem>(
     deleteDropdownList[0]
   );
   const [searchText, setSearchText] = useState<string>("");
-  const { open, openModal, closeModal } = useModal();
+  const [selectListView, setSelectListView] = useState<DropdownItem>(
+    categoryList[0]
+  );
+
+  // props
   const {
-    getItems,
-    searchItems,
     clearSearch,
-    deletePurchasedItems,
     deleteAllItems,
+    deletePurchasedItems,
     items,
-    searchResults,
+    getItems,
     loading,
+    searchItems,
+    searchResults,
   } = props;
+
+  // other hooks
+  const { open, openModal, closeModal } = useModal();
 
   useEffect(() => {
     // fetch items when items are empty
@@ -257,14 +262,14 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
 
 const mapStateToProps = (state) => ({
   items: state.itemState.items,
-  searchResults: state.itemState.searchResults,
   loading: state.itemState.loading,
+  searchResults: state.itemState.searchResults,
 });
 
 export default connect(mapStateToProps, {
-  getItems,
-  searchItems,
   clearSearch,
   deleteAllItems,
   deletePurchasedItems,
+  getItems,
+  searchItems,
 })(Dashboard);

@@ -4,8 +4,8 @@
   justify-content: center;
 
   &-spinner {
-    max-width: 90px;
     animation: spin 2s linear infinite;
+    max-width: 90px;
 
     svg {
       width: 100%;

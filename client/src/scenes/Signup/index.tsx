@@ -34,13 +34,18 @@ interface SignUpData {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const Signup: React.FC<Props> = (props: Props): JSX.Element => {
+  // state
   const [formData, setFormData] = useState<SignUpData>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
-  const { loading } = props;
+
+  // props
+  const { loading, registerUser } = props;
+
+  // other hooks
   const history = useHistory();
 
   useEffect(() => {
@@ -48,7 +53,7 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
     if (props.isAuthenticated) {
       history.push("/dashboard");
     }
-  }, [props]);
+  }, [props, history]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -60,7 +65,6 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
     e.preventDefault();
 
     const { firstName, lastName, email, password } = formData;
-    const { registerUser } = props;
 
     if (!firstName || !lastName || !email || !password) {
       return;

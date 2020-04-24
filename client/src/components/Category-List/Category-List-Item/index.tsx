@@ -25,6 +25,7 @@ interface ReduxDispatchProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const index: React.FC<Props> = (props: Props): JSX.Element => {
+  // props
   const { editItem, deleteItem, item } = props;
   const { _id, purchased, name } = item;
 
@@ -40,11 +41,11 @@ const index: React.FC<Props> = (props: Props): JSX.Element => {
     <li className="category-list-item">
       <div className="category-list-item-description">
         <Checkbox
-          className="category-list-item-checkbox"
-          label={name}
-          inputName="item-checkbox"
-          inputID={`checkbox-${_id}`}
           checked={purchased}
+          className="category-list-item-checkbox"
+          inputID={`checkbox-${_id}`}
+          inputName="item-checkbox"
+          label={name}
           onChange={handleChange}
         />
       </div>

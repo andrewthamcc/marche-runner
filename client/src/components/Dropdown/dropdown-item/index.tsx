@@ -9,6 +9,7 @@ interface Props {
 }
 
 const dropdownListItem: React.FC<Props> = (props: Props) => {
+  // props
   const { item, selectValue } = props;
 
   // remove disabled item from selectable items

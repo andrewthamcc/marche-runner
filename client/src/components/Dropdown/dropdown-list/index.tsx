@@ -7,9 +7,9 @@ import { DropdownItem } from "../index";
 require("./style.scss");
 
 interface Coords {
+  width?: number;
   x: number;
   y: number;
-  width?: number;
 }
 
 interface Props {
@@ -20,15 +20,14 @@ interface Props {
 }
 
 const DropdownList: React.FC<Props> = (props: Props) => {
+  // props
   const { coords, list, listWidth, selectValue } = props;
 
   const style = {
+    width: listWidth ? listWidth : coords.width,
     top: coords.y,
     left: coords.x,
-    width: listWidth ? listWidth : coords.width,
   };
-
-  const portalRoot = document.querySelector("#portal-root");
 
   const renderDropdownList = (
     <ul className="dropdown-list" style={style}>
@@ -37,6 +36,8 @@ const DropdownList: React.FC<Props> = (props: Props) => {
       ))}
     </ul>
   );
+
+  const portalRoot = document.querySelector("#portal-root");
 
   // render dropdown through portalRoot
   return ReactDOM.createPortal(renderDropdownList, portalRoot);

@@ -14,6 +14,7 @@ import { ReactComponent as Cart } from "./assets/cart.svg";
 require("./style.scss");
 
 const Home: React.FC = (): JSX.Element => {
+  // other hooks
   const { open, openModal, closeModal } = useModal();
 
   return (

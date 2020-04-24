@@ -5,25 +5,26 @@ import Symbol, { symbolType } from "../Symbol";
 require("./style.scss");
 
 interface Props {
+  checked: boolean; // boolean for marking checked
   className?: string;
   inputID: string; // id for input required if labels are being used
   inputName: string;
   label?: string;
-  checked: boolean; // boolean for marking checked
   onChange: () => void; // change handler
 }
 
 const Checkbox: React.FC<Props> = (props: Props): JSX.Element => {
-  const { className, label, inputID, inputName, checked, onChange } = props;
+  // props
+  const { checked, className, inputID, inputName, label, onChange } = props;
 
   return (
     <div className={`checkbox ${className ? className : ""}`}>
       <input
-        type="checkbox"
-        name={inputName}
-        id={inputID}
         checked={checked}
+        id={inputID}
+        name={inputName}
         onChange={onChange}
+        type="checkbox"
       />
       <span className="checkbox-icon" onClick={onChange}>
         <Symbol

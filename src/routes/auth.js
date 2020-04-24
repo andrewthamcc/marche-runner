@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 
     res.send({ id: user._id, token });
   } catch (error) {
-    res.status(401).send();
+    res.status(401).send(error);
   }
 });
 

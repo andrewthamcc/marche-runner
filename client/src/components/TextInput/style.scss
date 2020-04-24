@@ -9,18 +9,18 @@
   justify-content: center;
 
   label {
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 1rem;
   }
 
   input {
     display: block;
-    width: 100%;
     border: 2px solid #c0c0c0;
     border-radius: 8px;
     padding: 8px 16px;
     transition: border 0.2s ease-in, box-shadow 0.2s ease-in;
+    width: 100%;
 
     &.error {
       border-color: #ff0000;
@@ -32,12 +32,12 @@
   }
 
   &-errors {
+    background: #ffffff;
+    color: #ff0000;
     display: inline-block;
     height: 12px;
     font-size: 12px;
-    color: #ff0000;
 
-    background: #ffffff;
     position: absolute;
     left: 16px;
     bottom: -4px;

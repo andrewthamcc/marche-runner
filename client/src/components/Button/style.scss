@@ -1,18 +1,18 @@
 @import "../../styles/variables";
 
 .button {
-  font-size: 1.6rem;
-  width: 130px;
-  padding: 8px 16px;
-  color: $black;
   background-color: transparent;
   border: 2px solid #c0c0c0;
   border-radius: 40px;
   box-shadow: 0 1px 2px 0 rgba(130, 65, 243, 0.42);
+  color: $black;
+  font-size: 1.6rem;
+  padding: 8px 16px;
+  width: 130px;
 
   &-text {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
   }
 
@@ -26,8 +26,8 @@
 
   &.green {
     background-color: $green;
-    color: #ffffff;
     border-color: #ffffff;
+    color: #ffffff;
 
     &:hover,
     &:focus {
@@ -40,9 +40,8 @@
   }
 
   &.orange {
-    background-color: $orange;
     color: #ffffff;
-    // color: black;
+    background-color: $orange;
 
     &:hover,
     &:focus {

@@ -6,42 +6,45 @@ require("./style.scss");
 
 // define model for dropdown here
 export interface DropdownItem {
+  disabled?: boolean;
+  fn?: () => void;
   icon?: JSX.Element;
   text: string;
   value: any;
-  disabled?: boolean;
-  fn?: () => void;
 }
 
 interface Props {
-  className?: string; // passthrough for className
-  list: DropdownItem[]; // array of dropdown items - TypeScript would help with creating a model for this data
-  label?: string; // label for dropdown
-  width?: number; // width of dropdown menu
-  listWidth?: number; // optional prop for width of rendered dropdown list
-  value: any; // passthrough for setting value of dropdown
-  selectValue: (value) => void; // passthrough for method of changing the value similar usage to onChange
-  disabled?: boolean; // prop to disable dropdown functionality
   caret?: boolean; // prop for caret only dropdown TODO: make it so this dropdown can only be an icon instead...
+  className?: string; // passthrough for className
+  disabled?: boolean; // prop to disable dropdown functionality
+  label?: string; // label for dropdown
+  list: DropdownItem[]; // array of dropdown items - TypeScript would help with creating a model for this data
+  listWidth?: number; // optional prop for width of rendered dropdown list
+  selectValue: (value) => void; // passthrough for method of changing the value similar usage to onChange
+  value: any; // passthrough for setting value of dropdown
+  width?: number; // width of dropdown menu
 }
 
 const Dropdown: React.FC<Props> = (props: Props) => {
-  const {
-    className,
-    list,
-    label,
-    width,
-    listWidth,
-    value,
-    selectValue,
-    disabled,
-    caret,
-  } = props;
-
+  // state
   const [dropdownOpen, setDropdownOpen] = useState(false); // boolean to toggle opening of dropdown
   const [coords, setCoords] = useState({ x: 0, y: 0 }); // coordinates to open dropdown list
-  const dropdownRef = useRef(null); // ref of dropdown list for coordinates
 
+  // props
+  const {
+    caret,
+    className,
+    disabled,
+    label,
+    list,
+    listWidth,
+    selectValue,
+    value,
+    width,
+  } = props;
+
+  // other hooks
+  const dropdownRef = useRef(null); // ref of dropdown list for coordinates
   useOutsideClick(dropdownRef, () => setDropdownOpen(false));
 
   const toggleDropdown = () => {

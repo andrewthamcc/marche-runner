@@ -45,15 +45,16 @@ const svgIcons = {
 };
 
 interface OwnProps {
-  iconType: iconType; // iconType
-  color?: iconColor; // color of icon
   className?: string; // passthrough for className
+  color?: iconColor; // color of icon
+  iconType: iconType; // iconType
 }
 
 type Props = OwnProps;
 
 const Icon: React.FC<Props> = (props: Props): JSX.Element => {
-  const { iconType, color, className } = props;
+  // props
+  const { className, color, iconType } = props;
 
   const SVG = svgIcons[iconType];
 

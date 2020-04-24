@@ -7,12 +7,12 @@ import Button, { buttonColor } from "../../components/Button";
 require("./style.scss");
 
 interface OwnProps {
-  isModalOpen: boolean; // boolean to determine to display modal or not
+  children?: any;
   close: () => void; // prop to close modal from parent
   confirm: () => void; // function to execute when confirmed
-  title: string; // title text
+  isModalOpen: boolean; // boolean to determine to display modal or not
   text?: string; // body text
-  children?: any;
+  title: string; // title text
 }
 
 interface ReduxStateProps {}
@@ -25,8 +25,11 @@ type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 const portalRoot = document.querySelector("#portal-root");
 
 const ConfirmationModal: React.FC<Props> = (props: Props) => {
+  // props
+  const { isModalOpen, confirm, close, text, title } = props;
+
+  // other bhooks
   const node = useRef(null);
-  const { isModalOpen, close, title, text, confirm } = props;
 
   useEffect(() => {
     if (isModalOpen) {
