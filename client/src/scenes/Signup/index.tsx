@@ -150,8 +150,6 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
     );
   };
 
-  // todo: bug where signup right doens't display loader with flex
-
   return (
     <div className="signup">
       <div className="signup-left">

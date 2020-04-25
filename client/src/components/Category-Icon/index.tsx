@@ -6,6 +6,7 @@ import { ReactComponent as Dairy } from "./assets/dairy.svg";
 import { ReactComponent as Dry } from "./assets/dry.svg";
 import { ReactComponent as Frozen } from "./assets/frozen.svg";
 import { ReactComponent as Household } from "./assets/household.svg";
+import { ReactComponent as List } from "./assets/list.svg";
 import { ReactComponent as Meat } from "./assets/meat.svg";
 import { ReactComponent as Personal } from "./assets/personal.svg";
 import { ReactComponent as Pharmacy } from "./assets/pharmacy.svg";
@@ -23,6 +24,7 @@ export enum catIconType {
   dry = "dry",
   frozen = "frozen",
   household = "household",
+  list = "list",
   meat = "meat",
   personal = "personal",
   pharmacy = "pharmacy",
@@ -39,6 +41,7 @@ const svgIcons = {
   dry: Dry,
   frozen: Frozen,
   household: Household,
+  list: List,
   meat: Meat,
   personal: Personal,
   pharmacy: Pharmacy,

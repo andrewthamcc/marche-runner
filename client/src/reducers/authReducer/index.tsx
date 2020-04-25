@@ -1,6 +1,6 @@
 import {
   DELETE_USER,
-  CLEAR_ERRORS,
+  CLEAR_ERROR,
   LOAD_USER,
   LOAD_USER_FAILED,
   LOGIN_FAIL,
@@ -26,6 +26,7 @@ const authReducer = (state = initialState, action) => {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
+      sessionStorage.setItem("authenticated", action.payload.token);
 
       return {
         ...state,
@@ -50,9 +51,10 @@ const authReducer = (state = initialState, action) => {
     case LOGOUT:
     case DELETE_USER:
       localStorage.removeItem("token");
+      sessionStorage.removeItem("authenticated");
 
       return new authState();
-    case CLEAR_ERRORS:
+    case CLEAR_ERROR:
       return {
         ...state,
         error: null,

@@ -4,10 +4,12 @@ import { useHistory } from "react-router-dom";
 import moment from "moment";
 
 // components
+import Layout from "../../layout";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import useModal from "../../components/ConfirmationModal/useModal";
-import Icon, { iconType, iconColor } from "../../components/Icon";
+import Icon, { iconType } from "../../components/Icon";
 import Button, { buttonColor } from "../../components/Button";
+import IconButton from "../../components/Icon-Button";
 import TextInput, { textInputType } from "../../components/TextInput";
 import LoadingSpinner from "../../components/Loader";
 
@@ -259,7 +261,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
   }
 
   return (
-    <>
+    <Layout>
       {open && (
         <ConfirmationModal
           isModalOpen={open}
@@ -275,18 +277,16 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
           <div className="profile-header">
             <h2>Profile</h2>
             <div className="profile-header-controls">
-              <span
+              <IconButton
+                className="profile-header-controls-icon"
+                icon={iconType.pencil}
                 onClick={() => setEditView(!editView)}
+              />
+              <IconButton
                 className="profile-header-controls-icon"
-              >
-                <Icon iconType={iconType.pencil} color={iconColor.grey} />
-              </span>
-              <span
+                icon={iconType.trash}
                 onClick={() => openModal()}
-                className="profile-header-controls-icon"
-              >
-                <Icon iconType={iconType.trash} color={iconColor.grey} />
-              </span>
+              />
             </div>
           </div>
           <hr />
@@ -304,7 +304,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "../../redux";
 import setAuthToken from "../../utils/setAuthToken";
 import {
-  CLEAR_ERRORS,
+  CLEAR_ERROR,
   DELETE_USER,
   LOAD_USER,
   LOAD_USER_FAILED,
@@ -22,7 +22,7 @@ const setLoading = () => {
 
 export const clearErrors = () => (dispatch) => {
   store.dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERROR,
   });
 };
 
@@ -32,6 +32,8 @@ const loadUser = async () => {
   // sets jwt into axios headers
   if (localStorage.token) {
     setAuthToken(localStorage.token);
+  } else if (sessionStorage.authenticated) {
+    setAuthToken(sessionStorage.authenticated);
   }
 
   try {
@@ -52,7 +54,7 @@ const loadUser = async () => {
 
 export const registerUser = (data) => async (dispatch) => {
   setLoading();
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch({ type: CLEAR_ERROR });
 
   try {
     const res = await axios.post("/profile", data);
@@ -75,7 +77,7 @@ export const registerUser = (data) => async (dispatch) => {
 export const loginUser = (data) => async (dispatch) => {
   setLoading();
 
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch({ type: CLEAR_ERROR });
 
   try {
     const res = await axios.post("/login", data);

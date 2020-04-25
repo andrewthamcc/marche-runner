@@ -1,0 +1,16 @@
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+
+  &:hover,
+  &:focus {
+    .icon {
+      svg {
+        path {
+          fill: darken(#747474, 15%);
+        }
+      }
+    }
+  }
+}

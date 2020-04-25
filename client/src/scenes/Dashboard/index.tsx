@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Item } from "../../models/item";
 
 // components
+import Layout from "../../layout";
 import CategoryList, { categoryType } from "../../components/Category-List";
 import CategoryItem from "../../components/Category-List/Category-List-Item";
 import TextInput from "../../components/TextInput";
@@ -51,7 +52,7 @@ enum deleteType {
 const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   const deleteDropdownList = [
     {
-      text: "Select...",
+      text: "Delete...",
       value: null,
       disabled: true,
     },
@@ -240,7 +241,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   }
 
   return (
-    <>
+    <Layout>
       {open && (
         <ConfirmationModal
           isModalOpen={open}
@@ -256,7 +257,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
           {renderList()}
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

@@ -22,7 +22,8 @@
       path {
         fill: #747474;
 
-        &:hover {
+        &:hover,
+        &:focus {
           fill: darken(#747474, 15%);
         }
       }

@@ -1,4 +1,4 @@
-export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const CLEAR_ERROR = "CLEAR_ERROR";
 export const DELETE_USER = "DELETE_USER";
 export const LOAD_USER = "LOAD_USER";
 export const LOAD_USER_FAILED = "LOAD_USER_FAILED";

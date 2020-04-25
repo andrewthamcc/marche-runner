@@ -72,7 +72,15 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
 
   useEffect(() => {
     if (props.items) {
-      const filteredItems = items.filter((item) => item.category === category);
+      const filteredItems = items
+        .filter((item) => item.category === category)
+        .reverse();
+
+      // sorts to move purchased items automatically to bottom of list - this could be REALLY bad UX
+      // .sort((a, b) =>
+      //   a.purchased === b.purchased ? 0 : a.purchased ? 1 : -1
+      // );
+
       setCategoryItems(filteredItems);
 
       // focuses input

@@ -14,19 +14,24 @@
     margin-right: 0.5rem;
   }
 
-  &-controls {
-    display: none;
+  &-controls-delete {
+    opacity: 0;
+    cursor: pointer;
 
-    &-edit,
-    &-delete {
-      cursor: pointer;
-      margin-left: 1rem;
+    // &-edit,
+    // &-delete {
+    //   margin-left: 1rem;
+    // }
+
+    &:focus {
+      opacity: 1;
     }
   }
 
-  &:hover {
-    .category-list-item-controls {
-      display: block;
+  &:hover,
+  &:focus {
+    .category-list-item-controls-delete {
+      opacity: 1;
     }
   }
 }

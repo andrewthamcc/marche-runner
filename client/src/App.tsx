@@ -4,8 +4,6 @@ import { Provider } from "react-redux";
 import store from "./redux";
 
 // components
-import PageHeader from "./layout/Page-Header";
-import Footer from "./layout/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import Toast from "./components/Toast";
 
@@ -21,16 +19,12 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <BrowserRouter>
-          <Route path={/^(?!.*signup).*$/} component={PageHeader} />
-          <main>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
-              <PrivateRoute path="/profile" component={Profile} />
-              <Route path="/signup" component={Signup} />
-            </Switch>
-          </main>
-          <Route path={/^(?!.*signup).*$/} component={Footer} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <Route path="/signup" component={Signup} />
+          </Switch>
         </BrowserRouter>
         <Toast />
       </div>

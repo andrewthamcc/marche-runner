@@ -4,7 +4,8 @@ import { Item } from "../../../models/item";
 
 // components
 import Checkbox from "../../../components/Checkbox";
-import Icon, { iconType, iconColor } from "../../Icon";
+import IconButton from "../../Icon-Button";
+import { iconType } from "../../Icon";
 
 // redux actions
 import { editItem, deleteItem } from "../../../actions/items";
@@ -52,15 +53,11 @@ const index: React.FC<Props> = (props: Props): JSX.Element => {
 
       <div className="category-list-item-controls">
         {/* todo: investigate: inline edit may not be needed with the delete button and add button more easily accessible by the user */}
-        {/* <span className="category-list-item-controls-edit">
-          <Icon iconType={iconType.pencil} />
-        </span> */}
-        <span
+        <IconButton
+          icon={iconType.trash}
           className="category-list-item-controls-delete"
           onClick={() => deleteItem(_id)}
-        >
-          <Icon iconType={iconType.trash} color={iconColor.grey} />
-        </span>
+        />
       </div>
     </li>
   );

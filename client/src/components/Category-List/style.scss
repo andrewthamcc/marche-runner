@@ -40,7 +40,11 @@
       // todo: look into disabled button background-color;
       &.disabled {
         background: none !important;
-        cursor: not-allowed;
+        svg {
+          path {
+            fill: #c0c0c0;
+          }
+        }
       }
     }
   }

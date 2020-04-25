@@ -2,6 +2,13 @@
   input {
     left: -1000%;
     position: absolute;
+
+    &:focus {
+      // todo: research - changing font style may not be best option for displaying focus
+      ~ label {
+        font-style: italic;
+      }
+    }
   }
 
   &-icon svg {
