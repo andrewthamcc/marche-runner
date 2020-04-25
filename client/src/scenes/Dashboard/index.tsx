@@ -104,7 +104,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
       searchItems(searchText);
     }
 
-    // revert the list the default when the modal closes
+    // revert the list to default when the modal closes
     if (open === false) {
       setDeleteSelection(deleteDropdownList[0]);
     }

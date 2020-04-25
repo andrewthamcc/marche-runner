@@ -5,7 +5,7 @@
   box-shadow: 0 16px 32px 0 rgba(55, 58, 75, 0.35);
   height: 70px;
   margin: 1rem;
-  width: 300px;
+  width: 270px;
 
   position: fixed;
   right: 0;
@@ -44,10 +44,6 @@
   &.fadeIn {
     animation: fadein 0.3s;
   }
-
-  &.fadeOut {
-    animation: fadeout 0.3;
-  }
 }
 
 @keyframes fadein {
@@ -58,14 +54,5 @@
   to {
     height: 70px;
     opacity: 1;
-  }
-}
-
-@keyframes fadeout {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
   }
 }

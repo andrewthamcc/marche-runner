@@ -9,8 +9,8 @@ interface Props {
   className?: string; // passthrough for className
   color?: iconColor;
   disabled?: boolean;
-  icon: iconType;
-  onClick: () => void; // passthrough for onClick
+  icon?: iconType;
+  onClick?: () => void; // passthrough for onClick
   symbol?: symbolType;
 }
 

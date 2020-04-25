@@ -3,14 +3,16 @@ import { connect } from "react-redux";
 import { Item } from "../../models/item";
 
 // react components
-import Symbol, { symbolType } from "../Symbol";
 import CategoryListItem from "./Category-List-Item";
 import CategoryIcon, { catIconType } from "../Category-Icon";
-import Button from "../Button";
+import IconButton from "../Icon-Button";
+import { iconType, iconColor } from "../Icon";
+import { symbolType } from "../Symbol";
 import TextInput from "../TextInput";
 
 // redux actions
 import { addItem } from "../../actions/items";
+import { showToast, toastType } from "../../actions/ui";
 
 require("./style.scss");
 
@@ -56,6 +58,7 @@ interface ReduxStateProps {}
 
 interface ReduxDispatchProps {
   addItem: (item) => void;
+  showToast: (message, toastType) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
@@ -67,7 +70,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   const [newItem, setNewItem] = useState<string>("");
 
   // props
-  const { addItem, category, items } = props;
+  const { addItem, category, items, showToast } = props;
 
   // other hooks
   const inputRef = useRef<HTMLInputElement>(null);
@@ -109,6 +112,15 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
       category,
     };
 
+    const duplicateItem = items.find(
+      (item) => item.name.toLowerCase() === newItemData.name.toLowerCase()
+    );
+
+    // show warning toast on adding duplicate items
+    if (duplicateItem) {
+      showToast("Adding duplicate item", toastType.warning);
+    }
+
     addItem(newItemData);
     setNewItem("");
   };
@@ -132,16 +144,11 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           ref={inputRef} // todo: investigate the weird prop stuff on this
           onBlur={handleInputBlur}
         />
-        <Button
-          border={false}
+        <IconButton
+          symbol={symbolType.addGreen}
           className="category-list-form-button"
           disabled={newItem === ""}
-        >
-          <Symbol
-            symbolType={symbolType.addGreen}
-            className="category-list-form-button-icon"
-          />
-        </Button>
+        />
       </form>
     );
   };
@@ -176,14 +183,15 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
 
         {/* add items is not possible for a combined list view */}
         {category !== categoryType.combinedlist && (
-          <span
-            className="category-list-control-icon"
-            onClick={() => setAddItemView(!addItemView)}
-          >
-            <Symbol
-              symbolType={addItemView ? symbolType.close : symbolType.addOrange}
+          <>
+            <IconButton
+              className="category-list-control-icon"
+              color={iconColor.red}
+              icon={addItemView ? iconType.close : null}
+              symbol={!addItemView ? symbolType.addOrange : null}
+              onClick={() => setAddItemView(!addItemView)}
             />
-          </span>
+          </>
         )}
       </div>
       <hr />
@@ -194,4 +202,4 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { addItem })(CategoryList);
+export default connect(mapStateToProps, { addItem, showToast })(CategoryList);

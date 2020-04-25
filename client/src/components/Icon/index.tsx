@@ -29,6 +29,7 @@ export enum iconColor {
   green = "green",
   orange = "orange",
   grey = "grey",
+  red = "red",
 }
 
 const svgIcons = {

@@ -17,7 +17,7 @@ A simple listing application where users are able to sign up and log items requi
 - Recipes can be added to a shopping list auto-populating a grocery shopping list
 - Weekly schedule recipes for meal planning
 
-### Build
+## Build
 - Backend: NodeJS, Express, Mongoose/MongoDB
 - Frontend: React, TypeScript, Redux
 

@@ -35,6 +35,11 @@
     svg {
       path {
         fill: #ff0000;
+
+        &:hover,
+        &:focus {
+          fill: darken(#ff0000, 15%);
+        }
       }
     }
   }

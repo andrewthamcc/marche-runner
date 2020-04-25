@@ -44,7 +44,7 @@ const ToastNotification: React.FC<Props> = (props: Props): JSX.Element => {
 
   const renderToast = () => {
     return (
-      <div className={`toast ${displayToast ? "fadeIn" : "fadeOut"}`}>
+      <div className={`toast ${displayToast ? "fadeIn" : ""}`}>
         <div className="toast-wrapper">
           {type && (
             <Symbol symbolType={renderSymbol()} className="toast-symbol" />
