@@ -7,7 +7,7 @@ import Layout from "../../layout";
 import Button, { buttonColor } from "../../components/Button";
 import SigninModal from "../../components/SigninModal";
 import useModal from "../../components/SigninModal/useModal";
-import Screenshot from "./assets/marcherunner.png";
+import Screenshot from "./assets/marcherunner-list.png";
 import { ReactComponent as Profile } from "./assets/profile.svg";
 import { ReactComponent as List } from "./assets/list.svg";
 import { ReactComponent as Cart } from "./assets/cart.svg";

@@ -8,7 +8,7 @@ import CategoryList, { categoryType } from "../../components/Category-List";
 import CategoryItem from "../../components/Category-List/Category-List-Item";
 import TextInput from "../../components/TextInput";
 import Dropdown, { DropdownItem } from "../../components/Dropdown";
-import categoryList from "./categoryDropdownList";
+import categoryDropdownList from "./categoryDropdownList";
 import CategoryIcon, { catIconType } from "../../components/Category-Icon";
 import Symbol, { symbolType } from "../../components/Symbol";
 import ConfirmationModal from "../../components/ConfirmationModal";
@@ -74,7 +74,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   );
   const [searchText, setSearchText] = useState<string>("");
   const [selectListView, setSelectListView] = useState<DropdownItem>(
-    categoryList[0]
+    categoryDropdownList[0]
   );
 
   // props
@@ -156,7 +156,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
           <div className="dashboard-controls-right">
             <Dropdown
               label="View:"
-              list={categoryList}
+              list={categoryDropdownList}
               value={selectListView}
               selectValue={(selection) => setSelectListView(selection)}
               width={245}
@@ -208,8 +208,11 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     if (selectListView.value === categoryType.allItems) {
       return (
         <div className="dashboard-grid">
-          {categoryList.map((category) => {
-            if (category.value !== categoryType.allItems) {
+          {categoryDropdownList.map((category) => {
+            if (
+              category.value !== categoryType.allItems &&
+              category.value !== categoryType.combinedlist
+            ) {
               return (
                 <CategoryList
                   category={category.value}
@@ -220,6 +223,15 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
             }
             return null;
           })}
+        </div>
+      );
+    }
+
+    // returns single combined list view
+    if (selectListView.value === categoryType.combinedlist) {
+      return (
+        <div className="dashboard-single-list">
+          <CategoryList category={selectListView.value} items={items} />
         </div>
       );
     }

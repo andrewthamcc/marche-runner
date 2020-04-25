@@ -28,6 +28,7 @@ export enum categoryType {
   prepared = "prepared",
   produce = "produce",
   seafood = "seafood",
+  combinedlist = "combinedlist",
 }
 
 const categoryInfo = {
@@ -43,6 +44,7 @@ const categoryInfo = {
   prepared: { title: "Deli & Prepared Foods", icon: catIconType.prepared },
   produce: { title: "Fruits & Vegetables", icon: catIconType.produce },
   seafood: { title: "Seafood", icon: catIconType.seafood },
+  combinedlist: { title: "Combined List", icon: catIconType.list },
 };
 
 interface OwnProps {
@@ -73,7 +75,14 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   useEffect(() => {
     if (props.items) {
       const filteredItems = items
-        .filter((item) => item.category === category)
+        .filter((item) => {
+          // returns all items for the combined single list view
+          if (category === categoryType.combinedlist) {
+            return item;
+          }
+
+          return item.category === category;
+        })
         .reverse();
 
       // sorts to move purchased items automatically to bottom of list - this could be REALLY bad UX
@@ -151,7 +160,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   return (
-    <div className="category-list">
+    <div className={`category-list ${!categoryItems.length ? "empty" : ""}`}>
       <div className="category-list-header">
         <CategoryIcon
           iconType={categoryInfo[category].icon}
@@ -165,14 +174,17 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           </h3>
         )}
 
-        <span
-          className="category-list-control-icon"
-          onClick={() => setAddItemView(!addItemView)}
-        >
-          <Symbol
-            symbolType={addItemView ? symbolType.close : symbolType.addOrange}
-          />
-        </span>
+        {/* add items is not possible for a combined list view */}
+        {category !== categoryType.combinedlist && (
+          <span
+            className="category-list-control-icon"
+            onClick={() => setAddItemView(!addItemView)}
+          >
+            <Symbol
+              symbolType={addItemView ? symbolType.close : symbolType.addOrange}
+            />
+          </span>
+        )}
       </div>
       <hr />
       <ul>{!categoryItems.length ? renderEmptyList() : renderListItems()}</ul>

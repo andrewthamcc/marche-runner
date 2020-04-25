@@ -8,20 +8,21 @@ import TextInput, { textInputType } from "../../components/TextInput";
 import Button, { buttonColor } from "../../components/Button";
 
 // redux actions
-import { registerUser } from "../../actions/auth";
+import { clearErrors, registerUser } from "../../actions/auth";
 
 require("./style.scss");
 
 interface OwnProps {}
 
 interface ReduxStateProps {
+  error: any;
   loading: boolean;
   isAuthenticated: boolean;
 }
 
 interface ReduxDispatchProps {
+  clearErrors: () => void;
   registerUser: (data) => void;
-  showToast: (message, type) => void;
 }
 
 interface SignUpData {
@@ -43,7 +44,7 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
   });
 
   // props
-  const { loading, registerUser } = props;
+  const { clearErrors, error, loading, registerUser } = props;
 
   // other hooks
   const history = useHistory();
@@ -63,6 +64,10 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (error) {
+      clearErrors();
+    }
 
     const { firstName, lastName, email, password } = formData;
 
@@ -145,6 +150,9 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
           >
             Sign Up
           </Button>
+          {error && (
+            <p className="signup-error">An unexpected error occured.</p>
+          )}
         </form>
       </>
     );
@@ -169,8 +177,9 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
 };
 
 const mapStateToProps = (state) => ({
+  error: state.authState.error,
   loading: state.authState.loading,
   isAuthenticated: state.authState.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { registerUser })(Signup);
+export default connect(mapStateToProps, { clearErrors, registerUser })(Signup);

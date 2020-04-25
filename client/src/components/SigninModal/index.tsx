@@ -21,7 +21,7 @@ interface OwnProps {
 }
 
 interface ReduxStateProps {
-  authError: any;
+  error: any;
   isAuthenticated: boolean;
   loading: boolean;
 }
@@ -46,7 +46,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   });
 
   // props
-  const { authError, clearErrors, close, isModalOpen, loading } = props;
+  const { clearErrors, close, error, isModalOpen, loading } = props;
 
   // other hooks
   const history = useHistory();
@@ -76,7 +76,10 @@ const SigninModal: React.FC<Props> = (props: Props) => {
       return;
     }
 
-    clearErrors();
+    if (error) {
+      clearErrors();
+    }
+
     close();
   };
 
@@ -88,6 +91,11 @@ const SigninModal: React.FC<Props> = (props: Props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (error) {
+      clearErrors();
+    }
+
     const { loginUser } = props;
     const { email, password } = formData;
 
@@ -103,7 +111,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   };
 
   const renderError = () => {
-    const { status } = authError;
+    const { status } = error;
     let message = "";
 
     if (status === 401) {
@@ -156,7 +164,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
             >
               Sign In
             </Button>
-            {authError && renderError()}
+            {error && renderError()}
           </form>
           <p className="signin-signup">
             Don't have an account? <Link to="/signup">Sign Up</Link>
@@ -177,7 +185,7 @@ SigninModal.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  authError: state.authState.error,
+  error: state.authState.error,
   loading: state.authState.loading,
   isAuthenticated: state.authState.isAuthenticated,
 });

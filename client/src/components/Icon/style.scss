@@ -17,6 +17,7 @@
     }
   }
 
+  // color for icon-button
   &.grey {
     svg {
       path {
@@ -26,6 +27,14 @@
         &:focus {
           fill: darken(#747474, 15%);
         }
+      }
+    }
+  }
+
+  &.red {
+    svg {
+      path {
+        fill: #ff0000;
       }
     }
   }

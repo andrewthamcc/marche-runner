@@ -8,6 +8,11 @@ const categoryList = [
     value: "allItems",
   },
   {
+    icon: <CategoryIcon iconType={catIconType.list} />,
+    text: "Combined List",
+    value: "combinedlist",
+  },
+  {
     icon: <CategoryIcon iconType={catIconType.bakery} />,
     text: "Bakery",
     value: "bakery",
