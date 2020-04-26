@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactComponent as AddDisable } from "./assets/addDisable.svg";
 import { ReactComponent as AddGreen } from "./assets/addGreen.svg";
 import { ReactComponent as AddOrange } from "./assets/addOrange.svg";
 import { ReactComponent as Checkmark } from "./assets/checkmark.svg";
@@ -11,6 +12,7 @@ import { ReactComponent as Warning } from "./assets/warning.svg";
 require("./style.scss");
 
 export enum symbolType {
+  addDisable = "addDisable",
   addGreen = "addGreen",
   addOrange = "addOrange",
   checkmark = "checkmark",
@@ -22,6 +24,7 @@ export enum symbolType {
 }
 
 const svgSymbols = {
+  addDisable: AddDisable,
   addGreen: AddGreen,
   addOrange: AddOrange,
   checkmark: Checkmark,

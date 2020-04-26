@@ -15,6 +15,7 @@ class ItemState {
   items: Item[] = [];
   loading: false;
   searchResults: Item[] = [];
+  error: any;
 }
 
 const initialState = new ItemState();

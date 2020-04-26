@@ -146,7 +146,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           onBlur={handleInputBlur}
         />
         <IconButton
-          symbol={symbolType.addGreen}
+          symbol={newItem === "" ? symbolType.addDisable : symbolType.addGreen}
           className="category-list-form-button"
           disabled={newItem === ""}
         />

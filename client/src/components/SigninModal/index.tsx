@@ -61,7 +61,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   // other hooks
   const history = useHistory();
   const signinModal = useRef(null); // modal ref
-  const signinEmail = useRef(null); // input ref
+  const signinForm = useRef<HTMLFormElement>(null); // input ref
 
   useEffect(() => {
     // if user is authenticated redirect to dashboard
@@ -73,8 +73,8 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     if (isModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
 
-      if (signinEmail.current) {
-        signinEmail.current.focus();
+      if (signinForm.current) {
+        signinForm.current.focus();
       }
     }
 
@@ -151,7 +151,12 @@ const SigninModal: React.FC<Props> = (props: Props) => {
         <div className="signin-container" ref={signinModal}>
           <h2 className="signin-title">Sign In</h2>
 
-          <form onSubmit={handleSubmit} className="signin-form">
+          <form
+            onSubmit={handleSubmit}
+            className="signin-form"
+            ref={signinForm}
+            tabIndex={-1}
+          >
             <TextInput
               type={textInputType.email}
               value={formData.email}
@@ -160,7 +165,6 @@ const SigninModal: React.FC<Props> = (props: Props) => {
               label="Email Address"
               inputID="sign-in-email"
               inputName="email"
-              ref={signinEmail}
             />
             <TextInput
               value={formData.password}

@@ -5,12 +5,12 @@ import {
 } from "../../actions/user/types";
 
 class UserState {
-  firstName = "";
-  lastName = "";
-  email = "";
-  date = "";
-  error = "";
-  loading = false;
+  firstName: string = "";
+  lastName: string = "";
+  email: string = "";
+  date: string = "";
+  error: string = "";
+  loading: boolean = false;
 }
 
 const initialState = new UserState();

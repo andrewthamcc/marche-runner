@@ -20,7 +20,8 @@ interface OwnProps {
   placeholder?: string; // placeholder text
   ref?: RefObject<HTMLInputElement> | null; // forwardRef
   required?: boolean;
-  type?: textInputType;
+  tabIndex?: number; // passthrough for tab index
+  type?: textInputType; // type of input text | email | password
   value: string;
 }
 
@@ -43,6 +44,7 @@ const TextInput: React.FC<Props> = React.forwardRef(
       onChange,
       placeholder,
       required,
+      tabIndex,
       type,
       value,
     } = props;
@@ -79,6 +81,7 @@ const TextInput: React.FC<Props> = React.forwardRef(
           onFocus={() => setErrors("")}
           placeholder={placeholder}
           ref={ref}
+          tabIndex={tabIndex}
           type={type}
           value={value}
         />
