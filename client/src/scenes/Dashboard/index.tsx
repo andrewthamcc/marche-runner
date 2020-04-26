@@ -111,8 +111,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     // eslint-disable-next-line
   }, [
     clearSearch,
-    // deleteDropdownList, // this causes infite re-renders when added to the dependency array
-    items,
+    // deleteDropdownList, // this causes infinte re-renders when added to the dependency array
     getItems,
     open,
     searchItems,

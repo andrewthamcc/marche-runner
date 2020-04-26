@@ -22,6 +22,7 @@ const setLoading = () => {
 
 export const getItems = () => async (dispatch) => {
   setLoading();
+
   try {
     const res = await axios.get("/shop");
     const data = res.data;
