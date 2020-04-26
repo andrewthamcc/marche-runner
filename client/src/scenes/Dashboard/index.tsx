@@ -39,7 +39,7 @@ interface ReduxDispatchProps {
   deleteAllItems: () => void;
   deletePurchasedItems: () => void;
   getItems: () => void;
-  searchItems: (item) => void;
+  searchItems: (item: string) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;

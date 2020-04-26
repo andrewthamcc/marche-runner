@@ -14,6 +14,9 @@ import TextInput from "../TextInput";
 import { addItem } from "../../actions/items";
 import { showToast, toastType } from "../../actions/ui";
 
+// models
+import { AddItemData } from "../../models/item";
+
 require("./style.scss");
 
 export enum categoryType {
@@ -57,8 +60,8 @@ interface OwnProps {
 interface ReduxStateProps {}
 
 interface ReduxDispatchProps {
-  addItem: (item) => void;
-  showToast: (message, toastType) => void;
+  addItem: (newItem: AddItemData) => void;
+  showToast: (message: string, toastType: toastType) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
@@ -105,7 +108,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newItemData = {
+    const newItemData: AddItemData = {
       name: newItem,
       category,
     };

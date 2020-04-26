@@ -25,10 +25,15 @@ interface Props {
   width?: number; // width of dropdown menu
 }
 
+interface ICoords {
+  x: number;
+  y: number;
+}
+
 const Dropdown: React.FC<Props> = (props: Props) => {
   // state
-  const [dropdownOpen, setDropdownOpen] = useState(false); // boolean to toggle opening of dropdown
-  const [coords, setCoords] = useState({ x: 0, y: 0 }); // coordinates to open dropdown list
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false); // boolean to toggle opening of dropdown
+  const [coords, setCoords] = useState<ICoords>({ x: 0, y: 0 }); // coordinates to open dropdown list
 
   // props
   const {

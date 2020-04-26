@@ -1,5 +1,6 @@
 import store from "../../redux";
 import axios from "axios";
+import { AddItemData } from "../../models/item";
 
 import {
   GET_ITEMS,
@@ -34,7 +35,7 @@ export const getItems = () => async (dispatch) => {
   }
 };
 
-export const addItem = (item) => async (dispatch) => {
+export const addItem = (item: AddItemData) => async (dispatch) => {
   try {
     const res = await axios.post("/shop", item);
     const data = res.data;
@@ -48,7 +49,7 @@ export const addItem = (item) => async (dispatch) => {
   }
 };
 
-export const editItem = (id, item) => async (dispatch) => {
+export const editItem = (id: string, item) => async (dispatch) => {
   try {
     const res = await axios.patch(`/shop/${id}`, item);
     const data = res.data;
@@ -62,7 +63,7 @@ export const editItem = (id, item) => async (dispatch) => {
   }
 };
 
-export const deleteItem = (id) => async (dispatch) => {
+export const deleteItem = (id: string) => async (dispatch) => {
   try {
     const res = await axios.delete(`/shop/${id}`);
     const data = res.data;
@@ -114,7 +115,7 @@ export const deleteAllItems = () => async (dispatch) => {
   }
 };
 
-export const searchItems = (searchText) => (dispatch) => {
+export const searchItems = (searchText: string) => (dispatch) => {
   dispatch({
     type: SEARCH_ITEMS,
     payload: searchText,
