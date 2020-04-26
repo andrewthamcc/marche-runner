@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
@@ -63,21 +63,6 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   const signinModal = useRef(null); // modal ref
   const signinEmail = useRef(null); // input ref
 
-  const handleOutsideClick = useCallback(
-    () => (e) => {
-      if (signinModal.current.contains(e.target)) {
-        return;
-      }
-
-      if (error) {
-        clearErrors();
-      }
-
-      close();
-    },
-    [clearErrors, close, error]
-  );
-
   useEffect(() => {
     // if user is authenticated redirect to dashboard
     if (isAuthenticated) {
@@ -91,14 +76,24 @@ const SigninModal: React.FC<Props> = (props: Props) => {
       if (signinEmail.current) {
         signinEmail.current.focus();
       }
-    } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    function handleOutsideClick(e) {
+      if (signinModal.current.contains(e.target)) {
+        return;
+      }
+
+      if (error) {
+        clearErrors();
+      }
+
+      close();
     }
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [isAuthenticated, close, history, isModalOpen, handleOutsideClick]);
+  }, [isAuthenticated, clearErrors, close, error, history, isModalOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
