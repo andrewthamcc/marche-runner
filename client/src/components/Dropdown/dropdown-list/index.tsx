@@ -37,9 +37,8 @@ const DropdownList: React.FC<Props> = (props: Props) => {
     </ul>
   );
 
-  const portalRoot = document.querySelector("#portal-root");
+  const portalRoot: Element = document.querySelector("#portal-root");
 
-  // render dropdown through portalRoot
   return ReactDOM.createPortal(renderDropdownList, portalRoot);
 };
 

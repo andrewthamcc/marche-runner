@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
@@ -11,6 +11,9 @@ import Button, { buttonColor } from "../Button";
 
 // redux actions
 import { clearErrors, loginUser } from "../../actions/auth";
+
+// models
+import { LoginFormData } from "../../models/user";
 
 require("./style.scss");
 
@@ -28,7 +31,7 @@ interface ReduxStateProps {
 
 interface ReduxDispatchProps {
   clearErrors: () => void;
-  loginUser: (data) => void;
+  loginUser: (data: LoginFormData) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
@@ -46,21 +49,48 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   });
 
   // props
-  const { clearErrors, close, error, isModalOpen, loading } = props;
+  const {
+    clearErrors,
+    close,
+    error,
+    isAuthenticated,
+    isModalOpen,
+    loading,
+  } = props;
 
   // other hooks
   const history = useHistory();
-  const node = useRef(null);
+  const signinModal = useRef(null); // modal ref
+  const signinEmail = useRef(null); // input ref
+
+  const handleOutsideClick = useCallback(
+    () => (e) => {
+      if (signinModal.current.contains(e.target)) {
+        return;
+      }
+
+      if (error) {
+        clearErrors();
+      }
+
+      close();
+    },
+    [clearErrors, close, error]
+  );
 
   useEffect(() => {
     // if user is authenticated redirect to dashboard
-    if (props.isAuthenticated) {
+    if (isAuthenticated) {
       history.push("/dashboard");
       close();
     }
 
     if (isModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
+
+      if (signinEmail.current) {
+        signinEmail.current.focus();
+      }
     } else {
       document.removeEventListener("mousedown", handleOutsideClick);
     }
@@ -68,20 +98,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-    // eslint-disable-next-line
-  }, [props, isModalOpen]);
-
-  const handleOutsideClick = (e) => {
-    if (node.current.contains(e.target)) {
-      return;
-    }
-
-    if (error) {
-      clearErrors();
-    }
-
-    close();
-  };
+  }, [isAuthenticated, close, history, isModalOpen, handleOutsideClick]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,7 +120,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
       return;
     }
 
-    const data = { email, password };
+    const data: LoginFormData = { email, password };
     loginUser(data);
 
     // clear form
@@ -127,7 +144,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
     if (loading) {
       return (
         <div className="signin">
-          <div className="signin-container" ref={node}>
+          <div className="signin-container" ref={signinModal}>
             <LoadingSpinner />
           </div>
         </div>
@@ -136,7 +153,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
 
     return (
       <div className="signin">
-        <div className="signin-container" ref={node}>
+        <div className="signin-container" ref={signinModal}>
           <h2 className="signin-title">Sign In</h2>
 
           <form onSubmit={handleSubmit} className="signin-form">
@@ -148,6 +165,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
               label="Email Address"
               inputID="sign-in-email"
               inputName="email"
+              ref={signinEmail}
             />
             <TextInput
               value={formData.password}
@@ -175,7 +193,7 @@ const SigninModal: React.FC<Props> = (props: Props) => {
   };
 
   // gets the root for the portal to append to
-  const portalRoot = document.querySelector("#portal-root");
+  const portalRoot: Element = document.querySelector("#portal-root");
 
   return isModalOpen && ReactDOM.createPortal(renderModal(), portalRoot);
 };

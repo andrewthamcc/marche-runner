@@ -21,9 +21,6 @@ interface ReduxDispatchProps {}
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
-// gets the root for the portal to append to
-const portalRoot = document.querySelector("#portal-root");
-
 const ConfirmationModal: React.FC<Props> = (props: Props) => {
   // props
   const { isModalOpen, confirm, close, text, title } = props;
@@ -69,6 +66,8 @@ const ConfirmationModal: React.FC<Props> = (props: Props) => {
       </div>
     );
   };
+
+  const portalRoot: Element = document.querySelector("#portal-root");
 
   return isModalOpen && ReactDOM.createPortal(renderModal(), portalRoot);
 };

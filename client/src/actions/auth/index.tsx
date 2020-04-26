@@ -14,6 +14,8 @@ import {
   SET_AUTH_LOADING,
 } from "./types";
 
+import { LoginFormData, RegisterFormData } from "../../models/user";
+
 const setLoading = () => {
   store.dispatch({
     type: SET_AUTH_LOADING,
@@ -52,7 +54,7 @@ const loadUser = async () => {
   }
 };
 
-export const registerUser = (data) => async (dispatch) => {
+export const registerUser = (data: RegisterFormData) => async (dispatch) => {
   setLoading();
   dispatch({ type: CLEAR_ERROR });
 
@@ -74,7 +76,7 @@ export const registerUser = (data) => async (dispatch) => {
   }
 };
 
-export const loginUser = (data) => async (dispatch) => {
+export const loginUser = (data: LoginFormData) => async (dispatch) => {
   setLoading();
 
   dispatch({ type: CLEAR_ERROR });

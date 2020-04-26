@@ -76,7 +76,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (props.items) {
+    if (items) {
       const filteredItems = items
         .filter((item) => {
           // returns all items for the combined single list view
@@ -100,9 +100,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
         inputRef.current.focus();
       }
     }
-
-    // eslint-disable-next-line
-  }, [props, addItemView]);
+  }, [addItemView, category, items]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

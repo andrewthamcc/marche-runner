@@ -10,6 +10,9 @@ import Button, { buttonColor } from "../../components/Button";
 // redux actions
 import { clearErrors, registerUser } from "../../actions/auth";
 
+// models
+import { RegisterFormData } from "../../models/user";
+
 require("./style.scss");
 
 interface OwnProps {}
@@ -22,7 +25,7 @@ interface ReduxStateProps {
 
 interface ReduxDispatchProps {
   clearErrors: () => void;
-  registerUser: (data) => void;
+  registerUser: (data: RegisterFormData) => void;
 }
 
 interface SignUpData {
@@ -75,7 +78,7 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
       return;
     }
 
-    const data = { firstName, lastName, email, password };
+    const data: RegisterFormData = { firstName, lastName, email, password };
     registerUser(data);
 
     // clear form

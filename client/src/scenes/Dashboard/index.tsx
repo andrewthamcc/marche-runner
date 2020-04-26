@@ -108,9 +108,16 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     if (open === false) {
       setDeleteSelection(deleteDropdownList[0]);
     }
-
     // eslint-disable-next-line
-  }, [searchText, open]);
+  }, [
+    clearSearch,
+    // deleteDropdownList, // this causes infite re-renders when added to the dependency array
+    items,
+    getItems,
+    open,
+    searchItems,
+    searchText,
+  ]);
 
   const clearInput = () => {
     setSearchText("");
