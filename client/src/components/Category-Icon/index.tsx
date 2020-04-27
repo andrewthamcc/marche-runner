@@ -13,6 +13,7 @@ import { ReactComponent as Pharmacy } from "./assets/pharmacy.svg";
 import { ReactComponent as Prepared } from "./assets/prepared.svg";
 import { ReactComponent as Produce } from "./assets/produce.svg";
 import { ReactComponent as Seafood } from "./assets/seafood.svg";
+import { ReactComponent as Snack } from "./assets/snack.svg";
 
 require("./style.scss");
 
@@ -31,6 +32,7 @@ export enum catIconType {
   prepared = "prepared",
   produce = "produce",
   seafood = "seafood",
+  snack = "snack",
 }
 
 const svgIcons = {
@@ -48,6 +50,7 @@ const svgIcons = {
   prepared: Prepared,
   produce: Produce,
   seafood: Seafood,
+  snack: Snack,
 };
 
 interface OwnProps {

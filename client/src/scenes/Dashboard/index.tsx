@@ -6,6 +6,7 @@ import { Item } from "../../models/item";
 import Layout from "../../layout";
 import CategoryList, { categoryType } from "../../components/Category-List";
 import CategoryItem from "../../components/Category-List/Category-List-Item";
+import CombinedList from "../../components/Combined-List";
 import TextInput from "../../components/TextInput";
 import Dropdown, { DropdownItem } from "../../components/Dropdown";
 import categoryDropdownList from "./categoryDropdownList";
@@ -166,6 +167,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
               value={selectListView}
               selectValue={(selection) => setSelectListView(selection)}
               width={245}
+              listWidth={265}
               className="dashboard-controls-dropdown"
             />
             <Dropdown
@@ -237,7 +239,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     if (selectListView.value === categoryType.combinedlist) {
       return (
         <div className="dashboard-single-list">
-          <CategoryList category={selectListView.value} items={items} />
+          <CombinedList items={items} />
         </div>
       );
     }

@@ -3,14 +3,9 @@ import CategoryIcon, { catIconType } from "../../components/Category-Icon";
 
 const categoryList = [
   {
-    icon: <CategoryIcon iconType={catIconType.allItems} />,
-    text: "All",
-    value: "allItems",
-  },
-  {
-    icon: <CategoryIcon iconType={catIconType.list} />,
-    text: "Combined List",
-    value: "combinedlist",
+    text: "Category",
+    value: null,
+    disabled: true,
   },
   {
     icon: <CategoryIcon iconType={catIconType.bakery} />,
@@ -52,11 +47,6 @@ const categoryList = [
     text: "Deli & Prepared Foods",
     value: "prepared",
   },
-  // {
-  //   icon: <CategoryIcon iconType={catIconType.personal} />,
-  //   text: "Personal Items",
-  //   value: "personal",
-  // },
   {
     icon: <CategoryIcon iconType={catIconType.pharmacy} />,
     text: "Pharmacy & Personal Items",

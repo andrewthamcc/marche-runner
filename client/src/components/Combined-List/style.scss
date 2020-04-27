@@ -1,13 +1,16 @@
-@import "../../styles/variables";
-
-.category-list {
+.combined-list {
   padding: 4rem 0;
 
   &-header {
     height: 3rem;
 
-    display: flex;
     align-items: center;
+    display: flex;
+  }
+
+  &-title,
+  &-form {
+    flex-grow: 1;
   }
 
   &-icon {
@@ -19,17 +22,16 @@
     }
   }
 
-  &-title,
-  &-form {
-    flex-grow: 1;
-  }
-
   &-form {
     display: flex;
     align-items: center;
 
     &-input {
       flex-grow: 1;
+    }
+
+    &-dropdown {
+      margin-left: 1rem;
     }
 
     &-button {
@@ -49,19 +51,9 @@
     }
   }
 
-  &-item-empty {
+  &-empty {
     font-size: 1.3rem;
     font-style: italic;
     text-align: center;
-  }
-}
-
-@media only screen and (max-width: 950px) {
-  .category-list {
-    padding: 1.5rem 0;
-
-    &-title {
-      font-size: 1.5rem;
-    }
   }
 }

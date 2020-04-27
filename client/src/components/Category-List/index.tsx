@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { Item } from "../../models/item";
 
-// react components
+// components
 import CategoryListItem from "./Category-List-Item";
 import CategoryIcon, { catIconType } from "../Category-Icon";
 import IconButton from "../Icon-Button";
@@ -15,6 +14,7 @@ import { addItem } from "../../actions/items";
 import { showToast, toastType } from "../../actions/ui";
 
 // models
+import { Item } from "../../models/item";
 import { AddItemData } from "../../models/item";
 
 require("./style.scss");
@@ -28,12 +28,13 @@ export enum categoryType {
   frozen = "frozen",
   household = "household",
   meat = "meat",
-  personal = "personal",
+  personal = "personal", // to be deprecated by May 10
   pharmacy = "pharmacy",
   prepared = "prepared",
   produce = "produce",
   seafood = "seafood",
   combinedlist = "combinedlist",
+  snack = "snack",
 }
 
 const categoryInfo = {
@@ -44,11 +45,12 @@ const categoryInfo = {
   frozen: { title: "Frozen Foods", icon: catIconType.frozen },
   household: { title: "Household Items", icon: catIconType.household },
   meat: { title: "Meat", icon: catIconType.meat },
-  personal: { title: "Personal Items", icon: catIconType.personal },
-  pharmacy: { title: "Pharmacy", icon: catIconType.pharmacy },
+  // personal: { title: "Personal Items", icon: catIconType.personal },
+  pharmacy: { title: "Pharmacy & Personal Items", icon: catIconType.pharmacy },
   prepared: { title: "Deli & Prepared Foods", icon: catIconType.prepared },
   produce: { title: "Fruits & Vegetables", icon: catIconType.produce },
   seafood: { title: "Seafood", icon: catIconType.seafood },
+  snack: { title: "Snacks", icon: catIconType.snack },
   combinedlist: { title: "Combined List", icon: catIconType.list },
 };
 
@@ -82,8 +84,11 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
     if (items) {
       const filteredItems = items
         .filter((item) => {
-          // returns all items for the combined single list view
-          if (category === categoryType.combinedlist) {
+          // deprecate by May 10th
+          if (
+            item.category === categoryType.personal &&
+            category === categoryType.pharmacy
+          ) {
             return item;
           }
 
@@ -142,7 +147,7 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           onChange={(e) => setNewItem(e.target.value)}
           inputName="add-item-input"
           placeholder="Add an item..."
-          ref={inputRef} // todo: investigate the weird prop stuff on this
+          ref={inputRef} // todo: investigate the prop stuff on this
           onBlur={handleInputBlur}
         />
         <IconButton
@@ -182,18 +187,13 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
           </h3>
         )}
 
-        {/* add items is not possible for a combined list view */}
-        {category !== categoryType.combinedlist && (
-          <>
-            <IconButton
-              className="category-list-control-icon"
-              color={iconColor.red}
-              icon={addItemView ? iconType.close : null}
-              symbol={!addItemView ? symbolType.addOrange : null}
-              onClick={() => setAddItemView(!addItemView)}
-            />
-          </>
-        )}
+        <IconButton
+          className="category-list-control-icon"
+          color={iconColor.red}
+          icon={addItemView ? iconType.close : null}
+          symbol={!addItemView ? symbolType.addOrange : null}
+          onClick={() => setAddItemView(!addItemView)}
+        />
       </div>
       <hr />
       <ul>{!categoryItems.length ? renderEmptyList() : renderListItems()}</ul>

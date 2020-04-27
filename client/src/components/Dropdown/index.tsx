@@ -87,6 +87,7 @@ const Dropdown: React.FC<Props> = (props: Props) => {
           ${disabled ? "disabled" : ""}
         `}
         ref={dropdownRef}
+        tabIndex={0}
       >
         {value.icon && <span className="dropdown-icon">{value.icon}</span>}
         <span className="dropdown-text">{value.text}</span>

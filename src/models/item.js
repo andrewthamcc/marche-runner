@@ -21,10 +21,11 @@ const itemSchema = new mongoose.Schema({
       "household",
       "meat",
       "prepared", // deli & prepared
-      "personal",
-      "pharmacy",
+      "personal", // deprecated
+      "pharmacy", // pharmacy & personal
       "produce",
       "seafood",
+      "snack",
     ],
     trim: true,
     lowercase: true,
