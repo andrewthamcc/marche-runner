@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "../../redux";
 import setAuthToken from "../../utils/setAuthToken";
 import {
-  CLEAR_ERROR,
+  CLEAR_AUTH_ERROR,
   DELETE_USER,
   LOAD_USER,
   LOAD_USER_FAILED,
@@ -22,9 +22,9 @@ const setLoading = () => {
   });
 };
 
-export const clearErrors = () => (dispatch) => {
+export const clearErrors = () => {
   store.dispatch({
-    type: CLEAR_ERROR,
+    type: CLEAR_AUTH_ERROR,
   });
 };
 
@@ -56,7 +56,7 @@ const loadUser = async () => {
 
 export const registerUser = (data: RegisterFormData) => async (dispatch) => {
   setLoading();
-  dispatch({ type: CLEAR_ERROR });
+  dispatch({ type: CLEAR_AUTH_ERROR });
 
   try {
     const res = await axios.post("/profile", data);
@@ -79,7 +79,7 @@ export const registerUser = (data: RegisterFormData) => async (dispatch) => {
 export const loginUser = (data: LoginFormData) => async (dispatch) => {
   setLoading();
 
-  dispatch({ type: CLEAR_ERROR });
+  dispatch({ type: CLEAR_AUTH_ERROR });
 
   try {
     const res = await axios.post("/login", data);

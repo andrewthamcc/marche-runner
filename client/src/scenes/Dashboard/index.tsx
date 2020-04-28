@@ -19,28 +19,33 @@ import LoadingSpinner from "../../components/Loader";
 // react actions
 import {
   clearSearch,
+  clearError,
   deleteAllItems,
   deletePurchasedItems,
   getItems,
   searchItems,
 } from "../../actions/items";
+import { showToast, toastType } from "../../actions/ui";
 
 require("./style.scss");
 
 interface OwnProps {}
 
 interface ReduxStateProps {
+  error: any;
   items: Item[];
   loading: boolean;
   searchResults: Item[];
 }
 
 interface ReduxDispatchProps {
+  clearError: () => void;
   clearSearch: () => void;
   deleteAllItems: () => void;
   deletePurchasedItems: () => void;
   getItems: () => void;
   searchItems: (item: string) => void;
+  showToast: (message: string, type: toastType) => void;
 }
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
@@ -80,20 +85,32 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
 
   // props
   const {
+    clearError,
     clearSearch,
     deleteAllItems,
     deletePurchasedItems,
+    error,
     items,
     getItems,
     loading,
     searchItems,
     searchResults,
+    showToast,
   } = props;
 
   // other hooks
   const { open, openModal, closeModal } = useModal();
 
   useEffect(() => {
+    // display toast if error
+    if (error) {
+      showToast("An unexpected error occured.", toastType.error);
+
+      setTimeout(() => {
+        clearError();
+      }, 3100); // toast lasts 3secs clear after
+    }
+
     // fetch items when items are empty
     if (items.length === 0) {
       getItems();
@@ -113,6 +130,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   }, [
     clearSearch,
     // deleteDropdownList, // this causes infinte re-renders when added to the dependency array
+    error,
     getItems,
     open,
     searchItems,
@@ -282,15 +300,18 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
 };
 
 const mapStateToProps = (state) => ({
+  error: state.itemState.error,
   items: state.itemState.items,
   loading: state.itemState.loading,
   searchResults: state.itemState.searchResults,
 });
 
 export default connect(mapStateToProps, {
+  clearError,
   clearSearch,
   deleteAllItems,
   deletePurchasedItems,
   getItems,
   searchItems,
+  showToast,
 })(Dashboard);

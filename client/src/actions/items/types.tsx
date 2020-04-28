@@ -1,9 +1,11 @@
-export const GET_ITEMS = "GET_ITEMS";
 export const ADD_ITEM = "ADD_ITEM";
-export const EDIT_ITEM = "EDIT_ITEM";
-export const SEARCH_ITEMS = "SEARCH_ITEMS";
+export const CLEAR_ITEM_ERROR = "CLEAR_ITEM_ERROR";
 export const CLEAR_SEARCH = "CLEAR_SEARCH";
+export const DELETE_ALL = "DELETE_ALL";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const DELETE_PURCHASED = "DELETE_PURCHASED";
-export const DELETE_ALL = "DELETE_ALL";
+export const EDIT_ITEM = "EDIT_ITEM";
+export const GET_ITEMS = "GET_ITEMS";
+export const SEARCH_ITEMS = "SEARCH_ITEMS";
+export const SET_ITEM_ERROR = "SET_ITEM_ERROR";
 export const SET_ITEMS_LOADING = "SET_ITEMS_LOADING";

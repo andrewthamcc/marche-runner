@@ -1,6 +1,6 @@
 import {
   DELETE_USER,
-  CLEAR_ERROR,
+  CLEAR_AUTH_ERROR,
   LOAD_USER,
   LOAD_USER_FAILED,
   LOGIN_FAIL,
@@ -54,7 +54,7 @@ const authReducer = (state = initialState, action) => {
       sessionStorage.removeItem("authenticated");
 
       return new authState();
-    case CLEAR_ERROR:
+    case CLEAR_AUTH_ERROR:
       return {
         ...state,
         error: null,

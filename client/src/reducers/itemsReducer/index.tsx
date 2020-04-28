@@ -1,12 +1,14 @@
 import {
-  GET_ITEMS,
   ADD_ITEM,
-  EDIT_ITEM,
+  CLEAR_ITEM_ERROR,
+  CLEAR_SEARCH,
+  DELETE_ALL,
   DELETE_ITEM,
   DELETE_PURCHASED,
-  DELETE_ALL,
+  EDIT_ITEM,
+  GET_ITEMS,
   SEARCH_ITEMS,
-  CLEAR_SEARCH,
+  SET_ITEM_ERROR,
   SET_ITEMS_LOADING,
 } from "../../actions/items/types";
 import { Item } from "../../models/item";
@@ -15,7 +17,7 @@ class ItemState {
   items: Item[] = [];
   loading: false;
   searchResults: Item[] = [];
-  error: any;
+  error: any = null;
 }
 
 const initialState = new ItemState();
@@ -83,6 +85,16 @@ const itemsReducer = (state = initialState, action) => {
       return {
         ...state,
         searchResults: [],
+      };
+    case SET_ITEM_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case CLEAR_ITEM_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     case SET_ITEMS_LOADING:
       return {

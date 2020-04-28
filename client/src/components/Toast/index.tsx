@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 
 // components
-import Icon, { iconType, iconColor } from "../../components/Icon";
+import IconButton from "../../components/Icon-Button";
+import { iconType } from "../../components/Icon";
 import Symbol, { symbolType } from "../../components/Symbol";
 
 // redux actions
@@ -50,9 +51,11 @@ const ToastNotification: React.FC<Props> = (props: Props): JSX.Element => {
             <Symbol symbolType={renderSymbol()} className="toast-symbol" />
           )}
           <p className="toast-message">{message}</p>
-          <span className="toast-close" onClick={() => hideToast()}>
-            <Icon iconType={iconType.close} color={iconColor.grey} />
-          </span>
+          <IconButton
+            icon={iconType.close}
+            onClick={() => hideToast()}
+            className="toast-close"
+          />
         </div>
       </div>
     );

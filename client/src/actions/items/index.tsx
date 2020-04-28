@@ -3,20 +3,28 @@ import axios from "axios";
 import { AddItemData } from "../../models/item";
 
 import {
-  GET_ITEMS,
   ADD_ITEM,
-  EDIT_ITEM,
+  CLEAR_ITEM_ERROR,
+  CLEAR_SEARCH,
+  DELETE_ALL,
   DELETE_ITEM,
   DELETE_PURCHASED,
-  DELETE_ALL,
+  EDIT_ITEM,
+  GET_ITEMS,
   SEARCH_ITEMS,
-  CLEAR_SEARCH,
+  SET_ITEM_ERROR,
   SET_ITEMS_LOADING,
 } from "./types";
 
 const setLoading = () => {
   store.dispatch({
     type: SET_ITEMS_LOADING,
+  });
+};
+
+export const clearError = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_ITEM_ERROR,
   });
 };
 
@@ -32,7 +40,10 @@ export const getItems = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: SET_ITEM_ERROR,
+      payload: error,
+    });
   }
 };
 
@@ -46,7 +57,10 @@ export const addItem = (item: AddItemData) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: SET_ITEM_ERROR,
+      payload: error,
+    });
   }
 };
 
@@ -60,7 +74,10 @@ export const editItem = (id: string, item) => async (dispatch) => {
       payload: { _id: id, ...data },
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: SET_ITEM_ERROR,
+      payload: error,
+    });
   }
 };
 
@@ -74,7 +91,10 @@ export const deleteItem = (id: string) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: SET_ITEM_ERROR,
+      payload: error,
+    });
   }
 };
 
@@ -93,7 +113,10 @@ export const deletePurchasedItems = () => async (dispatch) => {
       payload: ids,
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: SET_ITEM_ERROR,
+      payload: error,
+    });
   }
 };
 
@@ -112,7 +135,10 @@ export const deleteAllItems = () => async (dispatch) => {
       payload: ids,
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: SET_ITEM_ERROR,
+      payload: error,
+    });
   }
 };
 
