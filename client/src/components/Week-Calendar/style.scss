@@ -1,0 +1,24 @@
+.week-calendar {
+  display: flex;
+  grid-template-columns: repeat(7, 1fr);
+
+  &-day {
+    border: 1px blue solid;
+    height: 15rem;
+    padding: 1rem;
+    width: calc(100% / 7);
+
+    display: flex;
+    justify-content: space-between;
+
+    // sun - sat
+    &-week-day {
+      font-weight: 600;
+    }
+
+    // dynamic dates MM DD
+    &-dynamic-day {
+      font-size: 1.2rem;
+    }
+  }
+}

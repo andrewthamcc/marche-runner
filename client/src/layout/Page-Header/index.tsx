@@ -65,6 +65,9 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
   const renderAuthLinks = () => {
     return (
       <>
+        <li>
+          <Link to="/mealplan">Meal Plan</Link>
+        </li>
         <li>{firstName}</li>
         <li>
           <Dropdown

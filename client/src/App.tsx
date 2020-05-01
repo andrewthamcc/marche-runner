@@ -11,8 +11,11 @@ import Home from "./scenes/Home";
 import Signup from "./scenes/Signup";
 import Dashboard from "./scenes/Dashboard";
 import Profile from "./scenes/Profile";
+import MealPlan from "./scenes/Meal-Plan";
 
 require("./styles/App.scss");
+
+require("./token"); // to be removed
 
 function App() {
   return (
@@ -20,9 +23,10 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={MealPlan} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/mealplan" component={MealPlan} />
             <Route path="/signup" component={Signup} />
           </Switch>
         </BrowserRouter>

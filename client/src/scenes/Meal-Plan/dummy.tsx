@@ -1,0 +1,42 @@
+export const dummyData = [
+  {
+    _id: "5eab79c24da4696112622af5",
+    name: "Vegetarian Indian",
+    type: "dinner",
+    date: "2020-04-27T00:00:00.000Z",
+    user: "5ea08f55fdd24f0017994ef9",
+    __v: 0,
+  },
+  {
+    _id: "5eab79a14da4696112622af4",
+    name: "Satay Chicken",
+    type: "dinner",
+    date: "2020-04-28T00:00:00.000Z",
+    user: "5ea08f55fdd24f0017994ef9",
+    __v: 0,
+  },
+  {
+    _id: "5eab79894da4696112622af3",
+    name: "Lentil Shakshouka",
+    type: "dinner",
+    date: "2020-04-29T00:00:00.000Z",
+    user: "5ea08f55fdd24f0017994ef9",
+    __v: 0,
+  },
+  {
+    _id: "5eab79814da4696112622af2",
+    name: "Chicken Schnitzel",
+    type: "dinner",
+    date: "2020-04-30T00:00:00.000Z",
+    user: "5ea08f55fdd24f0017994ef9",
+    __v: 0,
+  },
+  {
+    _id: "5eab79e24da4696112622af6",
+    name: "Poached Salmon Salad",
+    type: "dinner",
+    date: "2020-05-01T00:00:00.000Z",
+    user: "5ea08f55fdd24f0017994ef9",
+    __v: 0,
+  },
+];
