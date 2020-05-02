@@ -1,3 +1,38 @@
 .meal-plan {
   padding: 4rem 0;
+
+  &-title {
+    margin-bottom: 2rem;
+  }
+
+  &-selected-meal {
+    margin: 4rem auto 0;
+    width: 80%;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &-controls button {
+        margin-left: 1rem;
+      }
+    }
+
+    &-name {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    &-date,
+    &-type,
+    &-description {
+      margin-bottom: 1rem;
+
+      .title {
+        font-weight: 600;
+      }
+    }
+  }
 }

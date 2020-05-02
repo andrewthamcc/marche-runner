@@ -1,24 +1,104 @@
+@import "../../styles/variables";
+
 .week-calendar {
-  display: flex;
+  display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr;
+  // padding: 0 4%;
+
+  // https://medium.com/cloudaper/how-to-create-a-flexible-square-grid-with-css-grid-layout-ea48baf038f3
+  &::before {
+    content: "";
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+  }
+
+  > *:first-child {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+  }
 
   &-day {
-    border: 1px blue solid;
-    height: 15rem;
-    padding: 1rem;
-    width: calc(100% / 7);
+    border: 1px solid $black;
 
-    display: flex;
-    justify-content: space-between;
-
-    // sun - sat
-    &-week-day {
-      font-weight: 600;
+    &:nth-of-type(even) {
+      border-left: none;
+      border-right: none;
     }
 
-    // dynamic dates MM DD
-    &-dynamic-day {
-      font-size: 1.2rem;
+    &-header {
+      border-bottom: 1px solid $black;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      height: 3.5rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &-dayName {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+
+      &-date {
+        font-size: 1.2rem;
+        font-style: italic;
+
+        &.current {
+          background-color: $orange;
+          font-weight: 800;
+          border-radius: 8px;
+          padding: 0.4rem;
+        }
+      }
+    }
+
+    &-meals {
+      padding: 1rem 0;
+
+      display: flex;
+      flex-direction: column;
+
+      .meal-type {
+        border-radius: 8px;
+        color: #ffffff;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .breakfast {
+        order: 0;
+        background-color: #8c31a5;
+
+        &:hover,
+        &:focus {
+          background-color: darken(#8c31a5, 5%);
+        }
+      }
+
+      .lunch {
+        order: 1;
+        background-color: #23a897;
+
+        &:hover,
+        &:focus {
+          background-color: darken(#23a897, 5%);
+        }
+      }
+
+      .dinner {
+        order: 2;
+        background-color: #006996;
+
+        &:hover,
+        &:focus {
+          background-color: darken(#006996, 5%);
+        }
+      }
     }
   }
 }

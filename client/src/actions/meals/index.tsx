@@ -1,12 +1,18 @@
 import store from "../../redux";
 import axios from "axios";
-
-import moment from "moment";
+import {
+  endOfMonth,
+  endOfWeek,
+  format,
+  startOfMonth,
+  startOfWeek,
+} from "date-fns";
 import {
   ADD_MEAL,
   DELETE_MEAL,
   GET_MEALS,
   SET_DATE_RANGE,
+  SET_DATES,
   SET_MEAL_LOADING,
 } from "./types";
 import { dateRange } from "../../reducers/mealReducer";
@@ -68,16 +74,28 @@ export const deleteMeal = (id) => async (dispatch) => {
   }
 };
 
+export const setDates = (startDate: string, endDate: string) => (dispatch) => {
+  const newDates = {
+    startDate,
+    endDate,
+  };
+
+  dispatch({
+    type: SET_DATES,
+    payload: newDates,
+  });
+};
+
 export const setDateRange = (range: dateRange) => (dispatch) => {
   let startDate: string = "";
   let endDate: string = "";
 
   if (range === dateRange.week) {
-    startDate = moment().startOf("week").format("YYYY-MM-DD");
-    endDate = moment().endOf("week").format("YYYY-MM-DD");
+    startDate = format(startOfWeek(new Date()), "yyyy-MM-dd");
+    endDate = format(endOfWeek(new Date()), "yyyy-MM-dd");
   } else if (range === dateRange.month) {
-    startDate = moment().startOf("month").format("YYYY-MM-DD");
-    endDate = moment().endOf("month").format("YYYY-MM-DD");
+    startDate = format(startOfMonth(new Date()), "yyyy-MM-dd");
+    endDate = format(endOfMonth(new Date()), "yyyy-MM-dd");
   }
 
   const dateData = {

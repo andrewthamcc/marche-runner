@@ -1,9 +1,10 @@
-import moment from "moment";
+import { endOfWeek, format, startOfWeek } from "date-fns";
 import {
   ADD_MEAL,
   DELETE_MEAL,
   GET_MEALS,
   SET_DATE_RANGE,
+  SET_DATES,
   SET_MEAL_LOADING,
 } from "../../actions/meals/types";
 import { Meal } from "../../models/meal";
@@ -14,9 +15,9 @@ export enum dateRange {
 }
 
 class MenuState {
-  currentDay: string = moment().format("YYYY-MM-DD");
-  startDate: string = moment().startOf("week").format("YYYY-MM-DD");
-  endDate: string = moment().endOf("week").format("YYYY-MM-DD");
+  currentDay: string = format(new Date(), "yyyy-MM-dd");
+  startDate: string = format(startOfWeek(new Date()), "yyyy-MM-dd");
+  endDate: string = format(endOfWeek(new Date()), "yyyy-MM-dd");
   dateRange: dateRange = dateRange.week;
   meals: Meal[] = [];
   loading: boolean = false;
@@ -34,7 +35,7 @@ const itemsReducer = (state = initialState, action) => {
       };
     case GET_MEALS:
       return {
-        state,
+        ...state,
         meals: action.payload,
         loading: false,
       };
@@ -47,12 +48,18 @@ const itemsReducer = (state = initialState, action) => {
         ...state,
         meals: filteredMeals,
       };
+    case SET_DATES:
+      return {
+        ...state,
+        startDate: format(action.payload.startDate, "yyyy-MM-dd"),
+        endDate: format(action.payload.endDate, "yyyy-MM-dd"),
+      };
     case SET_DATE_RANGE:
       return {
         ...state,
         dateRange: action.payload.range,
-        startDate: action.payload.startDate,
-        endDate: action.payload.endDate,
+        startDate: format(action.payload.startDate, "yyyy-MM-dd"),
+        endDate: format(action.payload.endDate, "yyyy-MM-dd"),
         loading: false,
       };
     case SET_MEAL_LOADING:
