@@ -12,7 +12,11 @@ const Meal = require("../models/meal");
 router.post("/", auth, async (req, res) => {
   const user = req.user._id;
 
-  const meal = new Meal({ ...req.body, user });
+  // correct for timezone diff
+  let date = new Date(req.body.date);
+  date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+
+  const meal = new Meal({ ...req.body, user, date });
 
   try {
     await meal.save();
@@ -27,13 +31,13 @@ router.post("/", auth, async (req, res) => {
 // gets all meals within range
 router.get("/", auth, async (req, res) => {
   const user = req.user._id;
-  const start = req.query.start_date;
-  const end = req.query.end_date;
+  const start = new Date(req.query.start_date);
+  const end = new Date(req.query.end_date);
 
   try {
     const meals = await Meal.find({
       user,
-      date: { $gte: new Date(start), $lte: new Date(end) },
+      date: { $gte: start, $lte: end },
     }).sort({ date: 1 });
 
     if (!meals) {

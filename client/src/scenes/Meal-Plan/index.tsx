@@ -7,6 +7,8 @@ import Layout from "../../layout";
 import WeekCalendar from "../../components/Week-Calendar";
 import IconButton from "../../components/Icon-Button";
 import { iconType } from "../../components/Icon";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import useModal from "../../components/ConfirmationModal/useModal";
 
 // redux actions
 import { getMeals } from "../../actions/meals";
