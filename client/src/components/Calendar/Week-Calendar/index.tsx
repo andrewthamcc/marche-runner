@@ -11,15 +11,15 @@ import {
 } from "date-fns";
 
 // components
-import IconButton from "../../components/Icon-Button";
-import { iconType } from "../../components/Icon";
-import Button from "../../components/Button";
+import IconButton from "../../Icon-Button";
+import { iconType } from "../../Icon";
+import Button from "../../Button";
 
 // redux actions
-import { setDates } from "../../actions/meals";
+import { setDates } from "../../../actions/meals";
 
 // models
-import { Meal } from "../../models/meal";
+import { Meal } from "../../../models/meal";
 import { endOfWeek } from "date-fns/esm";
 
 require("./style.scss");
@@ -80,8 +80,8 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   const renderCalendarDays = () => {
-    return days.map((day) => (
-      <div className={`day day-${format(parseISO(day), "iii")}`}>
+    return days.map((day, index) => (
+      <div className={`day day-${format(parseISO(day), "iii")}`} key={index}>
         {" "}
         {format(parseISO(day), "iiii")}
       </div>
@@ -89,7 +89,7 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   const renderCalendar = () => {
-    return days.map((day) => {
+    return days.map((day, index) => {
       const dailyMeals = meals.filter((meal) =>
         isSameDay(parseISO(meal.date), parseISO(day))
       );
@@ -106,11 +106,8 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
       ));
 
       return (
-        <div className="cells-day">
+        <div className="cells-day" key={index}>
           <div className="cells-day-header">
-            {/* <span className="cells-day-header-dayName">
-              {format(parseISO(day), "iii")}
-            </span> */}
             <span
               className={`cells-day-header-date 
               ${isSameDay(new Date(), parseISO(day)) ? "current" : ""}`}
@@ -126,33 +123,31 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   return (
-    <>
-      <div className="week-calendar">
-        <div className="header">
-          <h3 className="header-title">
-            Week:{" "}
-            <span className="header-title-date">
-              {format(parseISO(startDate), "MMM dd")} -{" "}
-              {format(parseISO(endDate), "MMM dd")}
-            </span>
-          </h3>
+    <div className="week-calendar">
+      <div className="header">
+        <h3 className="header-title">
+          Week:{" "}
+          <span className="header-title-date">
+            {format(parseISO(startDate), "MMM d")} -{" "}
+            {format(parseISO(endDate), "MMM d")}
+          </span>
+        </h3>
 
-          <div className="header-controls">
-            <IconButton icon={iconType.chevronLeft} onClick={handlePrev} />
-            <Button
-              onClick={handleToday}
-              border={false}
-              className="header-controls-today"
-            >
-              Today
-            </Button>
-            <IconButton icon={iconType.chevronRight} onClick={handleNext} />
-          </div>
+        <div className="header-controls">
+          <IconButton icon={iconType.chevronLeft} onClick={handlePrev} />
+          <Button
+            onClick={handleToday}
+            border={false}
+            className="header-controls-today"
+          >
+            Today
+          </Button>
+          <IconButton icon={iconType.chevronRight} onClick={handleNext} />
         </div>
-        <div className="calendar-days">{renderCalendarDays()}</div>
-        <div className="cells">{renderCalendar()}</div>
       </div>
-    </>
+      <div className="calendar-days">{renderCalendarDays()}</div>
+      <div className="cells">{renderCalendar()}</div>
+    </div>
   );
 };
 

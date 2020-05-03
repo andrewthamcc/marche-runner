@@ -1,0 +1,21 @@
+.radio-input {
+  input {
+    left: -1000%;
+    position: absolute;
+
+    &:focus {
+      ~ label {
+        font-style: italic;
+      }
+    }
+  }
+
+  &-icon svg {
+    height: 14px;
+    width: 14px;
+  }
+
+  label {
+    margin-left: 0.5rem;
+  }
+}

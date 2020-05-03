@@ -1,37 +1,97 @@
 .meal-plan {
   padding: 4rem 0;
 
-  &-title {
+  &-header {
     margin-bottom: 2rem;
+
+    display: flex;
+    align-items: center;
+
+    &-title {
+      margin-left: 1rem;
+    }
   }
 
-  &-selected-meal {
-    margin: 4rem auto 0;
-    width: 80%;
+  &-calendar {
+    position: relative;
+  }
 
-    &-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  &-add-button {
+    position: absolute;
+    bottom: -20px;
+    right: -15px;
 
-      &-controls button {
+    svg {
+      border-radius: 50%;
+      box-shadow: 0 10px 20px 0 rgba(55, 58, 75, 0.35);
+      height: 40px;
+      width: 40px;
+    }
+  }
+
+  &-modal {
+    &-controls {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+
+      button {
         margin-left: 1rem;
       }
     }
+  }
+}
 
-    &-name {
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
+.selected-meal {
+  &-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  &-date,
+  &-type {
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-weight: 600;
+  }
+}
+
+.add-meal {
+  &-title {
+    margin-bottom: 1rem;
+  }
+
+  &-form {
+    &-radio-container {
+      margin: 2rem 0;
+
+      display: flex;
+      align-items: center;
     }
 
-    &-date,
-    &-type,
-    &-description {
-      margin-bottom: 1rem;
+    &-flex-container {
+      display: flex;
+      align-items: center;
+    }
 
-      .title {
-        font-weight: 600;
+    &-radio-input {
+      margin-right: 1rem;
+    }
+
+    &-date-input {
+      border: 2px solid #c0c0c0;
+      border-radius: 8px;
+      padding: 5px;
+      margin-right: 2rem;
+
+      &::-webkit-clear-button,
+      &::-webkit-inner-spin-button,
+      ::-webkit-calendar-picker-indicator {
+        -webkit-appearance: none;
+        display: none;
       }
     }
   }

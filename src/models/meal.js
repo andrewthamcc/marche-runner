@@ -8,11 +8,12 @@ const mealSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    maxlength: 200,
+    maxlength: 80,
   },
   description: {
     type: String,
-    maxlength: 600,
+    maxlength: 300,
+    default: "",
   },
   type: {
     type: String,

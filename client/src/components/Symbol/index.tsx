@@ -35,12 +35,10 @@ const svgSymbols = {
   warning: Warning,
 };
 
-interface OwnProps {
+interface Props {
   className?: string; // passthrough for className
   symbolType: symbolType; // iconType
 }
-
-type Props = OwnProps;
 
 const Icon: React.FC<Props> = (props: Props): JSX.Element => {
   // props

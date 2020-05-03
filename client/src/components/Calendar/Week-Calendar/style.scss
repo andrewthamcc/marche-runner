@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import "../../../styles/variables";
 
 .week-calendar {
   .header {
@@ -25,8 +25,13 @@
         width: auto;
         transition: 0.2s border ease-in;
 
-        &:hover {
+        &:hover,
+        &:focus {
           border-color: darken(#c0c0c0, 10%);
+        }
+
+        &:active {
+          background-color: darken(#ffffff, 3%);
         }
       }
     }
@@ -35,14 +40,15 @@
   .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    border: 1px solid $black;
     text-align: center;
 
     .day {
+      border: 1px solid $black;
       padding: 0.5rem;
       border-right: 1px solid $black;
 
-      &:last-of-type {
+      &:nth-of-type(even) {
+        border-left: none;
         border-right: none;
       }
     }
@@ -77,8 +83,9 @@
       }
 
       &-header {
-        padding: 0.75rem;
-        height: 3.5rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+        padding: 0 0.5rem;
 
         display: flex;
         align-items: center;
@@ -95,16 +102,14 @@
 
           &.current {
             background-color: $orange;
-            font-weight: 800;
-            border-radius: 8px;
+            color: #ffffff;
+            border-radius: 5px;
             padding: 0.4rem;
           }
         }
       }
 
       &-meals {
-        padding: 1rem 0;
-
         display: flex;
         flex-direction: column;
 

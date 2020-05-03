@@ -1,23 +1,18 @@
 import React, { useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-// react components
-import Button, { buttonColor } from "../../components/Button";
-
 require("./style.scss");
 
 interface Props {
   children?: any;
+  className?: string;
   close: () => void; // prop to close modal from parent
-  confirm: () => void; // function to execute when confirmed
   isModalOpen: boolean; // boolean to determine to display modal or not
-  text?: string; // body text
-  title: string; // title text
 }
 
-const ConfirmationModal: React.FC<Props> = (props: Props) => {
+const BlankModal: React.FC<Props> = (props: Props): JSX.Element => {
   // props
-  const { isModalOpen, confirm, close, text, title } = props;
+  const { className, close, isModalOpen } = props;
 
   // other hooks
   const node = useRef(null);
@@ -44,18 +39,9 @@ const ConfirmationModal: React.FC<Props> = (props: Props) => {
 
   const renderModal = () => {
     return (
-      <div className="confirmation-modal">
-        <div className="confirmation-modal-container" ref={node}>
-          <h2 className="confirmation-modal-title">{title}</h2>
-          <span className="confirmation-modal-text">{text}</span>
+      <div className={`blank-modal ${className ? className : ""}`}>
+        <div className="blank-modal-container" ref={node}>
           {props.children}
-
-          <div className="confirmation-modal-controls">
-            <Button color={buttonColor.green} onClick={() => confirm()}>
-              Confirm
-            </Button>
-            <Button onClick={() => close()}>Cancel</Button>
-          </div>
         </div>
       </div>
     );
@@ -66,8 +52,8 @@ const ConfirmationModal: React.FC<Props> = (props: Props) => {
   return isModalOpen && ReactDOM.createPortal(renderModal(), portalRoot);
 };
 
-ConfirmationModal.defaultProps = {
+BlankModal.defaultProps = {
   isModalOpen: false,
 };
 
-export default ConfirmationModal;
+export default BlankModal;

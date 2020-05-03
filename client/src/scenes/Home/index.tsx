@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Layout from "../../layout";
 import Button, { buttonColor } from "../../components/Button";
 import SigninModal from "../../components/SigninModal";
-import useModal from "../../components/SigninModal/useModal";
+import useModal from "../../utils/useModal";
 import Screenshot from "./assets/marcherunner-list.png";
 import { ReactComponent as Profile } from "./assets/profile.svg";
 import { ReactComponent as List } from "./assets/list.svg";

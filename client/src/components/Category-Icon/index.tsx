@@ -53,12 +53,10 @@ const svgIcons = {
   snack: Snack,
 };
 
-interface OwnProps {
+interface Props {
   className?: string; // passthrough for className
   iconType: catIconType; // iconType
 }
-
-type Props = OwnProps;
 
 const Icon: React.FC<Props> = (props: Props): JSX.Element => {
   const { className, iconType } = props;

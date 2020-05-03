@@ -5,7 +5,7 @@ import { ReactComponent as Runner } from "./assets/runner.svg";
 
 // components
 import SigninModal from "../../components/SigninModal";
-import useModal from "../../components/SigninModal/useModal";
+import useModal from "../../utils/useModal";
 import Button, { buttonColor } from "../../components/Button";
 import Icon, { iconType } from "../../components/Icon";
 import Dropdown, { DropdownItem } from "../../components/Dropdown";

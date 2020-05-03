@@ -7,7 +7,7 @@ import store from "./redux";
 import PrivateRoute from "./components/PrivateRoute";
 import Toast from "./components/Toast";
 
-import Home from "./scenes/Home";
+// import Home from "./scenes/Home";
 import Signup from "./scenes/Signup";
 import Dashboard from "./scenes/Dashboard";
 import Profile from "./scenes/Profile";
