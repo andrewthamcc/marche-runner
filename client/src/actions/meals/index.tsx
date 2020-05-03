@@ -60,7 +60,7 @@ export const getMeals = (startDate: string, endDate: string) => async (
   }
 };
 
-export const deleteMeal = (id) => async (dispatch) => {
+export const deleteMeal = (id: string) => async (dispatch) => {
   try {
     const res = await axios.delete(`/meals${id}`);
     const data = res.data;

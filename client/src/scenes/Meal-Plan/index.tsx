@@ -11,7 +11,7 @@ import ConfirmationModal from "../../components/ConfirmationModal";
 import useModal from "../../components/ConfirmationModal/useModal";
 
 // redux actions
-import { getMeals } from "../../actions/meals";
+import { deleteMeal, getMeals } from "../../actions/meals";
 
 // models
 import { Meal } from "../../models/meal";
@@ -22,7 +22,6 @@ require("./style.scss");
 interface OwnProps {}
 
 interface ReduxStateProps {
-  currentDate: string;
   endDate: string;
   dateRange: dateRange;
   meals: Meal[];
@@ -30,6 +29,7 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
+  deleteMeal: (id: string) => void;
   getMeals: (startDate: string, endDate: string) => void;
 }
 
@@ -40,14 +40,21 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
   const [selectedMeal, setSelectedMeal] = useState<Meal>(null);
 
   // props
-  const { currentDate, getMeals, startDate, endDate, meals } = props;
+  const { deleteMeal, getMeals, startDate, endDate, meals } = props;
 
   // other hooks
+  const { open, openModal, closeModal } = useModal();
+
   useEffect(() => {
     getMeals(startDate, endDate);
 
     // eslint-disable-next-line
   }, [startDate]);
+
+  const handleDelete = () => {
+    deleteMeal(selectedMeal._id);
+    setSelectedMeal(null);
+  };
 
   const renderSelectedMeal = () => {
     return (
@@ -59,10 +66,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
               icon={iconType.pencil}
               onClick={() => console.log("Editing...")}
             />
-            <IconButton
-              icon={iconType.trash}
-              onClick={() => console.log("Deleting...")}
-            />
+            <IconButton icon={iconType.trash} onClick={() => openModal()} />
           </div>
         </div>
         <hr />
@@ -88,12 +92,21 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
 
   return (
     <Layout>
+      {open && (
+        <ConfirmationModal
+          isModalOpen={open}
+          close={closeModal}
+          title={"Delete Meal?"}
+          text={"Are you sure you want to delete this meal?"}
+          confirm={() => handleDelete}
+        />
+      )}
+
       <div className="meal-plan">
         <div className="container">
           <h2 className="meal-plan-title">Meal Planning</h2>
 
           <WeekCalendar
-            currentDate={currentDate}
             endDate={endDate}
             startDate={startDate}
             meals={meals}
@@ -110,11 +123,10 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
 };
 
 const mapStateToProps = (state) => ({
-  currentDate: state.mealState.currentDay,
   dateRange: state.mealState.dateRange,
   endDate: state.mealState.endDate,
   meals: state.mealState.meals,
   startDate: state.mealState.startDate,
 });
 
-export default connect(mapStateToProps, { getMeals })(MealPlan);
+export default connect(mapStateToProps, { deleteMeal, getMeals })(MealPlan);

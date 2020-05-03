@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ReactComponent as Runner } from "./assets/runner.svg";
-import { useHistory } from "react-router-dom";
 
 // components
 import SigninModal from "../../components/SigninModal";

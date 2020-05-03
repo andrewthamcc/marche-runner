@@ -11,6 +11,8 @@ import {
 } from "date-fns";
 
 // components
+import IconButton from "../../components/Icon-Button";
+import { iconType } from "../../components/Icon";
 import Button from "../../components/Button";
 
 // redux actions
@@ -18,11 +20,11 @@ import { setDates } from "../../actions/meals";
 
 // models
 import { Meal } from "../../models/meal";
+import { endOfWeek } from "date-fns/esm";
 
 require("./style.scss");
 
 interface OwnProps {
-  currentDate: string; // current date
   endDate: string; // calendar ending date
   meals: Meal[]; // meals within this period
   selectMeal: (meal) => void; // passthrough for event handler when selecting meal
@@ -42,14 +44,7 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   const [days, setDays] = useState([]);
 
   // props
-  const {
-    currentDate,
-    endDate,
-    meals,
-    setDates,
-    startDate,
-    selectMeal,
-  } = props;
+  const { endDate, meals, setDates, startDate, selectMeal } = props;
 
   // other books
   useEffect(() => {
@@ -63,6 +58,13 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
     setDays(week);
   }, [startDate]);
 
+  const handleToday = () => {
+    const newStartDate = startOfWeek(new Date());
+    const newEndDate = endOfWeek(new Date());
+
+    setDates(newStartDate, newEndDate);
+  };
+
   const handleNext = () => {
     const newStartDate = addWeeks(parseISO(startDate), 1);
     const newEndDate = addWeeks(parseISO(endDate), 1);
@@ -75,6 +77,15 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
     const newEndDate = subWeeks(parseISO(endDate), 1);
 
     setDates(newStartDate, newEndDate);
+  };
+
+  const renderCalendarDays = () => {
+    return days.map((day) => (
+      <div className={`day day-${format(parseISO(day), "iii")}`}>
+        {" "}
+        {format(parseISO(day), "iiii")}
+      </div>
+    ));
   };
 
   const renderCalendar = () => {
@@ -95,22 +106,20 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
       ));
 
       return (
-        <div className="week-calendar-day">
-          <div className="week-calendar-day-header">
-            <span className="week-calendar-day-header-dayName">
+        <div className="cells-day">
+          <div className="cells-day-header">
+            {/* <span className="cells-day-header-dayName">
               {format(parseISO(day), "iii")}
-            </span>
+            </span> */}
             <span
-              className={`week-calendar-day-header-date 
-              ${
-                isSameDay(parseISO(currentDate), parseISO(day)) ? "current" : ""
-              }`}
+              className={`cells-day-header-date 
+              ${isSameDay(new Date(), parseISO(day)) ? "current" : ""}`}
             >
               {format(parseISO(day), "MMM do")}
             </span>
           </div>
 
-          <div className="week-calendar-day-meals">{displayMeals}</div>
+          <div className="cells-day-meals">{displayMeals}</div>
         </div>
       );
     });
@@ -118,9 +127,31 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
 
   return (
     <>
-      <Button onClick={handlePrev}>Previous</Button>
-      <Button onClick={handleNext}>Next</Button>
-      <div className="week-calendar">{renderCalendar()}</div>
+      <div className="week-calendar">
+        <div className="header">
+          <h3 className="header-title">
+            Week:{" "}
+            <span className="header-title-date">
+              {format(parseISO(startDate), "MMM dd")} -{" "}
+              {format(parseISO(endDate), "MMM dd")}
+            </span>
+          </h3>
+
+          <div className="header-controls">
+            <IconButton icon={iconType.chevronLeft} onClick={handlePrev} />
+            <Button
+              onClick={handleToday}
+              border={false}
+              className="header-controls-today"
+            >
+              Today
+            </Button>
+            <IconButton icon={iconType.chevronRight} onClick={handleNext} />
+          </div>
+        </div>
+        <div className="calendar-days">{renderCalendarDays()}</div>
+        <div className="cells">{renderCalendar()}</div>
+      </div>
     </>
   );
 };

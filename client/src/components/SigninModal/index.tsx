@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // components
 import LoadingSpinner from "../Loader";

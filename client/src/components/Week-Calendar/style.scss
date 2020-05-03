@@ -1,102 +1,149 @@
 @import "../../styles/variables";
 
 .week-calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 1fr;
-  // padding: 0 4%;
+  .header {
+    font-size: 1.7rem;
+    margin-bottom: 0.75rem;
 
-  // https://medium.com/cloudaper/how-to-create-a-flexible-square-grid-with-css-grid-layout-ea48baf038f3
-  &::before {
-    content: "";
-    width: 0;
-    padding-bottom: 100%;
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  > *:first-child {
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
-  }
-
-  &-day {
-    border: 1px solid $black;
-
-    &:nth-of-type(even) {
-      border-left: none;
-      border-right: none;
+    &-title-date {
+      font-size: 1.9rem;
+      font-weight: 500;
     }
 
-    &-header {
-      border-bottom: 1px solid $black;
-      margin-bottom: 1rem;
-      padding: 0.75rem;
-      height: 3.5rem;
-
+    &-controls {
       display: flex;
       align-items: center;
-      justify-content: space-between;
 
-      &-dayName {
-        font-size: 1.4rem;
-        font-weight: 600;
-      }
+      &-today {
+        border: 2px solid #c0c0c0;
+        font-size: 1.3rem;
+        margin: 0 0.5rem;
+        width: auto;
+        transition: 0.2s border ease-in;
 
-      &-date {
-        font-size: 1.2rem;
-        font-style: italic;
-
-        &.current {
-          background-color: $orange;
-          font-weight: 800;
-          border-radius: 8px;
-          padding: 0.4rem;
+        &:hover {
+          border-color: darken(#c0c0c0, 10%);
         }
       }
     }
+  }
 
-    &-meals {
-      padding: 1rem 0;
+  .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid $black;
+    text-align: center;
 
-      display: flex;
-      flex-direction: column;
+    .day {
+      padding: 0.5rem;
+      border-right: 1px solid $black;
 
-      .meal-type {
-        border-radius: 8px;
-        color: #ffffff;
-        cursor: pointer;
-        margin-bottom: 1rem;
-        padding: 0.5rem 1rem;
+      &:last-of-type {
+        border-right: none;
+      }
+    }
+  }
+
+  .cells {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+
+    // https://medium.com/cloudaper/how-to-create-a-flexible-square-grid-with-css-grid-layout-ea48baf038f3
+    &::before {
+      content: "";
+      width: 0;
+      padding-bottom: 100%;
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
+    }
+
+    > *:first-child {
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
+    }
+
+    &-day {
+      border: 1px solid $black;
+      border-top: none;
+
+      &:nth-of-type(even) {
+        border-left: none;
+        border-right: none;
       }
 
-      .breakfast {
-        order: 0;
-        background-color: #8c31a5;
+      &-header {
+        padding: 0.75rem;
+        height: 3.5rem;
 
-        &:hover,
-        &:focus {
-          background-color: darken(#8c31a5, 5%);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &-dayName {
+          font-size: 1.4rem;
+          font-weight: 600;
+        }
+
+        &-date {
+          font-size: 1.2rem;
+          font-style: italic;
+
+          &.current {
+            background-color: $orange;
+            font-weight: 800;
+            border-radius: 8px;
+            padding: 0.4rem;
+          }
         }
       }
 
-      .lunch {
-        order: 1;
-        background-color: #23a897;
+      &-meals {
+        padding: 1rem 0;
 
-        &:hover,
-        &:focus {
-          background-color: darken(#23a897, 5%);
+        display: flex;
+        flex-direction: column;
+
+        .meal-type {
+          border-radius: 8px;
+          color: #ffffff;
+          cursor: pointer;
+          margin-bottom: 1rem;
+          padding: 0.5rem 1rem;
         }
-      }
 
-      .dinner {
-        order: 2;
-        background-color: #006996;
+        .breakfast {
+          order: 0;
+          background-color: #8c31a5;
 
-        &:hover,
-        &:focus {
-          background-color: darken(#006996, 5%);
+          &:hover,
+          &:focus {
+            background-color: darken(#8c31a5, 5%);
+          }
+        }
+
+        .lunch {
+          order: 1;
+          background-color: #23a897;
+
+          &:hover,
+          &:focus {
+            background-color: darken(#23a897, 5%);
+          }
+        }
+
+        .dinner {
+          order: 2;
+          background-color: #006996;
+
+          &:hover,
+          &:focus {
+            background-color: darken(#006996, 5%);
+          }
         }
       }
     }

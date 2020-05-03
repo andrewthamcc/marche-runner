@@ -15,7 +15,6 @@ export enum dateRange {
 }
 
 class MenuState {
-  currentDay: string = format(new Date(), "yyyy-MM-dd");
   startDate: string = format(startOfWeek(new Date()), "yyyy-MM-dd");
   endDate: string = format(endOfWeek(new Date()), "yyyy-MM-dd");
   dateRange: dateRange = dateRange.week;
