@@ -374,7 +374,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
                 inputName="lunch"
                 onChange={() =>
                   modalView === openModalView.add
-                    ? setAddMealType(mealType.breakfast)
+                    ? setAddMealType(mealType.lunch)
                     : setEditMealType(mealType.lunch)
                 }
               />
@@ -390,7 +390,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
                 inputName="dinner"
                 onChange={() =>
                   modalView === openModalView.add
-                    ? setAddMealType(mealType.breakfast)
+                    ? setAddMealType(mealType.dinner)
                     : setEditMealType(mealType.dinner)
                 }
               />
