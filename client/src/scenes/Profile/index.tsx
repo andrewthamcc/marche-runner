@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns";
 
 // components
 import Layout from "../../layout";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import useModal from "../../utils/useModal";
 import Icon, { iconType } from "../../components/Icon";
 import Button, { buttonColor } from "../../components/Button";

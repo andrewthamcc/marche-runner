@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   addDays,
-  addWeeks,
+  addMonths,
   endOfWeek,
+  endOfMonth,
   format,
   isSameDay,
+  isSameMonth,
   parseISO,
   startOfWeek,
-  subWeeks,
+  startOfMonth,
+  subMonths,
 } from "date-fns";
 
 // components
@@ -39,7 +42,7 @@ interface ReduxDispatchProps {
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
-const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
+const MonthCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   // state
   const [days, setDays] = useState([]);
 
@@ -48,44 +51,59 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
 
   // other books
   useEffect(() => {
-    const week = [];
-    for (let i = 0; i < 7; i++) {
-      const day = addDays(startOfWeek(parseISO(startDate)), i);
+    const calendarRows = [];
+    let day = startOfWeek(parseISO(startDate));
 
-      week.push(format(day, "yyyy-MM-dd"));
+    while (day <= endOfWeek(parseISO(endDate))) {
+      calendarRows.push(format(day, "yyyy-MM-dd"));
+      day = addDays(day, 1);
     }
 
-    setDays(week);
-  }, [startDate]);
+    setDays(calendarRows);
+  }, [endDate, startDate]);
 
   const handleToday = () => {
-    const newStartDate = startOfWeek(new Date());
-    const newEndDate = endOfWeek(new Date());
+    const newStartDate = startOfMonth(new Date());
+    const newEndDate = endOfMonth(new Date());
 
     setDates(newStartDate, newEndDate);
   };
 
   const handleNext = () => {
-    const newStartDate = addWeeks(parseISO(startDate), 1);
-    const newEndDate = addWeeks(parseISO(endDate), 1);
+    const newStartDate = addMonths(parseISO(startDate), 1);
+    const newEndDate = endOfMonth(newStartDate);
 
     setDates(newStartDate, newEndDate);
   };
 
   const handlePrev = () => {
-    const newStartDate = subWeeks(parseISO(startDate), 1);
-    const newEndDate = subWeeks(parseISO(endDate), 1);
+    const newStartDate = subMonths(parseISO(startDate), 1);
+    const newEndDate = endOfMonth(newStartDate);
 
     setDates(newStartDate, newEndDate);
   };
 
   const renderCalendarDays = () => {
-    return days.map((day, index) => (
-      <div className={`day day-${format(parseISO(day), "iii")}`} key={index}>
-        {" "}
-        {format(parseISO(day), "iiii")}
-      </div>
-    ));
+    const days = [];
+    const start = format(startOfWeek(new Date()), "yyyy-MM-dd");
+
+    for (let i = 0; i < 7; i++) {
+      days.push(
+        <div
+          className={`day day-${format(addDays(parseISO(start), i), "iiii")}`}
+          key={i}
+        >
+          <span className="day-standard">
+            {format(addDays(parseISO(start), i), "iiii")}
+          </span>
+          <span className="day-mobile">
+            {format(addDays(parseISO(start), i), "EEEEEE")}
+          </span>
+        </div>
+      );
+    }
+
+    return days;
   };
 
   const renderCalendar = () => {
@@ -106,14 +124,24 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
       ));
 
       return (
-        <div className="cells-day" key={index}>
+        <div
+          className={`cells-day ${
+            !isSameMonth(parseISO(startDate), parseISO(day)) ? "disable" : ""
+          }`}
+          key={index}
+        >
           <div className="cells-day-header">
-            <span
-              className={`cells-day-header-date 
+            <div
+              className={`cells-day-header-date
               ${isSameDay(new Date(), parseISO(day)) ? "current" : ""}`}
             >
-              {format(parseISO(day), "MMM do")}
-            </span>
+              <span className="cells-day-header-date-standard">
+                {format(parseISO(day), "MMM do")}
+              </span>
+              <span className="cells-day-header-date-mobile">
+                {format(parseISO(day), "d")}
+              </span>
+            </div>
           </div>
 
           <div className="cells-day-meals">{displayMeals}</div>
@@ -123,13 +151,12 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   return (
-    <div className="week-calendar">
+    <div className="month-calendar">
       <div className="header">
         <h3 className="header-title">
-          Week:{" "}
+          Month:{" "}
           <span className="header-title-date">
-            {format(parseISO(startDate), "MMM d")} -{" "}
-            {format(parseISO(endDate), "MMM d")}
+            {format(parseISO(startDate), "MMMM yyyy")}
           </span>
         </h3>
 
@@ -153,4 +180,4 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { setDates })(WeekCalendar);
+export default connect(mapStateToProps, { setDates })(MonthCalendar);

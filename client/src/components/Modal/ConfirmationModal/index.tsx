@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 // react components
-import Button, { buttonColor } from "../../components/Button";
+import Button, { buttonColor } from "../../Button";
 
 require("./style.scss");
 

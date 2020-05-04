@@ -1,6 +1,6 @@
 @import "../../../styles/variables";
 
-.week-calendar {
+.month-calendar {
   .header {
     font-size: 1.7rem;
     margin-bottom: 0.75rem;
@@ -43,13 +43,17 @@
     text-align: center;
 
     .day {
-      border: 1px solid $black;
+      border-bottom: 1px solid $black;
+      border-left: 1px solid $black;
+      border-top: 1px solid $black;
       padding: 0.5rem;
-      border-right: 1px solid $black;
 
-      &:nth-of-type(even) {
-        border-left: none;
-        border-right: none;
+      &:last-of-type {
+        border-right: 1px solid $black;
+      }
+
+      &-mobile {
+        display: none;
       }
     }
   }
@@ -57,12 +61,12 @@
   .cells {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
 
     &::before {
       content: "";
       width: 0;
-      padding-bottom: 100%;
+      padding-bottom: 65%;
       grid-row: 1 / 1;
       grid-column: 1 / 1;
     }
@@ -73,17 +77,21 @@
     }
 
     &-day {
-      border: 1px solid $black;
-      border-top: none;
+      border-left: 1px solid $black;
+      border-bottom: 1px solid $black;
+      overflow: hidden;
 
-      &:nth-of-type(even) {
-        border-left: none;
-        border-right: none;
+      &:nth-of-type(7n) {
+        border-right: 1px solid $black;
+      }
+
+      &.disable {
+        background-color: #e6e6e6;
       }
 
       &-header {
-        height: 3rem;
-        margin-bottom: 1rem;
+        height: 2.5rem;
+        margin-bottom: 0.5rem;
         padding: 0 0.5rem;
 
         display: flex;
@@ -103,7 +111,11 @@
             background-color: $orange;
             color: #ffffff;
             border-radius: 5px;
-            padding: 0.4rem;
+            padding: 0.3rem;
+          }
+
+          &-mobile {
+            display: none;
           }
         }
       }
@@ -116,8 +128,13 @@
           border-radius: 8px;
           color: #ffffff;
           cursor: pointer;
-          margin-bottom: 1rem;
-          padding: 0.5rem 1rem;
+          font-size: 1.3rem;
+          margin-bottom: 0.5rem;
+          padding: 0.2rem 1rem;
+
+          text-overflow: clip;
+          white-space: nowrap;
+          overflow: hidden;
         }
 
         .breakfast {
@@ -150,6 +167,33 @@
           }
         }
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 775px) {
+  .calendar-days .day {
+    &-standard {
+      display: none;
+    }
+
+    &-mobile {
+      display: block !important;
+    }
+  }
+
+  .cells-day-header-date {
+    &.current {
+      background-color: #ffffff !important;
+      color: $orange !important;
+    }
+
+    &-standard {
+      display: none;
+    }
+
+    &-mobile {
+      display: block !important;
     }
   }
 }

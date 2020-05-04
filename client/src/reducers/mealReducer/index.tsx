@@ -1,4 +1,4 @@
-import { endOfWeek, format, startOfWeek } from "date-fns";
+import { endOfMonth, format, startOfMonth } from "date-fns";
 import {
   ADD_MEAL,
   DELETE_MEAL,
@@ -16,9 +16,9 @@ export enum dateRange {
 }
 
 class MenuState {
-  startDate: string = format(startOfWeek(new Date()), "yyyy-MM-dd");
-  endDate: string = format(endOfWeek(new Date()), "yyyy-MM-dd");
-  dateRange: dateRange = dateRange.week;
+  startDate: string = format(startOfMonth(new Date()), "yyyy-MM-dd");
+  endDate: string = format(endOfMonth(new Date()), "yyyy-MM-dd");
+  dateRange: dateRange = dateRange.month;
   meals: Meal[] = [];
   loading: boolean = false;
   error: any = null;

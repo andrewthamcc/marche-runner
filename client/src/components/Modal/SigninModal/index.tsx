@@ -4,15 +4,15 @@ import ReactDOM from "react-dom";
 import { Link, useHistory } from "react-router-dom";
 
 // components
-import LoadingSpinner from "../Loader";
-import TextInput, { textInputType } from "../TextInput";
-import Button, { buttonColor } from "../Button";
+import LoadingSpinner from "../../Loader";
+import TextInput, { textInputType } from "../../TextInput";
+import Button, { buttonColor } from "../../Button";
 
 // redux actions
-import { clearErrors, loginUser } from "../../actions/auth";
+import { clearErrors, loginUser } from "../../../actions/auth";
 
 // models
-import { LoginFormData } from "../../models/user";
+import { LoginFormData } from "../../../models/user";
 
 require("./style.scss");
 

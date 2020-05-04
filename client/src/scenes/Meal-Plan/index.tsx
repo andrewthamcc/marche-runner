@@ -6,10 +6,11 @@ import { format, isSameDay, parseISO } from "date-fns";
 import Layout from "../../layout";
 import { ReactComponent as MealPlanIcon } from "./assets/meal-plan.svg";
 import WeekCalendar from "../../components/Calendar/Week-Calendar";
+import MonthCalendar from "../../components/Calendar/Month-Calendar";
 import IconButton from "../../components/Icon-Button";
 import { iconType } from "../../components/Icon";
 import { symbolType } from "../../components/Symbol";
-import BlankModal from "../../components/Blank-Modal";
+import BlankModal from "../../components/Modal/Blank-Modal";
 import useModal from "../../utils/useModal";
 import TextInput from "../../components/TextInput";
 import RadioInput from "../../components/RadioInput";
@@ -42,6 +43,11 @@ interface ReduxDispatchProps {
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
+enum openCalendarView {
+  week = "week",
+  month = "month",
+}
+
 enum openModalView {
   default = "default",
   edit = "edit",
@@ -61,22 +67,25 @@ interface MealTextData {
 
 const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
   // state
-  const [selectedMeal, setSelectedMeal] = useState<Meal>(null);
-  const [modalView, setModalView] = useState<openModalView>(null);
+  const [calendarView, setCalendarView] = useState<openCalendarView>(
+    openCalendarView.week
+  ); // view of either week or monthly calendar
+  const [selectedMeal, setSelectedMeal] = useState<Meal>(null); // selected meal from calendar
+  const [modalView, setModalView] = useState<openModalView>(null); // modal view (default, add, edit)
   const [addMealTextData, setAddMealTextData] = useState<MealTextData>({
     name: "",
     description: "",
-  });
-  const [addMealType, setAddMealType] = useState<mealType>(mealType.dinner);
+  }); // add text data
+  const [addMealType, setAddMealType] = useState<mealType>(mealType.dinner); // add meal type
   const [addMealDate, setAddMealDate] = useState<string>(
     format(new Date(), "yyyy-MM-dd")
-  );
+  ); // add date
   const [editMealTextData, setEditMealTextData] = useState<MealTextData>({
     name: "",
     description: "",
-  });
-  const [editMealType, setEditMealType] = useState<mealType>(null);
-  const [editMealDate, setEditMealDate] = useState<string>(null);
+  }); // edit text data
+  const [editMealType, setEditMealType] = useState<mealType>(null); // edit meal type
+  const [editMealDate, setEditMealDate] = useState<string>(null); // edit meal date
 
   // props
   const {
@@ -98,6 +107,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     if (!open) {
       setSelectedMeal(null);
       setAddMealDate(format(new Date(), "yyyy-MM-dd"));
+      setEditMealDate(null);
       setEditMealType(null);
       setModalView(null);
     }
@@ -195,7 +205,6 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
         name: "",
         description: "",
       });
-      setEditMealType(null);
       closeModal();
 
       return;
@@ -207,7 +216,6 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
       name: "",
       description: "",
     });
-    setEditMealType(null);
     closeModal();
   };
 
@@ -256,93 +264,13 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
       case openModalView.default:
         return renderSelectedMeal();
       case openModalView.add:
-        return renderAddMeal();
+        return renderForm();
       case openModalView.edit:
-        return renderEditMeal();
+        return renderForm();
       case null:
       default:
         return;
     }
-  };
-
-  const renderAddMeal = () => {
-    return (
-      <div className="add-meal">
-        <h3 className="add-meal-title">Add Meal</h3>
-        <form
-          className="add-meal-form"
-          onSubmit={(e) => handleAddMealSubmit(e)}
-        >
-          <TextInput
-            inputName="name"
-            inputID="add-meal-name"
-            label="Name:"
-            onChange={(e) => handleTextChange(e, openModalView.add)}
-            placeholder="Meal name..."
-            required={true}
-            value={addMealTextData.name}
-          />
-
-          <div className="add-meal-form-flex-container">
-            <input
-              className="add-meal-form-date-input"
-              type="date"
-              onChange={(e) => {
-                let date = new Date(e.target.valueAsDate);
-                date = new Date(
-                  date.getTime() + date.getTimezoneOffset() * 60000
-                );
-
-                setAddMealDate(format(date, "yyyy-MM-dd"));
-              }}
-              value={addMealDate}
-            />
-            <div className="add-meal-form-radio-container">
-              <RadioInput
-                checked={addMealType === mealType.breakfast}
-                className="add-meal-form-radio-input"
-                inputName="dinner"
-                label={mealType.breakfast}
-                inputID={`add-meal-type=${mealType.breakfast}`}
-                onChange={() => setAddMealType(mealType.breakfast)}
-              />
-              <RadioInput
-                checked={addMealType === mealType.lunch}
-                className="add-meal-form-radio-input"
-                label={mealType.lunch}
-                inputID={`add-meal-type=${mealType.lunch}`}
-                inputName="lunch"
-                onChange={() => setAddMealType(mealType.lunch)}
-              />
-              <RadioInput
-                checked={addMealType === mealType.dinner}
-                className="add-meal-form-radio-input"
-                label={mealType.dinner}
-                inputID={`add-meal-type=${mealType.dinner}`}
-                inputName="dinner"
-                onChange={() => setAddMealType(mealType.dinner)}
-              />
-            </div>
-          </div>
-
-          <TextInput
-            inputName="description"
-            inputID="add-meal-description"
-            label="Description:"
-            onChange={(e) => handleTextChange(e, openModalView.add)}
-            placeholder="Ingredients, sides, recipes..."
-            value={addMealTextData.description}
-          />
-          <Button
-            className="add-meal-form-submit"
-            color={buttonColor.orange}
-            disabled={!addMealTextData.name}
-          >
-            Add Meal
-          </Button>
-        </form>
-      </div>
-    );
   };
 
   const renderSelectedMeal = () => {
@@ -364,26 +292,44 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     );
   };
 
-  const renderEditMeal = () => {
+  const renderForm = () => {
     return (
-      <div className="edit-meal">
-        <h3 className="edit-meal-title">Edit Meal</h3>
+      <>
+        <h3 className="modal-form-title">
+          {modalView === openModalView.add ? "Add Meal" : "Edit Meal"}
+        </h3>
         <form
-          className="edit-meal-form"
-          onSubmit={(e) => handleEditMealSubmit(e)}
+          className="modal-form"
+          onSubmit={(e) =>
+            modalView === openModalView.add
+              ? handleAddMealSubmit(e)
+              : handleEditMealSubmit(e)
+          }
         >
           <TextInput
             inputName="name"
-            inputID="edit-meal-name"
+            inputID="modal-form-name"
             label="Name:"
-            onChange={(e) => handleTextChange(e, openModalView.edit)}
-            placeholder={selectedMeal.name}
-            value={editMealTextData.name}
+            onChange={(e) =>
+              modalView === openModalView.add
+                ? handleTextChange(e, openModalView.add)
+                : handleTextChange(e, openModalView.edit)
+            }
+            placeholder={
+              modalView === openModalView.add
+                ? "Meal name..."
+                : selectedMeal.name
+            }
+            value={
+              modalView === openModalView.add
+                ? addMealTextData.name
+                : editMealTextData.name
+            }
           />
 
-          <div className="edit-meal-form-flex-container">
+          <div className="modal-form-flex-container">
             <input
-              className="edit-meal-form-date-input"
+              className="modal-form-date-input"
               type="date"
               onChange={(e) => {
                 let date = new Date(e.target.valueAsDate);
@@ -391,54 +337,97 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
                   date.getTime() + date.getTimezoneOffset() * 60000
                 );
 
-                setEditMealDate(format(date, "yyyy-MM-dd"));
+                modalView === openModalView.add
+                  ? setAddMealDate(format(date, "yyyy-MM-dd"))
+                  : setEditMealDate(format(date, "yyyy-MM-dd"));
               }}
-              value={editMealDate}
+              value={
+                modalView === openModalView.add ? addMealDate : editMealDate
+              }
             />
-            <div className="edit-meal-form-radio-container">
+            <div className="modal-form-radio-container">
               <RadioInput
-                checked={editMealType === mealType.breakfast}
-                className="edit-meal-form-radio-input"
+                checked={
+                  modalView === openModalView.add
+                    ? addMealType === mealType.breakfast
+                    : editMealType === mealType.breakfast
+                }
+                className="modal-form-radio-input"
                 inputName="dinner"
                 label={mealType.breakfast}
-                inputID={`edit-meal-type=${mealType.breakfast}`}
-                onChange={() => setEditMealType(mealType.breakfast)}
+                inputID={`form-meal-type-${mealType.breakfast}`}
+                onChange={() =>
+                  modalView === openModalView.add
+                    ? setAddMealType(mealType.breakfast)
+                    : setEditMealType(mealType.breakfast)
+                }
               />
               <RadioInput
-                checked={editMealType === mealType.lunch}
-                className="add-meal-form-radio-input"
+                checked={
+                  modalView === openModalView.add
+                    ? addMealType === mealType.lunch
+                    : editMealType === mealType.lunch
+                }
+                className="modal-form-radio-input"
                 label={mealType.lunch}
-                inputID={`edit-meal-type=${mealType.lunch}`}
+                inputID={`form-meal-type-${mealType.lunch}`}
                 inputName="lunch"
-                onChange={() => setEditMealType(mealType.lunch)}
+                onChange={() =>
+                  modalView === openModalView.add
+                    ? setAddMealType(mealType.breakfast)
+                    : setEditMealType(mealType.lunch)
+                }
               />
               <RadioInput
-                checked={editMealType === mealType.dinner}
-                className="edit-meal-form-radio-input"
+                checked={
+                  modalView === openModalView.add
+                    ? addMealType === mealType.dinner
+                    : editMealType === mealType.dinner
+                }
+                className="modal-form-radio-input"
                 label={mealType.dinner}
-                inputID={`edit-meal-type=${mealType.dinner}`}
+                inputID={`form-meal-type-${mealType.dinner}`}
                 inputName="dinner"
-                onChange={() => setEditMealType(mealType.dinner)}
+                onChange={() =>
+                  modalView === openModalView.add
+                    ? setAddMealType(mealType.breakfast)
+                    : setEditMealType(mealType.dinner)
+                }
               />
             </div>
           </div>
 
           <TextInput
             inputName="description"
-            inputID="edit-meal-description"
+            inputID="modal-form-description"
             label="Description:"
-            onChange={(e) => handleTextChange(e, openModalView.edit)}
-            placeholder={selectedMeal.description}
-            value={editMealTextData.description}
+            onChange={(e) =>
+              modalView === openModalView.add
+                ? handleTextChange(e, openModalView.add)
+                : handleTextChange(e, openModalView.edit)
+            }
+            placeholder={
+              modalView === openModalView.add
+                ? "Ingredients, sides, recipes..."
+                : selectedMeal.description
+            }
+            value={
+              modalView === openModalView.add
+                ? addMealTextData.description
+                : editMealTextData.description
+            }
           />
-          <Button color={buttonColor.orange} className="edit-meal-form-submit">
+          <Button color={buttonColor.orange} className="modal-form-submit">
             Save
           </Button>
-          <Button onClick={() => closeModal()} className="edit-meal-cancel">
-            Cancel
-          </Button>
+
+          {modalView === openModalView.edit && (
+            <Button onClick={() => closeModal()} className="modal-form-cancel">
+              Cancel
+            </Button>
+          )}
         </form>
-      </div>
+      </>
     );
   };
 
@@ -461,9 +450,9 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
             <MealPlanIcon />
             <h2 className="meal-plan-header-title">Meal Planning</h2>
           </div>
-
-          <div className="meal-plan-calendar">
-            <WeekCalendar
+        </div>
+        <div className="meal-plan-calendar">
+          {/* <WeekCalendar
               endDate={endDate}
               startDate={startDate}
               meals={meals}
@@ -472,16 +461,26 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
                 setModalView(openModalView.default);
                 openModal();
               }}
-            />
-            <IconButton
-              symbol={symbolType.addOrange}
-              className="meal-plan-add-button"
-              onClick={() => {
-                setModalView(openModalView.add);
-                openModal();
-              }}
-            />
-          </div>
+            /> */}
+
+          <MonthCalendar
+            endDate={endDate}
+            startDate={startDate}
+            meals={meals}
+            selectMeal={(meal: Meal) => {
+              setSelectedMeal(meal);
+              setModalView(openModalView.default);
+              openModal();
+            }}
+          />
+          <IconButton
+            symbol={symbolType.addOrange}
+            className="meal-plan-add-button"
+            onClick={() => {
+              setModalView(openModalView.add);
+              openModal();
+            }}
+          />
         </div>
       </div>
     </Layout>

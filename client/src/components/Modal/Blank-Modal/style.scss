@@ -15,9 +15,21 @@
     margin-top: 20vh;
     padding: 2rem 3rem;
     position: relative;
-    width: 50%;
+    width: 500px;
 
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .blank-modal-container {
+    width: 350px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .blank-modal-container {
+    width: 325px;
   }
 }
