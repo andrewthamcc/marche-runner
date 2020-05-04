@@ -1,6 +1,8 @@
 import React from "react";
 import { ReactComponent as CaretDown } from "./assets/caretDown.svg";
 import { ReactComponent as ChevronDown } from "./assets/chevron.svg";
+import { ReactComponent as ChevronLeft } from "./assets/chevronLeft.svg";
+import { ReactComponent as ChevronRight } from "./assets/chevronRight.svg";
 import { ReactComponent as Close } from "./assets/close.svg";
 import { ReactComponent as Gear } from "./assets/gear.svg";
 import { ReactComponent as Info } from "./assets/info.svg";
@@ -15,6 +17,8 @@ require("./style.scss");
 export enum iconType {
   caretDown = "caretDown",
   chevronDown = "chevronDown",
+  chevronLeft = "chevronLeft",
+  chevronRight = "chevronRight",
   close = "close",
   gear = "gear",
   info = "info",
@@ -35,6 +39,8 @@ export enum iconColor {
 const svgIcons = {
   caretDown: CaretDown,
   chevronDown: ChevronDown,
+  chevronLeft: ChevronLeft,
+  chevronRight: ChevronRight,
   close: Close,
   gear: Gear,
   info: Info,
@@ -45,13 +51,11 @@ const svgIcons = {
   trash: Trash,
 };
 
-interface OwnProps {
+interface Props {
   className?: string; // passthrough for className
   color?: iconColor; // color of icon
   iconType: iconType; // iconType
 }
-
-type Props = OwnProps;
 
 const Icon: React.FC<Props> = (props: Props): JSX.Element => {
   // props

@@ -11,6 +11,7 @@ import Home from "./scenes/Home";
 import Signup from "./scenes/Signup";
 import Dashboard from "./scenes/Dashboard";
 import Profile from "./scenes/Profile";
+import MealPlan from "./scenes/Meal-Plan";
 
 require("./styles/App.scss");
 
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/mealplan" component={MealPlan} />
             <Route path="/signup" component={Signup} />
           </Switch>
         </BrowserRouter>

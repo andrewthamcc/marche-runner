@@ -9,7 +9,7 @@ export enum textInputType {
   password = "password",
 }
 
-interface OwnProps {
+interface Props {
   className?: string; // passthrough for className
   disabled?: boolean; // prop to disable input
   inputID?: string; // id for input required if labels are being used
@@ -24,8 +24,6 @@ interface OwnProps {
   type?: textInputType; // type of input text | email | password
   value: string;
 }
-
-type Props = OwnProps;
 
 // todo: investigate proper typing of forwardRef
 const TextInput: React.FC<Props> = React.forwardRef(

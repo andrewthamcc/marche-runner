@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import moment from "moment";
+import { format, parseISO } from "date-fns";
 
 // components
 import Layout from "../../layout";
-import ConfirmationModal from "../../components/ConfirmationModal";
-import useModal from "../../components/ConfirmationModal/useModal";
+import ConfirmationModal from "../../components/Modal/ConfirmationModal";
+import useModal from "../../utils/useModal";
 import Icon, { iconType } from "../../components/Icon";
 import Button, { buttonColor } from "../../components/Button";
 import IconButton from "../../components/Icon-Button";
@@ -297,7 +297,8 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
             <div className="profile-flex-container-right">
               {editView ? renderEditView() : renderStandardView()}
               <p className="profile-date">
-                Member Since: <span>{moment(date).format("MMM Do YYYY")}</span>
+                Member Since:{" "}
+                <span>{date && format(parseISO(date), "MMM dd, yyyy")}</span>
               </p>
               {editView && renderEditControls()}
             </div>

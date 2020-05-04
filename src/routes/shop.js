@@ -65,6 +65,10 @@ router.patch("/:id", auth, async (req, res) => {
   try {
     const item = await Item.findOne({ _id, user });
 
+    if (!item) {
+      return res.status(404).send;
+    }
+
     updates.forEach((update) => (item[update] = req.body[update]));
 
     item.save();

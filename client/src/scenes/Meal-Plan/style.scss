@@ -1,0 +1,158 @@
+.meal-plan {
+  padding: 4rem 0;
+
+  &-header {
+    margin-bottom: 2rem;
+
+    display: flex;
+    align-items: center;
+
+    &-title {
+      margin-left: 1rem;
+    }
+  }
+
+  &-calendar {
+    margin: 0 auto;
+    position: relative;
+    width: 85%;
+  }
+
+  &-add-button {
+    position: absolute;
+    bottom: -20px;
+    right: -15px;
+
+    svg {
+      border-radius: 50%;
+      box-shadow: 0 10px 20px 0 rgba(55, 58, 75, 0.35);
+      height: 40px;
+      width: 40px;
+    }
+  }
+
+  &-modal {
+    width: 40%;
+
+    &-controls {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+
+      button {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+
+.selected-meal {
+  &-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  &-date,
+  &-type {
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-weight: 600;
+  }
+}
+
+.modal-form {
+  &-title {
+    margin-bottom: 1rem;
+  }
+
+  &-radio-container {
+    margin: 1rem 0;
+
+    display: flex;
+    align-items: center;
+  }
+
+  &-flex-container {
+    display: flex;
+    align-items: center;
+  }
+
+  &-radio-input {
+    margin-right: 1rem;
+  }
+
+  &-date-input {
+    border: 2px solid #c0c0c0;
+    border-radius: 8px;
+    padding: 5px;
+    margin-right: 2rem;
+
+    &::-webkit-clear-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      display: none;
+    }
+  }
+
+  &-submit {
+    margin-top: 1rem;
+  }
+
+  &-cancel {
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 1190px) {
+  .meal-plan-modal {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 935px) {
+  .meal-plan-modal {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .meal-plan-modal {
+    width: 85%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .modal-form-flex-container {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .modal-form-radio-container {
+    margin-bottom: 2rem;
+    order: -1;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .meal-plan {
+    &-calendar {
+      margin: 0 auto;
+      position: relative;
+      width: 95%;
+    }
+
+    &-add-button {
+      bottom: 10px;
+      right: 5px;
+
+      svg {
+        height: 40px;
+        width: 40px;
+      }
+    }
+  }
+}

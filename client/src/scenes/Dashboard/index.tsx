@@ -12,8 +12,8 @@ import Dropdown, { DropdownItem } from "../../components/Dropdown";
 import categoryDropdownList from "./categoryDropdownList";
 import CategoryIcon, { catIconType } from "../../components/Category-Icon";
 import Symbol, { symbolType } from "../../components/Symbol";
-import ConfirmationModal from "../../components/ConfirmationModal";
-import useModal from "../../components/ConfirmationModal/useModal";
+import ConfirmationModal from "../../components/Modal/ConfirmationModal";
+import useModal from "../../utils/useModal";
 import LoadingSpinner from "../../components/Loader";
 
 // react actions

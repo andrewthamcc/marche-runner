@@ -1,0 +1,199 @@
+@import "../../../styles/variables";
+
+.month-calendar {
+  .header {
+    font-size: 1.7rem;
+    margin-bottom: 0.75rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-title-date {
+      font-size: 1.9rem;
+      font-weight: 500;
+    }
+
+    &-controls {
+      display: flex;
+      align-items: center;
+
+      &-today {
+        border: 2px solid #c0c0c0;
+        font-size: 1.3rem;
+        margin: 0 0.5rem;
+        width: auto;
+        transition: 0.2s border ease-in;
+
+        &:hover,
+        &:focus {
+          border-color: darken(#c0c0c0, 10%);
+        }
+
+        &:active {
+          background-color: darken(#ffffff, 3%);
+        }
+      }
+    }
+  }
+
+  .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+
+    .day {
+      border-bottom: 1px solid $black;
+      border-left: 1px solid $black;
+      border-top: 1px solid $black;
+      padding: 0.5rem;
+
+      &:last-of-type {
+        border-right: 1px solid $black;
+      }
+
+      &-mobile {
+        display: none;
+      }
+    }
+  }
+
+  .cells {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr;
+
+    &::before {
+      content: "";
+      width: 0;
+      padding-bottom: 65%;
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
+    }
+
+    > *:first-child {
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
+    }
+
+    &-day {
+      border-left: 1px solid $black;
+      border-bottom: 1px solid $black;
+      overflow: hidden;
+
+      &:nth-of-type(7n) {
+        border-right: 1px solid $black;
+      }
+
+      &.disable {
+        background-color: #e6e6e6;
+      }
+
+      &-header {
+        height: 2.5rem;
+        margin-bottom: 0.5rem;
+        padding: 0 0.5rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &-dayName {
+          font-size: 1.4rem;
+          font-weight: 600;
+        }
+
+        &-date {
+          font-size: 1.2rem;
+          font-style: italic;
+
+          &.current {
+            background-color: $orange;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 0.3rem;
+          }
+
+          &-mobile {
+            display: none;
+          }
+        }
+      }
+
+      &-meals {
+        display: flex;
+        flex-direction: column;
+
+        .meal-type {
+          border-radius: 8px;
+          color: #ffffff;
+          cursor: pointer;
+          font-size: 1.3rem;
+          margin-bottom: 0.5rem;
+          padding: 0.2rem 1rem;
+
+          text-overflow: clip;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+
+        .breakfast {
+          order: 0;
+          background-color: #8c31a5;
+
+          &:hover,
+          &:focus {
+            background-color: darken(#8c31a5, 5%);
+          }
+        }
+
+        .lunch {
+          order: 1;
+          background-color: #23a897;
+
+          &:hover,
+          &:focus {
+            background-color: darken(#23a897, 5%);
+          }
+        }
+
+        .dinner {
+          order: 2;
+          background-color: #006996;
+
+          &:hover,
+          &:focus {
+            background-color: darken(#006996, 5%);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 775px) {
+  .calendar-days .day {
+    &-standard {
+      display: none;
+    }
+
+    &-mobile {
+      display: block !important;
+    }
+  }
+
+  .cells-day-header-date {
+    &.current {
+      background-color: #ffffff !important;
+      color: $orange !important;
+    }
+
+    &-standard {
+      display: none;
+    }
+
+    &-mobile {
+      display: block !important;
+    }
+  }
+}

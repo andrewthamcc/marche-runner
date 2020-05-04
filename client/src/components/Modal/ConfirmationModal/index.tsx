@@ -2,11 +2,11 @@ import React, { useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 // react components
-import Button, { buttonColor } from "../../components/Button";
+import Button, { buttonColor } from "../../Button";
 
 require("./style.scss");
 
-interface OwnProps {
+interface Props {
   children?: any;
   close: () => void; // prop to close modal from parent
   confirm: () => void; // function to execute when confirmed
@@ -15,17 +15,11 @@ interface OwnProps {
   title: string; // title text
 }
 
-interface ReduxStateProps {}
-
-interface ReduxDispatchProps {}
-
-type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
-
 const ConfirmationModal: React.FC<Props> = (props: Props) => {
   // props
   const { isModalOpen, confirm, close, text, title } = props;
 
-  // other bhooks
+  // other hooks
   const node = useRef(null);
 
   useEffect(() => {

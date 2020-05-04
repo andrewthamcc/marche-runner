@@ -11,10 +11,12 @@ app.use(express.json());
 const loginRoute = require("./src/routes/auth");
 const shopRoute = require("./src/routes/shop");
 const userRoute = require("./src/routes/user");
+const mealsRoute = require("./src/routes/meals");
 
 app.use("/login", loginRoute);
 app.use("/shop", shopRoute);
 app.use("/profile", userRoute);
+app.use("/meals", mealsRoute);
 
 // serve static assets in production
 if (process.env.NODE_ENV === "production") {

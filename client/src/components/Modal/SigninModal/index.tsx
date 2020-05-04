@@ -1,19 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // components
-import LoadingSpinner from "../Loader";
-import TextInput, { textInputType } from "../TextInput";
-import Button, { buttonColor } from "../Button";
+import LoadingSpinner from "../../Loader";
+import TextInput, { textInputType } from "../../TextInput";
+import Button, { buttonColor } from "../../Button";
 
 // redux actions
-import { clearErrors, loginUser } from "../../actions/auth";
+import { clearErrors, loginUser } from "../../../actions/auth";
 
 // models
-import { LoginFormData } from "../../models/user";
+import { LoginFormData } from "../../../models/user";
 
 require("./style.scss");
 
@@ -44,8 +43,8 @@ interface SignInData {
 const SigninModal: React.FC<Props> = (props: Props) => {
   // state
   const [formData, setFormData] = useState<SignInData>({
-    email: "",
-    password: "",
+    email: "hello@andrewtham.cc",
+    password: "123456",
   });
 
   // props

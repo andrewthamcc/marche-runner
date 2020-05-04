@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ReactComponent as Runner } from "./assets/runner.svg";
-import { useHistory } from "react-router-dom";
 
 // components
-import SigninModal from "../../components/SigninModal";
-import useModal from "../../components/SigninModal/useModal";
+import SigninModal from "../../components/Modal/SigninModal";
+import useModal from "../../utils/useModal";
 import Button, { buttonColor } from "../../components/Button";
 import Icon, { iconType } from "../../components/Icon";
 import Dropdown, { DropdownItem } from "../../components/Dropdown";
@@ -30,12 +29,18 @@ interface ReduxDispatchProps {
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 enum profileOptions {
+  meal = "meal",
   account = "account",
   signout = "signout",
 }
 
 const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
   const userDropdownList = [
+    {
+      text: "Meal Planning",
+      value: profileOptions.meal,
+      fn: () => history.push("/mealplan"),
+    },
     {
       // icon: <Icon iconType={iconType.profile} color={iconColor.grey} />,
       text: "Account",
@@ -72,7 +77,7 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
             value={userControlSelection}
             selectValue={(selection) => setUserControlSelection(selection)}
             className="page-header-dropdown"
-            listWidth={120}
+            listWidth={135}
             caret={true}
           />
         </li>
