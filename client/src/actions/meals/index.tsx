@@ -10,6 +10,7 @@ import {
 import {
   ADD_MEAL,
   DELETE_MEAL,
+  EDIT_MEAL,
   GET_MEALS,
   SET_DATE_RANGE,
   SET_DATES,
@@ -54,6 +55,20 @@ export const getMeals = (startDate: string, endDate: string) => async (
     dispatch({
       type: GET_MEALS,
       payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const editMeal = (id: string, meal) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`/meals/${id}`, meal);
+    const data = res.data;
+
+    dispatch({
+      type: EDIT_MEAL,
+      payload: { _id: id, ...data },
     });
   } catch (error) {
     console.log(error);

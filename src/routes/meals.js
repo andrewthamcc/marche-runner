@@ -55,8 +55,31 @@ router.get("/", auth, async (req, res) => {
 
 // @PATCH /meals:id
 // edit a meal
-router.patch("/", auth, async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
+  const _id = req.params.id;
+  const user = req.user._id;
+
+  const updatesObj = req.body;
+  const updates = Object.keys(req.body);
+
+  if (updatesObj.date) {
+    let date = new Date(req.body.date);
+    date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+
+    updatesObj.date = date;
+  }
+
   try {
+    const meal = await Meal.findOne({ _id, user });
+
+    if (!meal) {
+      return res.status(404).send();
+    }
+
+    updates.forEach((update) => (meal[update] = updatesObj[update]));
+
+    meal.save();
+    res.send(meal);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -65,8 +88,8 @@ router.patch("/", auth, async (req, res) => {
 // @DELETE    /meals:id
 // delete meal
 router.delete("/:id", auth, async (req, res) => {
-  const user = req.user._id;
   const _id = req.params.id;
+  const user = req.user._id;
 
   try {
     const meal = await Meal.findOneAndDelete({ _id, user });

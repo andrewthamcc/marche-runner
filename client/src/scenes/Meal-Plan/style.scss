@@ -30,6 +30,8 @@
   }
 
   &-modal {
+    width: 40%;
+
     &-controls {
       position: absolute;
       top: 1rem;
@@ -59,7 +61,8 @@
   }
 }
 
-.add-meal {
+.add-meal,
+.edit-meal {
   &-title {
     margin-bottom: 1rem;
   }
@@ -94,5 +97,13 @@
         display: none;
       }
     }
+
+    &-submit {
+      margin-top: 1rem;
+    }
   }
+}
+
+.edit-meal-form-submit {
+  margin-right: 1rem;
 }

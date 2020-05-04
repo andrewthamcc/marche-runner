@@ -39,8 +39,11 @@ const BlankModal: React.FC<Props> = (props: Props): JSX.Element => {
 
   const renderModal = () => {
     return (
-      <div className={`blank-modal ${className ? className : ""}`}>
-        <div className="blank-modal-container" ref={node}>
+      <div className="blank-modal">
+        <div
+          className={`blank-modal-container ${className ? className : ""}`}
+          ref={node}
+        >
           {props.children}
         </div>
       </div>

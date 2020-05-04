@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { format, parseISO } from "date-fns";
+import { format, isSameDay, parseISO } from "date-fns";
 
 // components
 import Layout from "../../layout";
@@ -16,7 +16,7 @@ import RadioInput from "../../components/RadioInput";
 import Button, { buttonColor } from "../../components/Button";
 
 // redux actions
-import { addMeal, deleteMeal, getMeals } from "../../actions/meals";
+import { addMeal, deleteMeal, editMeal, getMeals } from "../../actions/meals";
 
 // models
 import { Meal } from "../../models/meal";
@@ -36,6 +36,7 @@ interface ReduxStateProps {
 interface ReduxDispatchProps {
   addMeal: (meal) => void; // add a meal
   deleteMeal: (id: string) => void; // delete a meal
+  editMeal: (id: string, meal) => void; // edit a meal
   getMeals: (startDate: string, endDate: string) => void; // fetch meals
 }
 
@@ -53,7 +54,7 @@ enum mealType {
   dinner = "Dinner",
 }
 
-interface AddMealTextData {
+interface MealTextData {
   name: string;
   description: string;
 }
@@ -62,7 +63,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
   // state
   const [selectedMeal, setSelectedMeal] = useState<Meal>(null);
   const [modalView, setModalView] = useState<openModalView>(null);
-  const [addMealTextData, setAddMealTextData] = useState<AddMealTextData>({
+  const [addMealTextData, setAddMealTextData] = useState<MealTextData>({
     name: "",
     description: "",
   });
@@ -70,9 +71,23 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
   const [addMealDate, setAddMealDate] = useState<string>(
     format(new Date(), "yyyy-MM-dd")
   );
+  const [editMealTextData, setEditMealTextData] = useState<MealTextData>({
+    name: "",
+    description: "",
+  });
+  const [editMealType, setEditMealType] = useState<mealType>(null);
+  const [editMealDate, setEditMealDate] = useState<string>(null);
 
   // props
-  const { addMeal, deleteMeal, getMeals, startDate, endDate, meals } = props;
+  const {
+    addMeal,
+    deleteMeal,
+    editMeal,
+    getMeals,
+    startDate,
+    endDate,
+    meals,
+  } = props;
 
   // other hooks
   const { open, openModal, closeModal } = useModal();
@@ -83,22 +98,47 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     if (!open) {
       setSelectedMeal(null);
       setAddMealDate(format(new Date(), "yyyy-MM-dd"));
+      setEditMealType(null);
       setModalView(null);
     }
 
-    // eslint-disable-next-line
-  }, [startDate, endDate, open]);
+    if (selectedMeal !== null) {
+      setEditMealDate(format(parseISO(selectedMeal.date), "yyyy-MM-dd"));
 
-  const handleTextChange = (e) => {
+      switch (selectedMeal.type) {
+        case "breakfast":
+          return setEditMealType(mealType.breakfast);
+        case "lunch":
+          return setEditMealType(mealType.lunch);
+        case "dinner":
+          return setEditMealType(mealType.dinner);
+        default:
+          return;
+      }
+    }
+
+    // eslint-disable-next-line
+  }, [editMeal, endDate, open, selectedMeal, startDate]);
+
+  const handleTextChange = (e, type) => {
     const { name, value } = e.target;
 
-    setAddMealTextData((addMealData) => ({
-      ...addMealData,
-      [name]: value,
-    }));
+    if (type === openModalView.add) {
+      setAddMealTextData((addMealTextData) => ({
+        ...addMealTextData,
+        [name]: value,
+      }));
+    }
+
+    if (type === openModalView.edit) {
+      setEditMealTextData((editMealTextData) => ({
+        ...editMealTextData,
+        [name]: value,
+      }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleAddMealSubmit = (e) => {
     e.preventDefault();
 
     const { name, description } = addMealTextData;
@@ -106,11 +146,12 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     const mealData = {
       name,
       date: addMealDate,
-      type: addMealType.toLocaleLowerCase(),
+      type: addMealType.toLowerCase(),
       description,
     };
 
     addMeal(mealData);
+
     setAddMealTextData({
       name: "",
       description: "",
@@ -119,8 +160,59 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     closeModal();
   };
 
+  const handleEditMealSubmit = (e) => {
+    e.preventDefault();
+
+    const { name, description } = editMealTextData;
+
+    const mealEditData = {
+      name: name,
+      date: editMealDate,
+      type: editMealType.toLowerCase(),
+      description: description,
+    };
+
+    // delete empty or unchanged values
+    if (mealEditData.name === "") {
+      delete mealEditData.name;
+    }
+
+    if (mealEditData.description === "") {
+      delete mealEditData.description;
+    }
+
+    if (mealEditData.type === selectedMeal.type.toLowerCase()) {
+      delete mealEditData.type;
+    }
+
+    if (isSameDay(parseISO(mealEditData.date), parseISO(selectedMeal.date))) {
+      delete mealEditData.date;
+    }
+
+    // don't send if data is not changed and close edit view
+    if (!Object.keys(mealEditData).length) {
+      setEditMealTextData({
+        name: "",
+        description: "",
+      });
+      setEditMealType(null);
+      closeModal();
+
+      return;
+    }
+
+    editMeal(selectedMeal._id, mealEditData);
+
+    setEditMealTextData({
+      name: "",
+      description: "",
+    });
+    setEditMealType(null);
+    closeModal();
+  };
+
   const handleDelete = () => {
-    deleteMeal(selectedMeal._id); // this isn't working
+    deleteMeal(selectedMeal._id);
     closeModal();
   };
 
@@ -177,12 +269,16 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     return (
       <div className="add-meal">
         <h3 className="add-meal-title">Add Meal</h3>
-        <form className="add-meal-form" onSubmit={(e) => handleSubmit(e)}>
+        <form
+          className="add-meal-form"
+          onSubmit={(e) => handleAddMealSubmit(e)}
+        >
           <TextInput
             inputName="name"
             inputID="add-meal-name"
             label="Name:"
-            onChange={(e) => handleTextChange(e)}
+            onChange={(e) => handleTextChange(e, openModalView.add)}
+            placeholder="Meal name..."
             required={true}
             value={addMealTextData.name}
           />
@@ -191,7 +287,6 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
             <input
               className="add-meal-form-date-input"
               type="date"
-              min={format(new Date(), "yyyy-MM-dd")}
               onChange={(e) => {
                 let date = new Date(e.target.valueAsDate);
                 date = new Date(
@@ -234,10 +329,15 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
             inputName="description"
             inputID="add-meal-description"
             label="Description:"
-            onChange={(e) => handleTextChange(e)}
+            onChange={(e) => handleTextChange(e, openModalView.add)}
+            placeholder="Ingredients, sides, recipes..."
             value={addMealTextData.description}
           />
-          <Button color={buttonColor.orange} disabled={!addMealTextData.name}>
+          <Button
+            className="add-meal-form-submit"
+            color={buttonColor.orange}
+            disabled={!addMealTextData.name}
+          >
             Add Meal
           </Button>
         </form>
@@ -265,7 +365,81 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   const renderEditMeal = () => {
-    return "Will Edit stuff here...";
+    return (
+      <div className="edit-meal">
+        <h3 className="edit-meal-title">Edit Meal</h3>
+        <form
+          className="edit-meal-form"
+          onSubmit={(e) => handleEditMealSubmit(e)}
+        >
+          <TextInput
+            inputName="name"
+            inputID="edit-meal-name"
+            label="Name:"
+            onChange={(e) => handleTextChange(e, openModalView.edit)}
+            placeholder={selectedMeal.name}
+            value={editMealTextData.name}
+          />
+
+          <div className="edit-meal-form-flex-container">
+            <input
+              className="edit-meal-form-date-input"
+              type="date"
+              onChange={(e) => {
+                let date = new Date(e.target.valueAsDate);
+                date = new Date(
+                  date.getTime() + date.getTimezoneOffset() * 60000
+                );
+
+                setEditMealDate(format(date, "yyyy-MM-dd"));
+              }}
+              value={editMealDate}
+            />
+            <div className="edit-meal-form-radio-container">
+              <RadioInput
+                checked={editMealType === mealType.breakfast}
+                className="edit-meal-form-radio-input"
+                inputName="dinner"
+                label={mealType.breakfast}
+                inputID={`edit-meal-type=${mealType.breakfast}`}
+                onChange={() => setEditMealType(mealType.breakfast)}
+              />
+              <RadioInput
+                checked={editMealType === mealType.lunch}
+                className="add-meal-form-radio-input"
+                label={mealType.lunch}
+                inputID={`edit-meal-type=${mealType.lunch}`}
+                inputName="lunch"
+                onChange={() => setEditMealType(mealType.lunch)}
+              />
+              <RadioInput
+                checked={editMealType === mealType.dinner}
+                className="edit-meal-form-radio-input"
+                label={mealType.dinner}
+                inputID={`edit-meal-type=${mealType.dinner}`}
+                inputName="dinner"
+                onChange={() => setEditMealType(mealType.dinner)}
+              />
+            </div>
+          </div>
+
+          <TextInput
+            inputName="description"
+            inputID="edit-meal-description"
+            label="Description:"
+            onChange={(e) => handleTextChange(e, openModalView.edit)}
+            placeholder={selectedMeal.description}
+            value={editMealTextData.description}
+          />
+          <Button color={buttonColor.orange} className="edit-meal-form-submit">
+            Save
+          </Button>
+          <Button onClick={() => closeModal()} className="edit-meal-cancel">
+            Cancel
+          </Button>
+        </form>
+      </div>
+    );
   };
 
   return (
@@ -321,6 +495,9 @@ const mapStateToProps = (state) => ({
   startDate: state.mealState.startDate,
 });
 
-export default connect(mapStateToProps, { addMeal, deleteMeal, getMeals })(
-  MealPlan
-);
+export default connect(mapStateToProps, {
+  addMeal,
+  deleteMeal,
+  editMeal,
+  getMeals,
+})(MealPlan);

@@ -2,6 +2,7 @@ import { endOfWeek, format, startOfWeek } from "date-fns";
 import {
   ADD_MEAL,
   DELETE_MEAL,
+  EDIT_MEAL,
   GET_MEALS,
   SET_DATE_RANGE,
   SET_DATES,
@@ -37,6 +38,19 @@ const itemsReducer = (state = initialState, action) => {
         ...state,
         meals: action.payload,
         loading: false,
+      };
+    case EDIT_MEAL:
+      const editedMeals = state.meals.map((meal) => {
+        if (meal._id === action.payload._id) {
+          return action.payload;
+        }
+
+        return meal;
+      });
+
+      return {
+        ...state,
+        meals: editedMeals,
       };
     case DELETE_MEAL:
       const filteredMeals = state.meals.filter(
