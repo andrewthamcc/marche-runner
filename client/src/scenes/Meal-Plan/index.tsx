@@ -5,8 +5,7 @@ import { format, isSameDay, parseISO } from "date-fns";
 // components
 import Layout from "../../layout";
 import { ReactComponent as MealPlanIcon } from "./assets/meal-plan.svg";
-import WeekCalendar from "../../components/Calendar/Week-Calendar";
-import MonthCalendar from "../../components/Calendar/Month-Calendar";
+import Calendar, { calendarType } from "../../components/Calendar";
 import IconButton from "../../components/Icon-Button";
 import { iconType } from "../../components/Icon";
 import { symbolType } from "../../components/Symbol";
@@ -43,11 +42,6 @@ interface ReduxDispatchProps {
 
 type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
-enum openCalendarView {
-  week = "week",
-  month = "month",
-}
-
 enum openModalView {
   default = "default",
   edit = "edit",
@@ -67,9 +61,6 @@ interface MealTextData {
 
 const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
   // state
-  const [calendarView, setCalendarView] = useState<openCalendarView>(
-    openCalendarView.week
-  ); // view of either week or monthly calendar
   const [selectedMeal, setSelectedMeal] = useState<Meal>(null); // selected meal from calendar
   const [modalView, setModalView] = useState<openModalView>(null); // modal view (default, add, edit)
   const [addMealTextData, setAddMealTextData] = useState<MealTextData>({
@@ -451,28 +442,20 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
             <h2 className="meal-plan-header-title">Meal Planning</h2>
           </div>
         </div>
-        <div className="meal-plan-calendar">
-          {/* <WeekCalendar
-              endDate={endDate}
-              startDate={startDate}
-              meals={meals}
-              selectMeal={(meal: Meal) => {
-                setSelectedMeal(meal);
-                setModalView(openModalView.default);
-                openModal();
-              }}
-            /> */}
 
-          <MonthCalendar
+        <div className="meal-plan-calendar">
+          <Calendar
+            calendarView={calendarType.month}
             endDate={endDate}
-            startDate={startDate}
             meals={meals}
             selectMeal={(meal: Meal) => {
               setSelectedMeal(meal);
               setModalView(openModalView.default);
               openModal();
             }}
+            startDate={startDate}
           />
+
           <IconButton
             symbol={symbolType.addOrange}
             className="meal-plan-add-button"

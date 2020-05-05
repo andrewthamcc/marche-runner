@@ -1,53 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
 import {
   addDays,
-  addMonths,
   endOfWeek,
-  endOfMonth,
   format,
   isSameDay,
   isSameMonth,
   parseISO,
   startOfWeek,
-  startOfMonth,
-  subMonths,
 } from "date-fns";
-
-// components
-import IconButton from "../../Icon-Button";
-import { iconType } from "../../Icon";
-import Button from "../../Button";
-
-// redux actions
-import { setDates } from "../../../actions/meals";
 
 // models
 import { Meal } from "../../../models/meal";
 
 require("./style.scss");
 
-interface OwnProps {
+interface Props {
   endDate: string; // calendar ending date
   meals: Meal[]; // meals within this period
   selectMeal: (meal) => void; // passthrough for event handler when selecting meal
   startDate: string; // calendar starting date
 }
 
-interface ReduxStateProps {}
-
-interface ReduxDispatchProps {
-  setDates: (startDate, endDate) => void;
-}
-
-type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
-
 const MonthCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   // state
   const [days, setDays] = useState([]);
 
   // props
-  const { endDate, meals, setDates, startDate, selectMeal } = props;
+  const { endDate, meals, startDate, selectMeal } = props;
 
   // other books
   useEffect(() => {
@@ -61,27 +40,6 @@ const MonthCalendar: React.FC<Props> = (props: Props): JSX.Element => {
 
     setDays(calendarRows);
   }, [endDate, startDate]);
-
-  const handleToday = () => {
-    const newStartDate = startOfMonth(new Date());
-    const newEndDate = endOfMonth(new Date());
-
-    setDates(newStartDate, newEndDate);
-  };
-
-  const handleNext = () => {
-    const newStartDate = addMonths(parseISO(startDate), 1);
-    const newEndDate = endOfMonth(newStartDate);
-
-    setDates(newStartDate, newEndDate);
-  };
-
-  const handlePrev = () => {
-    const newStartDate = subMonths(parseISO(startDate), 1);
-    const newEndDate = endOfMonth(newStartDate);
-
-    setDates(newStartDate, newEndDate);
-  };
 
   const renderCalendarDays = () => {
     const days = [];
@@ -152,32 +110,10 @@ const MonthCalendar: React.FC<Props> = (props: Props): JSX.Element => {
 
   return (
     <div className="month-calendar">
-      <div className="header">
-        <h3 className="header-title">
-          Month:{" "}
-          <span className="header-title-date">
-            {format(parseISO(startDate), "MMMM yyyy")}
-          </span>
-        </h3>
-
-        <div className="header-controls">
-          <IconButton icon={iconType.chevronLeft} onClick={handlePrev} />
-          <Button
-            onClick={handleToday}
-            border={false}
-            className="header-controls-today"
-          >
-            Today
-          </Button>
-          <IconButton icon={iconType.chevronRight} onClick={handleNext} />
-        </div>
-      </div>
       <div className="calendar-days">{renderCalendarDays()}</div>
       <div className="cells">{renderCalendar()}</div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-export default connect(mapStateToProps, { setDates })(MonthCalendar);
+export default MonthCalendar;

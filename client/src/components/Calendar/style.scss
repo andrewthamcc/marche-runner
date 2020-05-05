@@ -1,0 +1,37 @@
+.calendar {
+  .header {
+    font-size: 1.7rem;
+    margin-bottom: 0.75rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-title-date {
+      font-size: 1.9rem;
+      font-weight: 500;
+    }
+
+    &-controls {
+      display: flex;
+      align-items: center;
+
+      &-today {
+        border: 2px solid #c0c0c0;
+        font-size: 1.3rem;
+        margin: 0 0.5rem;
+        width: auto;
+        transition: 0.2s border ease-in;
+
+        &:hover,
+        &:focus {
+          border-color: darken(#c0c0c0, 10%);
+        }
+
+        &:active {
+          background-color: darken(#ffffff, 3%);
+        }
+      }
+    }
+  }
+}
