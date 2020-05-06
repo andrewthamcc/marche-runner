@@ -6,6 +6,7 @@ require("dotenv").config();
 
 // get task model for deleteMany
 const Item = require("./item");
+const Meal = require("./meal");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -90,6 +91,7 @@ userSchema.pre("save", async function (next) {
 userSchema.pre("remove", async function (next) {
   const user = this;
 
+  await Meal.deleteMany({ user: user._id });
   await Item.deleteMany({ user: user._id });
 
   next();

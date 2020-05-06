@@ -428,7 +428,9 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
         <BlankModal
           isModalOpen={open}
           close={closeModal}
-          className="meal-plan-modal"
+          className={`meal-plan-modal ${
+            modalView !== openModalView.default ? "edit" : ""
+          }`}
         >
           {renderModalControls()}
           {renderModalContent()}

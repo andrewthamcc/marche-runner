@@ -35,7 +35,6 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   const renderCalendarDays = () => {
     return days.map((day, index) => (
       <div className={`day day-${format(parseISO(day), "iii")}`} key={index}>
-        {" "}
         {format(parseISO(day), "iiii")}
       </div>
     ));

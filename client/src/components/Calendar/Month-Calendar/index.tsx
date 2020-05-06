@@ -30,32 +30,29 @@ const MonthCalendar: React.FC<Props> = (props: Props): JSX.Element => {
 
   // other books
   useEffect(() => {
-    const calendarRows = [];
+    const monthDays = [];
     let day = startOfWeek(parseISO(startDate));
 
     while (day <= endOfWeek(parseISO(endDate))) {
-      calendarRows.push(format(day, "yyyy-MM-dd"));
+      monthDays.push(format(day, "yyyy-MM-dd"));
       day = addDays(day, 1);
     }
 
-    setDays(calendarRows);
+    setDays(monthDays);
   }, [endDate, startDate]);
 
   const renderCalendarDays = () => {
     const days = [];
-    const start = format(startOfWeek(new Date()), "yyyy-MM-dd");
+    const start = startOfWeek(new Date());
 
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div
-          className={`day day-${format(addDays(parseISO(start), i), "iiii")}`}
-          key={i}
-        >
+        <div className={`day day-${format(addDays(start, i), "iiii")}`} key={i}>
           <span className="day-standard">
-            {format(addDays(parseISO(start), i), "iiii")}
+            {format(addDays(start, i), "iiii")}
           </span>
           <span className="day-mobile">
-            {format(addDays(parseISO(start), i), "EEEEEE")}
+            {format(addDays(start, i), "EEEEEE")}
           </span>
         </div>
       );

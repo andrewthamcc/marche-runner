@@ -15,13 +15,15 @@ import MealPlan from "./scenes/Meal-Plan";
 
 require("./styles/App.scss");
 
+require("./token");
+
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={MealPlan} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/mealplan" component={MealPlan} />
