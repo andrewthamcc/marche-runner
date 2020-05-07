@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { format, parseISO } from "date-fns";
+import convertTime from "../../utils/convertTime";
 
 // components
 import Layout from "../../layout";
@@ -298,7 +299,9 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
               {editView ? renderEditView() : renderStandardView()}
               <p className="profile-date">
                 Member Since:{" "}
-                <span>{date && format(parseISO(date), "MMM dd, yyyy")}</span>
+                <span>
+                  {date && format(convertTime(parseISO(date)), "MMM dd, yyyy")}
+                </span>
               </p>
               {editView && renderEditControls()}
             </div>

@@ -271,7 +271,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
         <p className="selected-meal-name">{selectedMeal.name}</p>
         <p className="selected-meal-date">
           <span className="title">Date:</span>{" "}
-          {format(parseISO(selectedMeal.date), "MMM dd, yyyy")}
+          {format(convertTime(parseISO(selectedMeal.date)), "MMM dd, yyyy")}
         </p>
         <p className="selected-meal-type">
           <span className="title">Meal:</span> {selectedMeal.type}
