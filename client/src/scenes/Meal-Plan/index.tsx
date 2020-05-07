@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { format, isSameDay, parseISO } from "date-fns";
+import convertTime from "../../utils/convertTime";
 
 // components
 import Layout from "../../layout";
@@ -323,10 +324,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
               className="modal-form-date-input"
               type="date"
               onChange={(e) => {
-                let date = new Date(e.target.valueAsDate);
-                date = new Date(
-                  date.getTime() + date.getTimezoneOffset() * 60000
-                );
+                const date = convertTime(new Date(e.target.valueAsDate));
 
                 modalView === openModalView.add
                   ? setAddMealDate(format(date, "yyyy-MM-dd"))

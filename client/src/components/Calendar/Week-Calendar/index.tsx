@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import convertTime from "../../../utils/convertTime";
 import { addDays, format, isSameDay, parseISO, startOfWeek } from "date-fns";
 
 // models
@@ -43,7 +44,7 @@ const WeekCalendar: React.FC<Props> = (props: Props): JSX.Element => {
   const renderCalendar = () => {
     return days.map((day, index) => {
       const dailyMeals = meals.filter((meal) =>
-        isSameDay(parseISO(meal.date), parseISO(day))
+        isSameDay(convertTime(parseISO(meal.date)), parseISO(day))
       );
 
       const displayMeals = dailyMeals.map((meal) => (

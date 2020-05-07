@@ -12,11 +12,7 @@ const Meal = require("../models/meal");
 router.post("/", auth, async (req, res) => {
   const user = req.user._id;
 
-  // correct for timezone diff
-  let date = new Date(req.body.date);
-  date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-
-  const meal = new Meal({ ...req.body, user, date });
+  const meal = new Meal({ ...req.body, user });
 
   try {
     await meal.save();
@@ -32,10 +28,7 @@ router.post("/", auth, async (req, res) => {
 router.get("/", auth, async (req, res) => {
   const user = req.user._id;
   let start = new Date(req.query.start_date);
-  start = new Date(start.getTime() + start.getTimezoneOffset() * 60000);
-
   let end = new Date(req.query.end_date);
-  end = new Date(end.getTime() + end.getTimezoneOffset() * 60000);
 
   try {
     const meals = await Meal.find({
@@ -62,13 +55,6 @@ router.patch("/:id", auth, async (req, res) => {
   const updatesObj = req.body;
   const updates = Object.keys(req.body);
 
-  if (updatesObj.date) {
-    let date = new Date(req.body.date);
-    date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-
-    updatesObj.date = date;
-  }
-
   try {
     const meal = await Meal.findOne({ _id, user });
 
@@ -78,7 +64,7 @@ router.patch("/:id", auth, async (req, res) => {
 
     updates.forEach((update) => (meal[update] = updatesObj[update]));
 
-    meal.save();
+    await meal.save();
     res.send(meal);
   } catch (error) {
     res.status(500).send(error);
