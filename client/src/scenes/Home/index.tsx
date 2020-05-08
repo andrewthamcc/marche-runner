@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // components
 import Layout from "../../layout";
@@ -12,11 +12,37 @@ import { ReactComponent as Profile } from "./assets/profile.svg";
 import { ReactComponent as List } from "./assets/list.svg";
 import { ReactComponent as Cart } from "./assets/cart.svg";
 
+// redux actions
+import { loginUser } from "../../actions/auth";
+
+// models
+import { LoginFormData } from "../../models/user";
+
 require("./style.scss");
 
-const Home: React.FC = (): JSX.Element => {
+interface Props {
+  loginUser: (guestLogin: LoginFormData) => void;
+}
+
+const Home: React.FC<Props> = (props: Props): JSX.Element => {
+  // props
+  const { loginUser } = props;
+
   // other hooks
+  const history = useHistory();
   const { open, openModal, closeModal } = useModal();
+
+  const guestSignin = () => {
+    const guest = {
+      email: "guest@andrewtham.cc",
+      password: "123456",
+    };
+
+    loginUser(guest);
+    setTimeout(() => {
+      history.push("/dashboard");
+    }, 500);
+  };
 
   return (
     <Layout>
@@ -30,6 +56,12 @@ const Home: React.FC = (): JSX.Element => {
               <p>
                 MarchéRunner is a web application for helping with your grocery
                 runs.
+              </p>
+              <p className="hero-try">
+                Try it out{" "}
+                <span className="hero-try-link" onClick={() => guestSignin()}>
+                  here
+                </span>
               </p>
               <Link to="/signup">
                 <Button
@@ -114,4 +146,4 @@ const Home: React.FC = (): JSX.Element => {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, {})(Home);
+export default connect(mapStateToProps, { loginUser })(Home);

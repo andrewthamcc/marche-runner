@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import convertTime from "../../utils/convertTime";
+import isGuest from "../../utils/isGuest";
 
 // components
 import Layout from "../../layout";
@@ -27,8 +28,17 @@ interface OwnProps {}
 
 interface ReduxStateProps {
   loading: boolean;
+  id: string;
   user: UserModel;
 }
+
+interface ReduxDispatchProps {
+  editUserProfile: (data) => void;
+  deleteUserProfile: () => void;
+  getUserProfile: () => void;
+}
+
+type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 interface NewUserInfo {
   email: string;
@@ -40,14 +50,6 @@ interface NewPassword {
   confirmPassword: string;
   newPassword: string;
 }
-
-interface ReduxDispatchProps {
-  editUserProfile: (data) => void;
-  deleteUserProfile: () => void;
-  getUserProfile: () => void;
-}
-
-type Props = OwnProps & ReduxStateProps & ReduxDispatchProps;
 
 const Profile: React.FC<Props> = (props: Props): JSX.Element => {
   // state
@@ -71,6 +73,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
     deleteUserProfile,
     editUserProfile,
     getUserProfile,
+    id,
     loading,
     user,
   } = props;
@@ -194,7 +197,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
           <span>Last Name:</span> {lastName}
         </div>
         <div className="profile-email">
-          <span>Email Address:</span> {email}
+          <span>Email Address:</span> {isGuest(id) ? "guest@guest.com" : email}
         </div>
       </>
     );
@@ -284,6 +287,28 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
     );
   }
 
+  const renderIconButtons = () => {
+    if (isGuest(id)) {
+      return null;
+    }
+
+    return (
+      <>
+        {" "}
+        <IconButton
+          className="profile-header-controls-icon"
+          icon={iconType.pencil}
+          onClick={() => setEditView(!editView)}
+        />
+        <IconButton
+          className="profile-header-controls-icon"
+          icon={iconType.trash}
+          onClick={() => openModal()}
+        />
+      </>
+    );
+  };
+
   return (
     <Layout>
       {open && (
@@ -300,18 +325,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
         <div className="container">
           <div className="profile-header">
             <h2>Profile</h2>
-            <div className="profile-header-controls">
-              <IconButton
-                className="profile-header-controls-icon"
-                icon={iconType.pencil}
-                onClick={() => setEditView(!editView)}
-              />
-              <IconButton
-                className="profile-header-controls-icon"
-                icon={iconType.trash}
-                onClick={() => openModal()}
-              />
-            </div>
+            <div className="profile-header-controls">{renderIconButtons()}</div>
           </div>
           <hr />
           <div className="profile-flex-container">
@@ -336,11 +350,12 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
 };
 
 const mapStateToProps = (state) => ({
+  id: state.authState._id,
   user: {
-    firstName: state.userState.firstName,
-    lastName: state.userState.lastName,
     email: state.userState.email,
     date: state.userState.date,
+    firstName: state.userState.firstName,
+    lastName: state.userState.lastName,
   },
   loading: state.userState.loading,
 });
