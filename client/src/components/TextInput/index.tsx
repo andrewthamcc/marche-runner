@@ -17,6 +17,7 @@ interface Props {
   label?: string; // label name
   onBlur?: () => void; // passthrough of callback for onBlur event
   onChange: (e) => void;
+  onFocus?: (e) => void;
   placeholder?: string; // placeholder text
   ref?: RefObject<HTMLInputElement> | null; // forwardRef
   required?: boolean;
@@ -40,12 +41,21 @@ const TextInput: React.FC<Props> = React.forwardRef(
       label,
       onBlur,
       onChange,
+      onFocus,
       placeholder,
       required,
       tabIndex,
       type,
       value,
     } = props;
+
+    const handleFocus = (e) => {
+      if (onFocus) {
+        onFocus(e);
+      }
+
+      setErrors("");
+    };
 
     const validateInput = (e) => {
       // onBlur callback
@@ -76,7 +86,7 @@ const TextInput: React.FC<Props> = React.forwardRef(
           name={inputName}
           onBlur={validateInput}
           onChange={onChange}
-          onFocus={() => setErrors("")}
+          onFocus={(e) => handleFocus(e)}
           placeholder={placeholder}
           ref={ref}
           tabIndex={tabIndex}

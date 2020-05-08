@@ -1,4 +1,6 @@
 .loading {
+  flex-grow: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,6 +8,7 @@
   &-spinner {
     animation: spin 2s linear infinite;
     max-width: 90px;
+    flex-grow: 1;
 
     svg {
       width: 100%;

@@ -93,6 +93,15 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
     }));
   };
 
+  const handleFocus = (e) => {
+    const { name } = e.target;
+
+    setNewUserInfo((newUserInfo) => ({
+      ...newUserInfo,
+      [name]: user[name],
+    }));
+  };
+
   // handle change of password input
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
@@ -134,6 +143,17 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
         delete newUserData[data];
       }
     });
+
+    // remove values that have not changed
+    if (newUserData.firstName === user.firstName) {
+      delete newUserData.firstName;
+    }
+    if (newUserData.lastName === user.lastName) {
+      delete newUserData.lastName;
+    }
+    if (newUserData.email === user.email) {
+      delete newUserData.email;
+    }
 
     // don't send if data is not changed and close edit view
     if (!Object.keys(newUserData).length) {
@@ -190,6 +210,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
           inputName="firstName"
           value={newUserInfo.firstName}
           onChange={(e) => handleChange(e)}
+          onFocus={(e) => handleFocus(e)}
           className="profile-edit-input"
         />
         <TextInput
@@ -199,6 +220,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
           inputName="lastName"
           value={newUserInfo.lastName}
           onChange={(e) => handleChange(e)}
+          onFocus={(e) => handleFocus(e)}
           className="profile-edit-input"
         />
         <TextInput
@@ -209,6 +231,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
           inputName="email"
           value={newUserInfo.email}
           onChange={(e) => handleChange(e)}
+          onFocus={(e) => handleFocus(e)}
           className="profile-edit-input"
         />
         <TextInput

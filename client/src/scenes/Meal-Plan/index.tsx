@@ -122,7 +122,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     // eslint-disable-next-line
   }, [editMeal, endDate, open, selectedMeal, startDate]);
 
-  const handleTextChange = (e, type) => {
+  const handleTextChange = (e, type: openModalView) => {
     const { name, value } = e.target;
 
     if (type === openModalView.add) {
@@ -136,6 +136,17 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
       setEditMealTextData((editMealTextData) => ({
         ...editMealTextData,
         [name]: value,
+      }));
+    }
+  };
+
+  const handleFocus = (e) => {
+    const { name } = e.target;
+
+    if (modalView === openModalView.edit) {
+      setEditMealTextData((editMealTextData) => ({
+        ...editMealTextData,
+        [name]: selectedMeal[name],
       }));
     }
   };
@@ -175,11 +186,14 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
     };
 
     // delete empty or unchanged values
-    if (mealEditData.name === "") {
+    if (mealEditData.name === "" || mealEditData.name === selectedMeal.name) {
       delete mealEditData.name;
     }
 
-    if (mealEditData.description === "") {
+    if (
+      mealEditData.description === "" ||
+      mealEditData.description === selectedMeal.description
+    ) {
       delete mealEditData.description;
     }
 
@@ -307,6 +321,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
                 ? handleTextChange(e, openModalView.add)
                 : handleTextChange(e, openModalView.edit)
             }
+            onFocus={(e) => handleFocus(e)}
             placeholder={
               modalView === openModalView.add
                 ? "Meal name..."
@@ -395,6 +410,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
                 ? handleTextChange(e, openModalView.add)
                 : handleTextChange(e, openModalView.edit)
             }
+            onFocus={(e) => handleFocus(e)}
             placeholder={
               modalView === openModalView.add
                 ? "Ingredients, sides, recipes..."
@@ -441,29 +457,29 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
             <MealPlanIcon />
             <h2 className="meal-plan-header-title">Meal Planning</h2>
           </div>
-        </div>
 
-        <div className="meal-plan-calendar">
-          <Calendar
-            calendarView={calendarType.month}
-            endDate={endDate}
-            meals={meals}
-            selectMeal={(meal: Meal) => {
-              setSelectedMeal(meal);
-              setModalView(openModalView.default);
-              openModal();
-            }}
-            startDate={startDate}
-          />
+          <div className="meal-plan-calendar">
+            <Calendar
+              calendarView={calendarType.month}
+              endDate={endDate}
+              meals={meals}
+              selectMeal={(meal: Meal) => {
+                setSelectedMeal(meal);
+                setModalView(openModalView.default);
+                openModal();
+              }}
+              startDate={startDate}
+            />
 
-          <IconButton
-            symbol={symbolType.addOrange}
-            className="meal-plan-add-button"
-            onClick={() => {
-              setModalView(openModalView.add);
-              openModal();
-            }}
-          />
+            <IconButton
+              symbol={symbolType.addOrange}
+              className="meal-plan-add-button"
+              onClick={() => {
+                setModalView(openModalView.add);
+                openModal();
+              }}
+            />
+          </div>
         </div>
       </div>
     </Layout>

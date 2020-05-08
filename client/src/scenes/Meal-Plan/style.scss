@@ -13,9 +13,7 @@
   }
 
   &-calendar {
-    margin: 0 auto;
     position: relative;
-    width: 85%;
   }
 
   &-add-button {
@@ -164,9 +162,7 @@
 
 @media only screen and (max-width: 650px) {
   .meal-plan {
-    &-calendar {
-      margin: 0 auto;
-      position: relative;
+    .container {
       width: 95%;
     }
   }

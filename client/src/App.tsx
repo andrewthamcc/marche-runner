@@ -12,6 +12,7 @@ import Signup from "./scenes/Signup";
 import Dashboard from "./scenes/Dashboard";
 import Profile from "./scenes/Profile";
 import MealPlan from "./scenes/Meal-Plan";
+import NotFound from "./scenes/404";
 
 require("./styles/App.scss");
 
@@ -26,6 +27,7 @@ function App() {
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/mealplan" component={MealPlan} />
             <Route path="/signup" component={Signup} />
+            <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
         <Toast />

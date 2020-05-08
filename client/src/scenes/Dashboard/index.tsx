@@ -270,14 +270,6 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
     );
   };
 
-  if (loading) {
-    return (
-      <div className="dashboard loading">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
   return (
     <Layout>
       {open && (
@@ -289,12 +281,16 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
         />
       )}
 
-      <div className="dashboard">
-        <div className="container">
-          <div className="dashboard-controls">{renderControls()}</div>
-          {renderList()}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="dashboard">
+          <div className="container">
+            <div className="dashboard-controls">{renderControls()}</div>
+            {renderList()}
+          </div>
         </div>
-      </div>
+      )}
     </Layout>
   );
 };

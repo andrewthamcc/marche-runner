@@ -7,3 +7,10 @@ export interface Meal {
   date: string;
   __v: number;
 }
+
+export interface AddMealData {
+  name: string;
+  date: string;
+  description?: string;
+  type: string;
+}

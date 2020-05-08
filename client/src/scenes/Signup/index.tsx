@@ -172,7 +172,7 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
           </p>
         </div>
       </div>
-      <div className="signup-right">
+      <div className={`signup-right ${loading ? "loading" : ""}`}>
         {loading ? <LoadingSpinner /> : renderForm()}
       </div>
     </div>

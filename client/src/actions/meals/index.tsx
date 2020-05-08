@@ -17,6 +17,7 @@ import {
   SET_MEAL_LOADING,
 } from "./types";
 import { dateRange } from "../../reducers/mealReducer";
+import { AddMealData } from "../../models/meal";
 
 const setLoading = () => {
   store.dispatch({
@@ -24,7 +25,7 @@ const setLoading = () => {
   });
 };
 
-export const addMeal = (meal) => async (dispatch) => {
+export const addMeal = (meal: AddMealData) => async (dispatch) => {
   try {
     const res = await axios.post("/meals", meal);
     const data = res.data;

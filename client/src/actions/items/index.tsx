@@ -1,7 +1,7 @@
 import store from "../../redux";
 import axios from "axios";
 import { AddItemData } from "../../models/item";
-
+import { Item } from "../../models/item";
 import {
   ADD_ITEM,
   CLEAR_ITEM_ERROR,
@@ -34,6 +34,9 @@ export const getItems = () => async (dispatch) => {
   try {
     const res = await axios.get("/shop");
     const data = res.data;
+
+    // sort items alphabetically
+    data.sort((a: Item, b: Item) => a.name < b.name);
 
     dispatch({
       type: GET_ITEMS,
@@ -128,7 +131,7 @@ export const deleteAllItems = () => async (dispatch) => {
     const data = res.data;
 
     const ids = [];
-    data.items.forEach((item) => ids.push(item._id));
+    data.items.forEach((item: Item) => ids.push(item._id));
 
     dispatch({
       type: DELETE_ALL,
