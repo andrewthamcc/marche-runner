@@ -17,6 +17,8 @@
 
     &-text {
       color: #ffffff;
+      font-size: 2rem;
+      line-height: 1.7;
 
       h1 {
         font-size: 6rem;
@@ -24,16 +26,22 @@
         font-weight: 500;
       }
 
-      font-size: 2rem;
-      line-height: 1.8;
+      &-link {
+        color: $orange;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
     }
 
     &-button {
       margin: 1rem 0;
     }
 
-    &-signin,
-    &-try {
+    &-signin {
       font-size: 1.3rem;
 
       &-link {

@@ -28,7 +28,6 @@ export enum categoryType {
   frozen = "frozen",
   household = "household",
   meat = "meat",
-  personal = "personal", // to be deprecated by May 10
   pharmacy = "pharmacy",
   prepared = "prepared",
   produce = "produce",
@@ -45,7 +44,6 @@ const categoryInfo = {
   frozen: { title: "Frozen Foods", icon: catIconType.frozen },
   household: { title: "Household Items", icon: catIconType.household },
   meat: { title: "Meat", icon: catIconType.meat },
-  // personal: { title: "Personal Items", icon: catIconType.personal },
   pharmacy: { title: "Pharmacy & Personal Items", icon: catIconType.pharmacy },
   prepared: { title: "Deli & Prepared Foods", icon: catIconType.prepared },
   produce: { title: "Fruits & Vegetables", icon: catIconType.produce },
@@ -83,23 +81,8 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   useEffect(() => {
     if (items) {
       const filteredItems = items
-        .filter((item) => {
-          // deprecate by May 10th
-          if (
-            item.category === categoryType.personal &&
-            category === categoryType.pharmacy
-          ) {
-            return item;
-          }
-
-          return item.category === category;
-        })
+        .filter((item) => item.category === category)
         .reverse();
-
-      // sorts to move purchased items automatically to bottom of list - this could be REALLY bad UX
-      // .sort((a, b) =>
-      //   a.purchased === b.purchased ? 0 : a.purchased ? 1 : -1
-      // );
 
       setCategoryItems(filteredItems);
 

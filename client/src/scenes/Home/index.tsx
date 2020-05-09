@@ -39,9 +39,10 @@ const Home: React.FC<Props> = (props: Props): JSX.Element => {
     };
 
     loginUser(guest);
+    // hack to push to dashboard
     setTimeout(() => {
       history.push("/dashboard");
-    }, 500);
+    }, 200);
   };
 
   return (
@@ -57,11 +58,12 @@ const Home: React.FC<Props> = (props: Props): JSX.Element => {
                 MarchéRunner is a web application for helping with your grocery
                 runs.
               </p>
-              <p className="hero-try">
+              <p>
                 Try it out{" "}
-                <span className="hero-try-link" onClick={() => guestSignin()}>
+                <span className="hero-text-link" onClick={() => guestSignin()}>
                   here
                 </span>
+                .
               </p>
               <Link to="/signup">
                 <Button
@@ -98,11 +100,9 @@ const Home: React.FC<Props> = (props: Props): JSX.Element => {
                   updates to improve MarchéRunner and expand on its features.
                 </p>
               </div>
-              {/* <div className="about-flex-container-right"> */}
               <div className="about-screenshot">
                 <img src={Screenshot} alt="MarchéRunner app screenshot" />
               </div>
-              {/* </div> */}
             </div>
           </div>
         </section>

@@ -52,7 +52,6 @@ const index: React.FC<Props> = (props: Props): JSX.Element => {
       </div>
 
       <div className="category-list-item-controls">
-        {/* todo: investigate: inline edit may not be needed with the delete button and add button more easily accessible by the user */}
         <IconButton
           icon={iconType.trash}
           className="category-list-item-controls-delete"

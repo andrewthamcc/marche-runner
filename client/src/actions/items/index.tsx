@@ -35,12 +35,16 @@ export const getItems = () => async (dispatch) => {
     const res = await axios.get("/shop");
     const data = res.data;
 
-    // sort items alphabetically
-    data.sort((a: Item, b: Item) => a.name < b.name);
+    // alpha sort list items after fetch
+    const sorted = data
+      .sort((a: Item, b: Item) =>
+        a.name[0].toLowerCase() < b.name[0].toLowerCase() ? -1 : 1
+      )
+      .reverse();
 
     dispatch({
       type: GET_ITEMS,
-      payload: data,
+      payload: sorted,
     });
   } catch (error) {
     dispatch({

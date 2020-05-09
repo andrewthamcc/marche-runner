@@ -52,11 +52,6 @@ const categoryList = [
     text: "Deli & Prepared Foods",
     value: "prepared",
   },
-  // {
-  //   icon: <CategoryIcon iconType={catIconType.personal} />,
-  //   text: "Personal Items",
-  //   value: "personal",
-  // },
   {
     icon: <CategoryIcon iconType={catIconType.pharmacy} />,
     text: "Pharmacy & Personal Items",
