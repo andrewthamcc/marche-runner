@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 
 // components
 import CategoryListItem from "./Category-List-Item";
@@ -184,6 +185,6 @@ const CategoryList: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state: AppState) => ({});
 
 export default connect(mapStateToProps, { addItem, showToast })(CategoryList);

@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 
 interface OwnProps {}
 
@@ -27,7 +28,7 @@ const PrivateRoute = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   isAuthenticated: state.authState.isAuthenticated,
 });
 

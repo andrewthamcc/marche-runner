@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 import ReactDOM from "react-dom";
 
 // components
@@ -66,7 +67,7 @@ const ToastNotification: React.FC<Props> = (props: Props): JSX.Element => {
   return displayToast && ReactDOM.createPortal(renderToast(), toastPortal);
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   displayToast: state.uiState.displayToast,
   type: state.uiState.toastType,
   message: state.uiState.toastMessage,

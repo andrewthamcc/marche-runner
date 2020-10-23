@@ -1,3 +1,4 @@
+import { IAction } from "../../actions";
 import {
   DELETE_USER,
   CLEAR_AUTH_ERROR,
@@ -21,7 +22,7 @@ class authState {
 
 const initialState = new authState();
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
@@ -46,7 +47,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         isAuthenticated: true,
-        firstName: action.payload.firstName,
+        firstName: action.payload.firstName as string,
       };
     case LOGOUT:
     case DELETE_USER:

@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "../../redux";
+import { Dispatch } from "../index";
 import setAuthToken from "../../utils/setAuthToken";
 import {
   CLEAR_AUTH_ERROR,
@@ -54,7 +55,9 @@ const loadUser = async () => {
   }
 };
 
-export const registerUser = (data: RegisterFormData) => async (dispatch) => {
+export const registerUser = (data: RegisterFormData) => async (
+  dispatch: Dispatch
+) => {
   setLoading();
   dispatch({ type: CLEAR_AUTH_ERROR });
 
@@ -76,7 +79,9 @@ export const registerUser = (data: RegisterFormData) => async (dispatch) => {
   }
 };
 
-export const loginUser = (data: LoginFormData) => async (dispatch) => {
+export const loginUser = (data: LoginFormData) => async (
+  dispatch: Dispatch
+) => {
   setLoading();
 
   dispatch({ type: CLEAR_AUTH_ERROR });
@@ -99,13 +104,13 @@ export const loginUser = (data: LoginFormData) => async (dispatch) => {
   }
 };
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = () => (dispatch: Dispatch) => {
   dispatch({
     type: LOGOUT,
   });
 };
 
-export const deleteUserProfile = () => async (dispatch) => {
+export const deleteUserProfile = () => async (dispatch: Dispatch) => {
   setLoading();
 
   try {

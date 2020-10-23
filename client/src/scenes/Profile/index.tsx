@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 import { useHistory } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import convertTime from "../../utils/convertTime";
@@ -349,7 +350,7 @@ const Profile: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   id: state.authState._id,
   user: {
     email: state.userState.email,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 import { format, isSameDay, parseISO } from "date-fns";
 import convertTime from "../../utils/convertTime";
 
@@ -486,7 +487,7 @@ const MealPlan: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   dateRange: state.mealState.dateRange,
   endDate: state.mealState.endDate,
   meals: state.mealState.meals,

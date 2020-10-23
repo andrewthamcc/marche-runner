@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 import {
   addWeeks,
   addMonths,
@@ -192,6 +193,6 @@ Calendar.defaultProps = {
   calendarView: calendarType.month,
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state: AppState) => ({});
 
 export default connect(mapStateToProps, { setDates })(Calendar);

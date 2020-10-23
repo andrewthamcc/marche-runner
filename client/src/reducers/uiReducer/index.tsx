@@ -4,7 +4,7 @@ import { toastType } from "../../actions/ui/";
 class UIState {
   displayToast: boolean = false;
   toastMessage: string = "";
-  toastType: toastType = null;
+  toastType: toastType | null = null;
 }
 
 const initialState = new UIState();

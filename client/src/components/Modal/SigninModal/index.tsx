@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../../reducers";
 import ReactDOM from "react-dom";
 import { Link, useHistory } from "react-router-dom";
 
@@ -200,7 +201,7 @@ SigninModal.defaultProps = {
   isModalOpen: false,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   error: state.authState.error,
   loading: state.authState.loading,
   isAuthenticated: state.authState.isAuthenticated,

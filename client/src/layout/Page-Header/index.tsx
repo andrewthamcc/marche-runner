@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 import { Link, useHistory } from "react-router-dom";
 import { ReactComponent as Runner } from "./assets/runner.svg";
 
@@ -125,7 +126,7 @@ const PageHeader: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   firstName: state.authState.firstName,
   isAuthenticated: state.authState.isAuthenticated,
 });

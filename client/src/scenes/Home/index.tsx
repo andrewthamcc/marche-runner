@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 import { Link, useHistory } from "react-router-dom";
 
 // components
@@ -144,6 +145,6 @@ const Home: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state: AppState) => ({});
 
 export default connect(mapStateToProps, { loginUser })(Home);

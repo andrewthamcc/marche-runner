@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 import { Item } from "../../models/item";
 
 // components
@@ -295,7 +296,7 @@ const Dashboard: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   error: state.itemState.error,
   items: state.itemState.items,
   loading: state.itemState.loading,

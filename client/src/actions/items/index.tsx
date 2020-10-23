@@ -1,4 +1,5 @@
 import store from "../../redux";
+import { Dispatch } from "../index";
 import axios from "axios";
 import { AddItemData } from "../../models/item";
 import { Item } from "../../models/item";
@@ -22,13 +23,13 @@ const setLoading = () => {
   });
 };
 
-export const clearError = () => (dispatch) => {
+export const clearError = () => (dispatch: Dispatch) => {
   dispatch({
     type: CLEAR_ITEM_ERROR,
   });
 };
 
-export const getItems = () => async (dispatch) => {
+export const getItems = () => async (dispatch: Dispatch) => {
   setLoading();
 
   try {
@@ -54,7 +55,7 @@ export const getItems = () => async (dispatch) => {
   }
 };
 
-export const addItem = (item: AddItemData) => async (dispatch) => {
+export const addItem = (item: AddItemData) => async (dispatch: Dispatch) => {
   try {
     const res = await axios.post("/shop", item);
     const data = res.data;
@@ -71,7 +72,7 @@ export const addItem = (item: AddItemData) => async (dispatch) => {
   }
 };
 
-export const editItem = (id: string, item) => async (dispatch) => {
+export const editItem = (id: string, item) => async (dispatch: Dispatch) => {
   try {
     const res = await axios.patch(`/shop/${id}`, item);
     const data = res.data;
@@ -88,7 +89,7 @@ export const editItem = (id: string, item) => async (dispatch) => {
   }
 };
 
-export const deleteItem = (id: string) => async (dispatch) => {
+export const deleteItem = (id: string) => async (dispatch: Dispatch) => {
   try {
     const res = await axios.delete(`/shop/${id}`);
     const data = res.data;
@@ -105,7 +106,7 @@ export const deleteItem = (id: string) => async (dispatch) => {
   }
 };
 
-export const deletePurchasedItems = () => async (dispatch) => {
+export const deletePurchasedItems = () => async (dispatch: Dispatch) => {
   setLoading();
 
   try {
@@ -127,7 +128,7 @@ export const deletePurchasedItems = () => async (dispatch) => {
   }
 };
 
-export const deleteAllItems = () => async (dispatch) => {
+export const deleteAllItems = () => async (dispatch: Dispatch) => {
   setLoading();
 
   try {
@@ -149,14 +150,14 @@ export const deleteAllItems = () => async (dispatch) => {
   }
 };
 
-export const searchItems = (searchText: string) => (dispatch) => {
+export const searchItems = (searchText: string) => (dispatch: Dispatch) => {
   dispatch({
     type: SEARCH_ITEMS,
     payload: searchText,
   });
 };
 
-export const clearSearch = () => (dispatch) => {
+export const clearSearch = () => (dispatch: Dispatch) => {
   dispatch({
     type: CLEAR_SEARCH,
   });

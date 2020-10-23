@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers";
 
 // components
 import LoadingSpinner from "../../components/Loader";
@@ -179,7 +180,7 @@ const Signup: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   error: state.authState.error,
   loading: state.authState.loading,
   isAuthenticated: state.authState.isAuthenticated,

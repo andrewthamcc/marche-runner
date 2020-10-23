@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { AppState } from "../../../reducers";
 import { Item } from "../../../models/item";
 
 // components
@@ -62,6 +63,6 @@ const index: React.FC<Props> = (props: Props): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state: AppState) => ({});
 
 export default connect(mapStateToProps, { editItem, deleteItem })(index);

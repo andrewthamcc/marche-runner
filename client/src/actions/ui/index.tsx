@@ -1,3 +1,4 @@
+import { Dispatch } from "../index";
 import { SHOW_TOAST, HIDE_TOAST } from "./types";
 
 export enum toastType {
@@ -7,7 +8,7 @@ export enum toastType {
 }
 
 export const showToast = (message: string, toastType: toastType = null) => (
-  dispatch
+  dispatch: Dispatch
 ) => {
   const toastInfo = {
     message,
@@ -27,7 +28,7 @@ export const showToast = (message: string, toastType: toastType = null) => (
   }, 3000);
 };
 
-export const hideToast = () => (dispatch) => {
+export const hideToast = () => (dispatch: Dispatch) => {
   dispatch({
     type: HIDE_TOAST,
   });

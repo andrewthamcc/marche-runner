@@ -1,4 +1,5 @@
 import store from "../../redux";
+import { Dispatch } from "../index";
 import axios from "axios";
 import {
   endOfMonth,
@@ -25,7 +26,7 @@ const setLoading = () => {
   });
 };
 
-export const addMeal = (meal: AddMealData) => async (dispatch) => {
+export const addMeal = (meal: AddMealData) => async (dispatch: Dispatch) => {
   try {
     const res = await axios.post("/meals", meal);
     const data = res.data;
@@ -62,7 +63,7 @@ export const getMeals = (startDate: string, endDate: string) => async (
   }
 };
 
-export const editMeal = (id: string, meal) => async (dispatch) => {
+export const editMeal = (id: string, meal) => async (dispatch: Dispatch) => {
   try {
     const res = await axios.patch(`/meals/${id}`, meal);
     const data = res.data;
@@ -76,7 +77,7 @@ export const editMeal = (id: string, meal) => async (dispatch) => {
   }
 };
 
-export const deleteMeal = (id: string) => async (dispatch) => {
+export const deleteMeal = (id: string) => async (dispatch: Dispatch) => {
   try {
     const res = await axios.delete(`/meals/${id}`);
     const data = res.data;
@@ -90,7 +91,9 @@ export const deleteMeal = (id: string) => async (dispatch) => {
   }
 };
 
-export const setDates = (startDate: string, endDate: string) => (dispatch) => {
+export const setDates = (startDate: string, endDate: string) => (
+  dispatch: Dispatch
+) => {
   const newDates = {
     startDate,
     endDate,
@@ -102,7 +105,7 @@ export const setDates = (startDate: string, endDate: string) => (dispatch) => {
   });
 };
 
-export const setDateRange = (range: dateRange) => (dispatch) => {
+export const setDateRange = (range: dateRange) => (dispatch: Dispatch) => {
   let startDate: string = "";
   let endDate: string = "";
 

@@ -6,6 +6,10 @@ import itemState from "./itemsReducer";
 import uiState from "./uiReducer";
 import mealState from "./mealReducer";
 
-const AppState = { authState, userState, itemState, mealState, uiState };
+const reducers = { authState, userState, itemState, mealState, uiState };
 
-export default combineReducers(AppState);
+const RootState = combineReducers(reducers);
+
+export type AppState = ReturnType<typeof RootState>;
+
+export default RootState;

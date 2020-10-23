@@ -1,3 +1,4 @@
+import { Dispatch } from "../index";
 import store from "../../redux";
 import axios from "axios";
 import { GET_PROFILE, EDIT_PROFILE, SET_USER_LOADING } from "./types";
@@ -8,7 +9,7 @@ const setLoading = () => {
   });
 };
 
-export const getUserProfile = () => async (dispatch) => {
+export const getUserProfile = () => async (dispatch: Dispatch) => {
   setLoading();
 
   try {
@@ -24,7 +25,7 @@ export const getUserProfile = () => async (dispatch) => {
   }
 };
 
-export const editUserProfile = (data) => async (dispatch) => {
+export const editUserProfile = (data) => async (dispatch: Dispatch) => {
   setLoading();
 
   try {
